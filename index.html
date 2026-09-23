@@ -10,12 +10,29 @@
 
 <link rel="manifest" href="manifest.json">
 
-<meta name="theme-color" content="#f6f7fb">
+<meta name="theme-color" content="#f5f5f7">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="apple-mobile-web-app-title" content="Teacher Planner">
 
 <style>
+
+/* =========================================================
+   BASE
+========================================================= */
+
+:root{
+    --bg:#f5f5f7;
+    --card:#ffffff;
+    --ink:#18191d;
+    --muted:#8d8e96;
+    --soft:#f0f0f3;
+    --line:#e9e9ed;
+    --dark:#1d1e22;
+    --dark-2:#303139;
+    --danger:#c94b4b;
+    --shadow:0 8px 28px rgba(20,20,25,.055);
+}
 
 *{
     box-sizing:border-box;
@@ -23,17 +40,36 @@
 }
 
 html{
-    background:#f6f7fb;
+    background:var(--bg);
+    scroll-behavior:smooth;
 }
 
 body{
     margin:0;
-    font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text",
-    "Segoe UI",Roboto,Helvetica,Arial,sans-serif;
-    background:#f6f7fb;
-    color:#17181c;
+    background:
+        radial-gradient(
+            circle at 50% -10%,
+            rgba(255,255,255,.95),
+            transparent 38%
+        ),
+        var(--bg);
+    color:var(--ink);
     min-height:100vh;
+
+    font-family:
+        -apple-system,
+        BlinkMacSystemFont,
+        "SF Pro Display",
+        "SF Pro Text",
+        "Segoe UI",
+        Roboto,
+        Helvetica,
+        Arial,
+        sans-serif;
+
     padding-bottom:env(safe-area-inset-bottom);
+    -webkit-font-smoothing:antialiased;
+    text-rendering:optimizeLegibility;
 }
 
 button,
@@ -49,239 +85,375 @@ button{
     touch-action:manipulation;
 }
 
-.app{
-    max-width:520px;
-    margin:0 auto;
-    min-height:100vh;
-    padding:18px 16px 32px;
+button:active{
+    transform:scale(.975);
 }
 
-/* =========================
+input,
+select,
+textarea{
+    -webkit-appearance:none;
+    appearance:none;
+}
+
+.app{
+    max-width:520px;
+    min-height:100vh;
+    margin:0 auto;
+    padding:
+        calc(16px + env(safe-area-inset-top))
+        16px
+        calc(28px + env(safe-area-inset-bottom));
+}
+
+/* =========================================================
    TOP BAR
-========================= */
+========================================================= */
 
 .topbar{
     display:flex;
     align-items:center;
     justify-content:space-between;
-    margin-bottom:24px;
+    margin-bottom:30px;
 }
 
 .brand{
     display:flex;
     align-items:center;
-    gap:10px;
+    gap:11px;
 }
 
 .brand-icon{
     width:42px;
     height:42px;
     border-radius:14px;
+
     display:flex;
     align-items:center;
     justify-content:center;
-    background:linear-gradient(145deg,#1d1e23,#3b3d45);
-    color:white;
-    font-size:20px;
-    box-shadow:0 8px 18px rgba(0,0,0,.12);
+
+    color:#fff;
+    font-size:18px;
+    font-weight:800;
+
+    background:
+        linear-gradient(
+            145deg,
+            #18191d,
+            #3b3c44
+        );
+
+    box-shadow:
+        0 8px 20px rgba(0,0,0,.13),
+        inset 0 1px 0 rgba(255,255,255,.08);
 }
 
 .brand-text{
-    font-size:19px;
-    font-weight:750;
-    letter-spacing:-.4px;
+    font-size:18px;
+    line-height:1.1;
+    font-weight:760;
+    letter-spacing:-.45px;
 }
 
 .brand-sub{
-    font-size:11px;
-    color:#8c8e96;
-    margin-top:2px;
+    margin-top:4px;
+    font-size:10px;
+    color:#9899a1;
+    letter-spacing:.15px;
 }
 
 .icon-btn{
     width:42px;
     height:42px;
     border-radius:14px;
-    background:white;
-    color:#27282d;
-    box-shadow:0 5px 18px rgba(0,0,0,.07);
-    font-size:19px;
+
     display:flex;
     align-items:center;
     justify-content:center;
-    transition:.15s ease;
+
+    background:rgba(255,255,255,.88);
+    color:#2a2b30;
+
+    box-shadow:
+        0 5px 18px rgba(0,0,0,.055),
+        inset 0 0 0 1px rgba(0,0,0,.035);
+
+    font-size:18px;
+    transition:
+        transform .16s ease,
+        box-shadow .16s ease;
 }
 
-.icon-btn:active{
-    transform:scale(.93);
-}
-
-/* =========================
-   PAGES
-========================= */
+/* =========================================================
+   PAGE SYSTEM
+========================================================= */
 
 .page{
     display:none;
+    animation:pageIn .22s ease;
 }
 
 .page.active{
     display:block;
 }
 
-/* =========================
+@keyframes pageIn{
+    from{
+        opacity:0;
+        transform:translateY(5px);
+    }
+
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
+
+/* =========================================================
    HOME
-========================= */
+========================================================= */
 
 .greeting{
-    margin-bottom:18px;
+    margin-bottom:22px;
 }
 
 .greeting-small{
-    font-size:13px;
-    color:#8c8e96;
-    margin-bottom:5px;
+    color:#909198;
+    font-size:12px;
+    font-weight:500;
+    margin-bottom:7px;
 }
 
 .greeting-title{
-    font-size:30px;
-    font-weight:800;
-    letter-spacing:-1.2px;
+    font-size:31px;
+    line-height:1.08;
+    font-weight:820;
+    letter-spacing:-1.35px;
 }
 
 .greeting-title span{
     display:inline-block;
 }
 
-/* Welcome */
+/* =========================================================
+   WELCOME CARD
+========================================================= */
 
 .welcome-card{
-    background:linear-gradient(145deg,#202126,#363840);
-    color:white;
-    border-radius:24px;
-    padding:22px;
-    margin-bottom:18px;
-    box-shadow:0 14px 30px rgba(0,0,0,.14);
     position:relative;
     overflow:hidden;
+
+    color:#fff;
+
+    padding:23px;
+    margin-bottom:15px;
+
+    border-radius:26px;
+
+    background:
+        radial-gradient(
+            circle at 92% 8%,
+            rgba(255,255,255,.12),
+            transparent 28%
+        ),
+        linear-gradient(
+            145deg,
+            #202126,
+            #35363e
+        );
+
+    box-shadow:
+        0 18px 38px rgba(0,0,0,.12),
+        inset 0 1px 0 rgba(255,255,255,.06);
 }
 
-.welcome-card:after{
+.welcome-card:before{
     content:"";
     position:absolute;
-    width:150px;
-    height:150px;
+    width:180px;
+    height:180px;
+    right:-85px;
+    bottom:-105px;
     border-radius:50%;
-    background:rgba(255,255,255,.055);
-    right:-45px;
-    top:-55px;
+    background:rgba(255,255,255,.045);
 }
 
 .welcome-icon{
-    width:48px;
-    height:48px;
-    border-radius:16px;
-    background:rgba(255,255,255,.1);
+    width:46px;
+    height:46px;
+    border-radius:15px;
+
     display:flex;
     align-items:center;
     justify-content:center;
-    font-size:23px;
-    margin-bottom:18px;
+
+    margin-bottom:19px;
+
+    background:rgba(255,255,255,.09);
+    box-shadow:inset 0 0 0 1px rgba(255,255,255,.05);
+
+    font-size:21px;
 }
 
 .welcome-title{
+    position:relative;
     font-size:20px;
-    font-weight:750;
+    font-weight:760;
+    letter-spacing:-.35px;
     margin-bottom:7px;
 }
 
 .welcome-text{
-    color:rgba(255,255,255,.68);
-    line-height:1.5;
-    font-size:13px;
-    max-width:330px;
+    position:relative;
+    max-width:340px;
+
+    color:rgba(255,255,255,.64);
+
+    font-size:12px;
+    line-height:1.55;
 }
 
-/* Next lesson */
+/* =========================================================
+   NEXT LESSON
+========================================================= */
 
 .next-card{
-    background:linear-gradient(145deg,#202126,#34363e);
-    color:white;
-    border-radius:24px;
-    padding:20px;
-    margin-bottom:18px;
-    box-shadow:0 14px 30px rgba(0,0,0,.14);
+    position:relative;
+    overflow:hidden;
+
+    color:#fff;
+
+    padding:21px;
+    margin-bottom:22px;
+
+    border-radius:25px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #24252a,
+            #393a42
+        );
+
+    box-shadow:
+        0 17px 34px rgba(0,0,0,.115),
+        inset 0 1px 0 rgba(255,255,255,.055);
+}
+
+.next-card:after{
+    content:"";
+    position:absolute;
+    width:125px;
+    height:125px;
+    border-radius:50%;
+    right:-60px;
+    top:-60px;
+    background:rgba(255,255,255,.035);
 }
 
 .next-label{
-    font-size:11px;
-    color:rgba(255,255,255,.6);
+    position:relative;
+    font-size:10px;
+    font-weight:650;
+    color:rgba(255,255,255,.54);
     text-transform:uppercase;
-    letter-spacing:1px;
-    margin-bottom:8px;
+    letter-spacing:1.25px;
+    margin-bottom:9px;
 }
 
 .next-name{
+    position:relative;
     font-size:22px;
-    font-weight:750;
-    letter-spacing:-.5px;
+    font-weight:760;
+    letter-spacing:-.55px;
 }
 
 .next-meta{
-    color:rgba(255,255,255,.7);
-    font-size:13px;
+    position:relative;
     margin-top:5px;
+    font-size:12px;
+    color:rgba(255,255,255,.64);
 }
 
 .next-time{
-    font-size:31px;
-    font-weight:800;
-    margin-top:15px;
-    letter-spacing:-1px;
+    position:relative;
+    margin-top:16px;
+
+    font-size:30px;
+    line-height:1;
+    font-weight:820;
+    letter-spacing:-1.2px;
 }
 
-/* Sections */
+/* =========================================================
+   SECTION HEAD
+========================================================= */
 
 .section-head{
     display:flex;
     align-items:center;
     justify-content:space-between;
-    margin:24px 2px 11px;
+
+    margin:
+        25px
+        2px
+        11px;
 }
 
 .section-title{
-    font-size:17px;
-    font-weight:750;
-    letter-spacing:-.3px;
+    font-size:16px;
+    font-weight:760;
+    letter-spacing:-.25px;
 }
 
 .section-action{
-    font-size:12px;
-    color:#7b7d85;
+    font-size:11px;
+    color:#999aa1;
+    font-weight:550;
 }
 
-/* Lesson cards */
+/* =========================================================
+   LESSON CARD
+========================================================= */
 
 .lesson-card{
-    background:white;
-    border-radius:19px;
-    padding:16px;
-    margin-bottom:10px;
     display:flex;
     align-items:center;
-    gap:14px;
-    box-shadow:0 5px 18px rgba(0,0,0,.045);
+    gap:13px;
+
+    background:rgba(255,255,255,.92);
+
+    padding:15px;
+
+    margin-bottom:9px;
+
+    border-radius:19px;
+
+    box-shadow:
+        0 5px 18px rgba(20,20,25,.042),
+        inset 0 0 0 1px rgba(0,0,0,.018);
+
+    transition:
+        transform .15s ease,
+        box-shadow .15s ease;
+}
+
+.lesson-card:active{
+    transform:scale(.985);
 }
 
 .lesson-time{
-    min-width:56px;
-    font-size:14px;
-    font-weight:750;
+    min-width:58px;
+
+    font-size:13px;
+    font-weight:760;
+    letter-spacing:-.15px;
 }
 
 .lesson-line{
     width:1px;
-    height:38px;
-    background:#e9e9ed;
+    height:37px;
+    background:#e5e5e9;
 }
 
 .lesson-info{
@@ -290,153 +462,223 @@ button{
 }
 
 .lesson-name{
-    font-size:15px;
-    font-weight:700;
+    font-size:14px;
+    font-weight:720;
     white-space:nowrap;
     overflow:hidden;
     text-overflow:ellipsis;
 }
 
 .lesson-level{
-    font-size:12px;
-    color:#92949b;
-    margin-top:3px;
+    margin-top:4px;
+    font-size:11px;
+    color:#96979f;
 }
 
 .lesson-delete{
-    width:32px;
-    height:32px;
-    border-radius:10px;
-    background:#f5f5f7;
-    color:#9a9ba1;
-    font-size:14px;
-}
+    width:31px;
+    height:31px;
 
-.lesson-delete:active{
-    transform:scale(.9);
-}
-
-/* Empty */
-
-.empty-card{
-    background:white;
-    border-radius:21px;
-    padding:25px 20px;
-    text-align:center;
-    box-shadow:0 5px 18px rgba(0,0,0,.045);
-}
-
-.empty-icon{
-    width:52px;
-    height:52px;
-    margin:0 auto 13px;
-    border-radius:17px;
-    background:#f2f2f5;
     display:flex;
     align-items:center;
     justify-content:center;
-    font-size:22px;
+
+    flex-shrink:0;
+
+    border-radius:10px;
+
+    background:#f3f3f5;
+    color:#a2a3a9;
+
+    font-size:15px;
+
+    transition:.15s ease;
+}
+
+/* =========================================================
+   EMPTY STATES
+========================================================= */
+
+.empty-card{
+    text-align:center;
+
+    background:rgba(255,255,255,.9);
+
+    padding:27px 21px;
+
+    border-radius:21px;
+
+    box-shadow:
+        0 6px 20px rgba(20,20,25,.04),
+        inset 0 0 0 1px rgba(0,0,0,.018);
+}
+
+.empty-icon{
+    width:50px;
+    height:50px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    margin:0 auto 13px;
+
+    border-radius:16px;
+
+    background:#f0f0f3;
+
+    font-size:21px;
 }
 
 .empty-title{
-    font-weight:750;
-    font-size:15px;
     margin-bottom:5px;
+
+    font-size:15px;
+    font-weight:750;
+    letter-spacing:-.15px;
 }
 
 .empty-text{
-    font-size:12px;
-    color:#94959c;
-    line-height:1.5;
+    max-width:310px;
+    margin:0 auto;
+
+    font-size:11.5px;
+    line-height:1.55;
+    color:#999aa1;
 }
 
-/* Stats */
+/* =========================================================
+   STATS
+========================================================= */
 
 .stats{
     display:grid;
     grid-template-columns:repeat(2,1fr);
     gap:10px;
+
     margin-top:12px;
 }
 
 .stat-card{
-    background:white;
-    border-radius:19px;
+    position:relative;
+    overflow:hidden;
+
     padding:17px;
-    box-shadow:0 5px 18px rgba(0,0,0,.045);
+
+    background:rgba(255,255,255,.9);
+
+    border-radius:19px;
+
+    box-shadow:
+        0 6px 20px rgba(20,20,25,.04),
+        inset 0 0 0 1px rgba(0,0,0,.018);
 }
 
 .stat-number{
-    font-size:24px;
-    font-weight:800;
+    font-size:25px;
+    line-height:1;
+    font-weight:820;
+    letter-spacing:-.8px;
 }
 
 .stat-label{
-    color:#92949b;
-    font-size:11px;
-    margin-top:3px;
+    margin-top:6px;
+    font-size:10.5px;
+    color:#999aa1;
 }
 
-/* =========================
+/* =========================================================
    BOTTOM NAV
-========================= */
+========================================================= */
 
 .bottom-nav{
     position:sticky;
     bottom:12px;
     z-index:20;
-    background:rgba(255,255,255,.92);
-    backdrop-filter:blur(18px);
-    -webkit-backdrop-filter:blur(18px);
-    border:1px solid rgba(0,0,0,.05);
-    border-radius:22px;
-    box-shadow:0 10px 30px rgba(0,0,0,.10);
+
     display:grid;
     grid-template-columns:repeat(3,1fr);
-    padding:6px;
-    margin-top:28px;
+
+    padding:5px;
+
+    margin-top:30px;
+
+    background:rgba(255,255,255,.88);
+
+    border-radius:22px;
+
+    border:1px solid rgba(0,0,0,.045);
+
+    box-shadow:
+        0 12px 34px rgba(0,0,0,.09);
+
+    backdrop-filter:blur(22px);
+    -webkit-backdrop-filter:blur(22px);
 }
 
 .nav-btn{
-    background:transparent;
+    padding:9px 5px 8px;
+
     border-radius:17px;
-    padding:10px 5px 9px;
-    color:#999aa1;
-    transition:.15s ease;
+
+    background:transparent;
+
+    color:#999aa2;
+
+    transition:
+        background .18s ease,
+        color .18s ease,
+        transform .15s ease;
 }
 
 .nav-btn.active{
     background:#202126;
-    color:white;
+    color:#fff;
+    box-shadow:
+        0 5px 12px rgba(0,0,0,.12);
 }
 
 .nav-icon{
-    font-size:17px;
     display:block;
-    margin-bottom:3px;
+    margin-bottom:4px;
+
+    font-size:16px;
+    line-height:1;
 }
 
 .nav-label{
-    font-size:10px;
+    font-size:9.5px;
     font-weight:650;
 }
 
-/* =========================
-   SCHEDULE
-========================= */
+/* =========================================================
+   PAGE TITLES
+========================================================= */
 
 .page-title{
-    font-size:28px;
-    font-weight:800;
-    letter-spacing:-1px;
-    margin-bottom:18px;
+    margin-bottom:19px;
+
+    font-size:29px;
+    line-height:1;
+    font-weight:820;
+    letter-spacing:-1.1px;
 }
+
+/* =========================================================
+   SCHEDULE
+========================================================= */
 
 .week{
     display:flex;
-    gap:8px;
+    gap:7px;
+
     overflow-x:auto;
-    padding-bottom:4px;
+
+    padding:
+        1px
+        1px
+        5px;
+
     scrollbar-width:none;
 }
 
@@ -445,68 +687,118 @@ button{
 }
 
 .day-btn{
-    min-width:54px;
-    padding:10px 8px;
+    min-width:52px;
+
+    padding:10px 7px 9px;
+
     border-radius:17px;
-    background:white;
-    box-shadow:0 5px 16px rgba(0,0,0,.045);
+
+    background:rgba(255,255,255,.92);
     color:#777981;
-    transition:.15s ease;
+
+    box-shadow:
+        0 5px 16px rgba(20,20,25,.04),
+        inset 0 0 0 1px rgba(0,0,0,.018);
+
+    transition:
+        .16s ease;
 }
 
 .day-btn.active{
     background:#202126;
-    color:white;
+    color:#fff;
+
+    box-shadow:
+        0 7px 16px rgba(0,0,0,.13);
 }
 
 .day-name{
-    font-size:10px;
+    font-size:9px;
+    font-weight:650;
     text-transform:uppercase;
     letter-spacing:.5px;
 }
 
 .day-number{
+    margin-top:4px;
+
     font-size:17px;
-    font-weight:750;
-    margin-top:3px;
+    line-height:1;
+    font-weight:780;
 }
 
 .schedule-date{
-    margin:20px 2px 12px;
-    font-size:14px;
-    color:#85868e;
+    margin:
+        18px
+        2px
+        11px;
+
+    color:#898a92;
+
+    font-size:12px;
+    font-weight:550;
 }
 
-.add-main{
+.add-main,
+.add-student{
     width:100%;
-    height:52px;
-    border-radius:18px;
-    background:#202126;
-    color:white;
+    height:51px;
+
+    margin-bottom:15px;
+
+    border-radius:17px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #1d1e22,
+            #303138
+        );
+
+    color:#fff;
+
+    font-size:13px;
     font-weight:700;
-    margin-bottom:16px;
-    box-shadow:0 9px 20px rgba(0,0,0,.12);
-    transition:.15s ease;
+
+    box-shadow:
+        0 9px 21px rgba(0,0,0,.11),
+        inset 0 1px 0 rgba(255,255,255,.06);
+
+    transition:
+        transform .15s ease,
+        box-shadow .15s ease;
 }
 
-.add-main:active{
-    transform:scale(.98);
+.add-main:active,
+.add-student:active{
+    transform:scale(.985);
+    box-shadow:0 5px 12px rgba(0,0,0,.1);
 }
 
-/* =========================
+/* =========================================================
    STUDENTS
-========================= */
+========================================================= */
 
 .student-card{
-    background:white;
-    border-radius:20px;
-    padding:16px;
     display:flex;
     align-items:center;
     gap:13px;
-    margin-bottom:10px;
-    box-shadow:0 5px 18px rgba(0,0,0,.045);
-    transition:.15s ease;
+
+    padding:15px;
+
+    margin-bottom:9px;
+
+    border-radius:20px;
+
+    background:rgba(255,255,255,.92);
+
+    box-shadow:
+        0 6px 20px rgba(20,20,25,.04),
+        inset 0 0 0 1px rgba(0,0,0,.018);
+
+    transition:
+        transform .15s ease,
+        box-shadow .15s ease;
 }
 
 .student-card:active{
@@ -516,15 +808,26 @@ button{
 .avatar{
     width:45px;
     height:45px;
-    border-radius:15px;
-    background:#ececf0;
+
     display:flex;
     align-items:center;
     justify-content:center;
-    font-size:15px;
-    font-weight:800;
-    color:#44454c;
+
     flex-shrink:0;
+
+    border-radius:15px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #eeeeF1,
+            #e4e4e8
+        );
+
+    color:#47484f;
+
+    font-size:13px;
+    font-weight:820;
 }
 
 .student-info{
@@ -533,159 +836,227 @@ button{
 }
 
 .student-name{
+    font-size:14px;
     font-weight:750;
-    font-size:15px;
+    letter-spacing:-.15px;
 }
 
 .student-level{
-    font-size:12px;
-    color:#96979e;
-    margin-top:3px;
+    margin-top:4px;
+
+    font-size:11px;
+    color:#96979f;
 }
 
 .chevron{
-    color:#b0b1b7;
-    font-size:18px;
+    color:#b5b6bc;
+    font-size:20px;
+    font-weight:300;
 }
 
-.add-student{
-    width:100%;
-    height:52px;
-    border-radius:18px;
-    background:#202126;
-    color:white;
-    font-weight:700;
-    margin-bottom:15px;
-}
-
-/* =========================
+/* =========================================================
    PROFILE
-========================= */
+========================================================= */
 
 .back-btn{
-    background:transparent;
-    padding:5px 0;
-    color:#777981;
-    font-size:13px;
+    padding:4px 0;
+
     margin-bottom:17px;
+
+    background:transparent;
+
+    color:#7e7f87;
+
+    font-size:12px;
+    font-weight:600;
 }
 
 .profile-header{
-    background:white;
-    border-radius:23px;
-    padding:22px;
+    padding:24px 20px;
+
     text-align:center;
-    box-shadow:0 5px 18px rgba(0,0,0,.045);
+
+    background:rgba(255,255,255,.92);
+
+    border-radius:24px;
+
+    box-shadow:
+        0 7px 22px rgba(20,20,25,.045),
+        inset 0 0 0 1px rgba(0,0,0,.018);
 }
 
 .profile-avatar{
-    width:70px;
-    height:70px;
-    margin:0 auto 12px;
-    border-radius:23px;
-    background:#202126;
-    color:white;
+    width:68px;
+    height:68px;
+
     display:flex;
     align-items:center;
     justify-content:center;
-    font-size:22px;
-    font-weight:800;
+
+    margin:0 auto 12px;
+
+    border-radius:22px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #202126,
+            #3a3b43
+        );
+
+    color:#fff;
+
+    font-size:21px;
+    font-weight:820;
+
+    box-shadow:
+        0 9px 20px rgba(0,0,0,.12);
 }
 
 .profile-name{
-    font-size:22px;
+    font-size:21px;
     font-weight:800;
+    letter-spacing:-.5px;
 }
 
 .profile-level{
-    font-size:13px;
-    color:#92939a;
-    margin-top:4px;
+    margin-top:5px;
+
+    color:#96979e;
+
+    font-size:12px;
 }
 
 .profile-section{
-    background:white;
-    border-radius:20px;
     padding:18px;
-    margin-top:12px;
-    box-shadow:0 5px 18px rgba(0,0,0,.045);
+
+    margin-top:11px;
+
+    border-radius:21px;
+
+    background:rgba(255,255,255,.92);
+
+    box-shadow:
+        0 6px 20px rgba(20,20,25,.04),
+        inset 0 0 0 1px rgba(0,0,0,.018);
 }
 
 .profile-section-title{
-    font-size:13px;
-    font-weight:750;
     margin-bottom:8px;
+
+    font-size:12px;
+    font-weight:760;
 }
 
 .profile-notes{
-    font-size:13px;
     color:#777981;
-    line-height:1.5;
+
+    font-size:12px;
+    line-height:1.6;
 }
 
 .danger-btn{
     width:100%;
     height:48px;
+
+    margin-top:11px;
+
     border-radius:16px;
+
     background:#fff0f0;
-    color:#c94a4a;
+
+    color:#c94b4b;
+
+    font-size:12px;
     font-weight:700;
-    margin-top:12px;
 }
 
-/* =========================
+/* =========================================================
    SETTINGS
-========================= */
+========================================================= */
 
 .settings-hero{
-    background:linear-gradient(145deg,#202126,#363840);
-    color:white;
-    border-radius:24px;
-    padding:20px;
     display:flex;
-    gap:14px;
     align-items:center;
-    margin-bottom:16px;
-    box-shadow:0 14px 30px rgba(0,0,0,.14);
+    gap:14px;
+
+    padding:20px;
+
+    margin-bottom:15px;
+
+    color:#fff;
+
+    border-radius:24px;
+
+    background:
+        radial-gradient(
+            circle at 90% 0%,
+            rgba(255,255,255,.09),
+            transparent 30%
+        ),
+        linear-gradient(
+            145deg,
+            #202126,
+            #36373f
+        );
+
+    box-shadow:
+        0 16px 34px rgba(0,0,0,.115),
+        inset 0 1px 0 rgba(255,255,255,.06);
 }
 
 .settings-hero-icon{
-    width:48px;
-    height:48px;
-    border-radius:16px;
-    background:rgba(255,255,255,.1);
+    width:47px;
+    height:47px;
+
     display:flex;
     align-items:center;
     justify-content:center;
-    font-size:22px;
+
     flex-shrink:0;
+
+    border-radius:16px;
+
+    background:rgba(255,255,255,.09);
+
+    font-size:21px;
 }
 
 .settings-hero-title{
-    font-size:16px;
+    font-size:15px;
     font-weight:750;
+    letter-spacing:-.2px;
 }
 
 .settings-hero-text{
-    font-size:11px;
-    color:rgba(255,255,255,.65);
     margin-top:4px;
-    line-height:1.4;
+
+    color:rgba(255,255,255,.61);
+
+    font-size:10.5px;
+    line-height:1.45;
 }
 
 .settings-group{
-    background:white;
-    border-radius:20px;
     overflow:hidden;
-    box-shadow:0 5px 18px rgba(0,0,0,.045);
+
+    border-radius:21px;
+
+    background:rgba(255,255,255,.94);
+
+    box-shadow:
+        0 6px 20px rgba(20,20,25,.04),
+        inset 0 0 0 1px rgba(0,0,0,.018);
 }
 
 .settings-row{
     display:flex;
     align-items:center;
-    gap:13px;
-    padding:16px;
-    min-height:70px;
+    gap:12px;
+
+    min-height:72px;
+
+    padding:15px;
 }
 
 .settings-row + .settings-row{
@@ -695,38 +1066,53 @@ button{
 .settings-icon{
     width:39px;
     height:39px;
-    border-radius:13px;
-    background:#f1f1f4;
+
     display:flex;
     align-items:center;
     justify-content:center;
-    font-size:18px;
+
     flex-shrink:0;
+
+    border-radius:13px;
+
+    background:#f0f0f3;
+
+    font-size:17px;
 }
 
 .settings-info{
     flex:1;
+    min-width:0;
 }
 
 .settings-title{
-    font-size:14px;
-    font-weight:700;
+    font-size:13px;
+    font-weight:720;
 }
 
 .settings-description{
-    font-size:11px;
-    color:#999aa1;
     margin-top:3px;
+
+    color:#999aa1;
+
+    font-size:10.5px;
     line-height:1.4;
 }
 
 .settings-action{
     padding:9px 12px;
-    border-radius:12px;
+
+    flex-shrink:0;
+
+    border-radius:11px;
+
     background:#202126;
-    color:white;
-    font-size:11px;
+    color:#fff;
+
+    font-size:10.5px;
     font-weight:700;
+
+    transition:.15s ease;
 }
 
 .settings-action:active{
@@ -734,27 +1120,30 @@ button{
 }
 
 .settings-danger{
-    color:#c94a4a;
+    color:#c94b4b;
 }
 
 .settings-danger .settings-icon{
     background:#fff0f0;
 }
 
-/* =========================
-   MODAL
-========================= */
+/* =========================================================
+   MODALS
+========================================================= */
 
 .modal-backdrop{
     position:fixed;
     inset:0;
     z-index:100;
-    background:rgba(0,0,0,.38);
-    backdrop-filter:blur(6px);
-    -webkit-backdrop-filter:blur(6px);
+
     display:none;
     align-items:flex-end;
     justify-content:center;
+
+    background:rgba(12,12,15,.36);
+
+    backdrop-filter:blur(9px);
+    -webkit-backdrop-filter:blur(9px);
 }
 
 .modal-backdrop.show{
@@ -764,36 +1153,58 @@ button{
 .modal{
     width:100%;
     max-width:520px;
-    background:#f7f7f9;
-    border-radius:27px 27px 0 0;
-    padding:18px 16px calc(20px + env(safe-area-inset-bottom));
-    box-shadow:0 -10px 40px rgba(0,0,0,.18);
-    animation:slideUp .22s ease;
+
+    padding:
+        11px
+        16px
+        calc(20px + env(safe-area-inset-bottom));
+
+    border-radius:28px 28px 0 0;
+
+    background:
+        linear-gradient(
+            180deg,
+            #f8f8fa,
+            #f3f3f5
+        );
+
+    box-shadow:
+        0 -12px 40px rgba(0,0,0,.16);
+
+    animation:sheetIn .23s cubic-bezier(.22,.8,.25,1);
 }
 
-@keyframes slideUp{
+@keyframes sheetIn{
+
     from{
-        transform:translateY(30px);
         opacity:0;
+        transform:translateY(35px);
     }
+
     to{
-        transform:translateY(0);
         opacity:1;
+        transform:translateY(0);
     }
+
 }
 
 .modal-handle{
-    width:38px;
+    width:36px;
     height:4px;
-    border-radius:20px;
-    background:#d0d0d4;
+
     margin:0 auto 18px;
+
+    border-radius:10px;
+
+    background:#d0d0d4;
 }
 
 .modal-title{
+    margin-bottom:18px;
+
     font-size:21px;
     font-weight:800;
-    margin-bottom:18px;
+    letter-spacing:-.55px;
 }
 
 .field{
@@ -802,57 +1213,102 @@ button{
 
 .field label{
     display:block;
-    font-size:11px;
-    color:#85868d;
-    margin:0 0 6px 3px;
+
+    margin:
+        0
+        0
+        6px
+        3px;
+
+    color:#85868e;
+
+    font-size:10.5px;
+    font-weight:600;
 }
 
 .field input,
 .field select,
 .field textarea{
     width:100%;
-    border:none;
-    outline:none;
-    background:white;
-    border-radius:15px;
+
     padding:13px 14px;
-    font-size:14px;
-    box-shadow:0 3px 10px rgba(0,0,0,.035);
+
+    outline:none;
+    border:none;
+
+    border-radius:15px;
+
+    background:#fff;
+
+    color:#202126;
+
+    font-size:13px;
+
+    box-shadow:
+        inset 0 0 0 1px rgba(0,0,0,.025),
+        0 3px 11px rgba(0,0,0,.03);
+
+    transition:
+        box-shadow .15s ease,
+        transform .15s ease;
+}
+
+.field input:focus,
+.field select:focus,
+.field textarea:focus{
+    box-shadow:
+        inset 0 0 0 1.5px rgba(35,35,40,.16),
+        0 4px 13px rgba(0,0,0,.04);
 }
 
 .field textarea{
-    min-height:90px;
+    min-height:88px;
     resize:none;
 }
 
 .modal-actions{
     display:grid;
     grid-template-columns:1fr 1fr;
-    gap:10px;
+    gap:9px;
+
     margin-top:18px;
 }
 
 .modal-btn{
     height:49px;
+
     border-radius:16px;
+
+    font-size:12px;
     font-weight:700;
+
+    transition:.15s ease;
 }
 
 .cancel-btn{
-    background:#e9e9ed;
+    background:#e7e7eb;
     color:#55565d;
 }
 
 .save-btn{
-    background:#202126;
-    color:white;
+    color:#fff;
+
+    background:
+        linear-gradient(
+            145deg,
+            #1d1e22,
+            #303138
+        );
+
+    box-shadow:
+        0 7px 16px rgba(0,0,0,.10);
 }
 
-/* =========================
-   SMALL SCREENS
-========================= */
+/* =========================================================
+   MOBILE
+========================================================= */
 
-@media(max-width:360px){
+@media(max-width:380px){
 
     .app{
         padding-left:13px;
@@ -860,20 +1316,26 @@ button{
     }
 
     .greeting-title{
-        font-size:27px;
+        font-size:28px;
     }
 
     .page-title{
-        font-size:26px;
+        font-size:27px;
     }
 
     .lesson-card{
         padding:14px;
+        gap:11px;
+    }
+
+    .lesson-time{
+        min-width:53px;
     }
 
     .day-btn{
-        min-width:50px;
+        min-width:49px;
     }
+
 }
 
 </style>
@@ -883,36 +1345,64 @@ button{
 
 <div class="app">
 
-    <!-- TOP BAR -->
+    <!-- =====================================================
+         TOP BAR
+    ====================================================== -->
 
     <div class="topbar">
 
         <div class="brand">
-            <div class="brand-icon">✓</div>
+
+            <div class="brand-icon">
+                ✓
+            </div>
 
             <div>
-                <div class="brand-text">Teacher Planner</div>
-                <div class="brand-sub">Simple. Private. Yours.</div>
+
+                <div class="brand-text">
+                    Teacher Planner
+                </div>
+
+                <div class="brand-sub">
+                    Simple. Private. Yours.
+                </div>
+
             </div>
+
         </div>
 
-        <button class="icon-btn" onclick="openSettings()">⚙️</button>
+
+        <button
+            class="icon-btn"
+            onclick="openSettings()"
+            aria-label="Settings"
+        >
+            ⚙️
+        </button>
 
     </div>
 
 
-    <!-- =========================
+    <!-- =====================================================
          HOME
-    ========================== -->
+    ====================================================== -->
 
-    <section id="homePage" class="page active">
+    <section
+        id="homePage"
+        class="page active"
+    >
 
         <div class="greeting">
 
-            <div class="greeting-small" id="todayText"></div>
+            <div
+                class="greeting-small"
+                id="todayText"
+            ></div>
 
             <div class="greeting-title">
+
                 <span id="greetingText"></span>
+
             </div>
 
         </div>
@@ -923,66 +1413,107 @@ button{
     </section>
 
 
-    <!-- =========================
+    <!-- =====================================================
          SCHEDULE
-    ========================== -->
+    ====================================================== -->
 
-    <section id="schedulePage" class="page">
+    <section
+        id="schedulePage"
+        class="page"
+    >
 
-        <div class="page-title">Schedule</div>
+        <div class="page-title">
+            Schedule
+        </div>
 
-        <div class="week" id="weekDays"></div>
 
-        <div class="schedule-date" id="scheduleDate"></div>
+        <div
+            class="week"
+            id="weekDays"
+        ></div>
 
-        <button class="add-main" onclick="openLessonModal()">
-            ＋ Add lesson
+
+        <div
+            class="schedule-date"
+            id="scheduleDate"
+        ></div>
+
+
+        <button
+            class="add-main"
+            onclick="openLessonModal()"
+        >
+            ＋&nbsp; Add lesson
         </button>
+
 
         <div id="scheduleLessons"></div>
 
     </section>
 
 
-    <!-- =========================
+    <!-- =====================================================
          STUDENTS
-    ========================== -->
+    ====================================================== -->
 
-    <section id="studentsPage" class="page">
+    <section
+        id="studentsPage"
+        class="page"
+    >
 
-        <div class="page-title">Students</div>
+        <div class="page-title">
+            Students
+        </div>
 
-        <button class="add-student" onclick="openStudentModal()">
-            ＋ Add student
+
+        <button
+            class="add-student"
+            onclick="openStudentModal()"
+        >
+            ＋&nbsp; Add student
         </button>
+
 
         <div id="studentsList"></div>
 
     </section>
 
 
-    <!-- =========================
+    <!-- =====================================================
          PROFILE
-    ========================== -->
+    ====================================================== -->
 
-    <section id="profilePage" class="page">
+    <section
+        id="profilePage"
+        class="page"
+    >
 
-        <button class="back-btn" onclick="showPage('students')">
-            ← Back to students
+        <button
+            class="back-btn"
+            onclick="showPage('students')"
+        >
+            ←&nbsp; Back to students
         </button>
+
 
         <div id="profileContent"></div>
 
     </section>
 
 
-    <!-- =========================
+    <!-- =====================================================
          SETTINGS
-    ========================== -->
+    ====================================================== -->
 
-    <section id="settingsPage" class="page">
+    <section
+        id="settingsPage"
+        class="page"
+    >
 
-        <div class="page-title">Settings</div>
+        <div class="page-title">
+            Settings
+        </div>
+
 
         <div class="settings-hero">
 
@@ -990,7 +1521,9 @@ button{
                 🔒
             </div>
 
+
             <div>
+
                 <div class="settings-hero-title">
                     Your planner, your space
                 </div>
@@ -998,6 +1531,7 @@ button{
                 <div class="settings-hero-text">
                     Your students, lessons and notes stay on this device.
                 </div>
+
             </div>
 
         </div>
@@ -1005,11 +1539,14 @@ button{
 
         <div class="settings-group">
 
+            <!-- Backup -->
+
             <div class="settings-row">
 
                 <div class="settings-icon">
                     💾
                 </div>
+
 
                 <div class="settings-info">
 
@@ -1023,18 +1560,25 @@ button{
 
                 </div>
 
-                <button class="settings-action" onclick="backupData()">
+
+                <button
+                    class="settings-action"
+                    onclick="backupData()"
+                >
                     Backup
                 </button>
 
             </div>
 
 
+            <!-- Restore -->
+
             <div class="settings-row">
 
                 <div class="settings-icon">
                     📥
                 </div>
+
 
                 <div class="settings-info">
 
@@ -1048,18 +1592,25 @@ button{
 
                 </div>
 
-                <button class="settings-action" onclick="document.getElementById('restoreInput').click()">
+
+                <button
+                    class="settings-action"
+                    onclick="document.getElementById('restoreInput').click()"
+                >
                     Restore
                 </button>
 
             </div>
 
 
+            <!-- Clear -->
+
             <div class="settings-row settings-danger">
 
                 <div class="settings-icon">
                     🗑
                 </div>
+
 
                 <div class="settings-info">
 
@@ -1073,9 +1624,12 @@ button{
 
                 </div>
 
-                <button class="settings-action"
-                        style="background:#fff0f0;color:#c94a4a"
-                        onclick="clearAllData()">
+
+                <button
+                    class="settings-action"
+                    style="background:#fff0f0;color:#c94b4b"
+                    onclick="clearAllData()"
+                >
                     Clear
                 </button>
 
@@ -1095,38 +1649,59 @@ button{
     </section>
 
 
-    <!-- =========================
+    <!-- =====================================================
          BOTTOM NAV
-    ========================== -->
+    ====================================================== -->
 
     <nav class="bottom-nav">
 
-        <button id="navHome"
-                class="nav-btn active"
-                onclick="showPage('home')">
+        <button
+            id="navHome"
+            class="nav-btn active"
+            onclick="showPage('home')"
+        >
 
-            <span class="nav-icon">⌂</span>
-            <span class="nav-label">Home</span>
+            <span class="nav-icon">
+                ⌂
+            </span>
 
-        </button>
-
-
-        <button id="navSchedule"
-                class="nav-btn"
-                onclick="showPage('schedule')">
-
-            <span class="nav-icon">◷</span>
-            <span class="nav-label">Schedule</span>
+            <span class="nav-label">
+                Home
+            </span>
 
         </button>
 
 
-        <button id="navStudents"
-                class="nav-btn"
-                onclick="showPage('students')">
+        <button
+            id="navSchedule"
+            class="nav-btn"
+            onclick="showPage('schedule')"
+        >
 
-            <span class="nav-icon">♙</span>
-            <span class="nav-label">Students</span>
+            <span class="nav-icon">
+                ◷
+            </span>
+
+            <span class="nav-label">
+                Schedule
+            </span>
+
+        </button>
+
+
+        <button
+            id="navStudents"
+            class="nav-btn"
+            onclick="showPage('students')"
+        >
+
+            <span class="nav-icon">
+                ♙
+            </span>
+
+            <span class="nav-label">
+                Students
+            </span>
 
         </button>
 
@@ -1135,15 +1710,20 @@ button{
 </div>
 
 
-<!-- =========================
+<!-- =========================================================
      LESSON MODAL
-========================== -->
+========================================================== -->
 
-<div id="lessonModal" class="modal-backdrop" onclick="backdropClose(event,'lessonModal')">
+<div
+    id="lessonModal"
+    class="modal-backdrop"
+    onclick="backdropClose(event,'lessonModal')"
+>
 
     <div class="modal">
 
         <div class="modal-handle"></div>
+
 
         <div class="modal-title">
             Add lesson
@@ -1152,7 +1732,9 @@ button{
 
         <div class="field">
 
-            <label>Student</label>
+            <label>
+                Student
+            </label>
 
             <select id="lessonStudent"></select>
 
@@ -1161,33 +1743,59 @@ button{
 
         <div class="field">
 
-            <label>Date</label>
+            <label>
+                Date
+            </label>
 
-            <input id="lessonDate" type="date">
-
-        </div>
-
-
-        <div class="field">
-
-            <label>Time</label>
-
-            <input id="lessonTime" type="time">
+            <input
+                id="lessonDate"
+                type="date"
+            >
 
         </div>
 
 
         <div class="field">
 
-            <label>Duration</label>
+            <label>
+                Time
+            </label>
+
+            <input
+                id="lessonTime"
+                type="time"
+            >
+
+        </div>
+
+
+        <div class="field">
+
+            <label>
+                Duration
+            </label>
 
             <select id="lessonDuration">
 
-                <option value="30">30 minutes</option>
-                <option value="45">45 minutes</option>
-                <option value="60" selected>60 minutes</option>
-                <option value="90">90 minutes</option>
-                <option value="120">120 minutes</option>
+                <option value="30">
+                    30 minutes
+                </option>
+
+                <option value="45">
+                    45 minutes
+                </option>
+
+                <option value="60" selected>
+                    60 minutes
+                </option>
+
+                <option value="90">
+                    90 minutes
+                </option>
+
+                <option value="120">
+                    120 minutes
+                </option>
 
             </select>
 
@@ -1196,13 +1804,18 @@ button{
 
         <div class="modal-actions">
 
-            <button class="modal-btn cancel-btn"
-                    onclick="closeModal('lessonModal')">
+            <button
+                class="modal-btn cancel-btn"
+                onclick="closeModal('lessonModal')"
+            >
                 Cancel
             </button>
 
-            <button class="modal-btn save-btn"
-                    onclick="saveLesson()">
+
+            <button
+                class="modal-btn save-btn"
+                onclick="saveLesson()"
+            >
                 Save lesson
             </button>
 
@@ -1213,15 +1826,20 @@ button{
 </div>
 
 
-<!-- =========================
+<!-- =========================================================
      STUDENT MODAL
-========================== -->
+========================================================== -->
 
-<div id="studentModal" class="modal-backdrop" onclick="backdropClose(event,'studentModal')">
+<div
+    id="studentModal"
+    class="modal-backdrop"
+    onclick="backdropClose(event,'studentModal')"
+>
 
     <div class="modal">
 
         <div class="modal-handle"></div>
+
 
         <div class="modal-title">
             Add student
@@ -1230,7 +1848,9 @@ button{
 
         <div class="field">
 
-            <label>Name</label>
+            <label>
+                Name
+            </label>
 
             <input
                 id="studentName"
@@ -1244,16 +1864,35 @@ button{
 
         <div class="field">
 
-            <label>Level</label>
+            <label>
+                Level
+            </label>
 
             <select id="studentLevel">
 
-                <option value="A1">A1</option>
-                <option value="A2">A2</option>
-                <option value="B1" selected>B1</option>
-                <option value="B2">B2</option>
-                <option value="C1">C1</option>
-                <option value="C2">C2</option>
+                <option value="A1">
+                    A1
+                </option>
+
+                <option value="A2">
+                    A2
+                </option>
+
+                <option value="B1" selected>
+                    B1
+                </option>
+
+                <option value="B2">
+                    B2
+                </option>
+
+                <option value="C1">
+                    C1
+                </option>
+
+                <option value="C2">
+                    C2
+                </option>
 
             </select>
 
@@ -1262,7 +1901,9 @@ button{
 
         <div class="field">
 
-            <label>Notes</label>
+            <label>
+                Notes
+            </label>
 
             <textarea
                 id="studentNotes"
@@ -1274,13 +1915,18 @@ button{
 
         <div class="modal-actions">
 
-            <button class="modal-btn cancel-btn"
-                    onclick="closeModal('studentModal')">
+            <button
+                class="modal-btn cancel-btn"
+                onclick="closeModal('studentModal')"
+            >
                 Cancel
             </button>
 
-            <button class="modal-btn save-btn"
-                    onclick="saveStudent()">
+
+            <button
+                class="modal-btn save-btn"
+                onclick="saveStudent()"
+            >
                 Add student
             </button>
 
@@ -1299,28 +1945,18 @@ button{
 
 const KEY = "teacherPlanner_v4";
 
-const DEMO_CLEAN_FLAG = "teacherPlanner_demo_cleaned_v1";
+const DEMO_CLEAN_FLAG =
+    "teacherPlanner_demo_cleaned_v1";
 
-
-/*
-    Yeni istifadəçi üçün artıq demo məlumat yoxdur.
-*/
 
 const defaultData = {
-    students: [],
-    lessons: []
+    students:[],
+    lessons:[]
 };
 
 
 /* =========================================================
-   ONE-TIME DEMO CLEANUP
-=========================================================
-
-   Əgər cihazda əvvəlki Aysel/Murad/Leyla demo məlumatları
-   tam şəkildə qalıbsa, onları yalnız bir dəfə təmizləyirik.
-
-   Əgər istifadəçi həmin məlumatları dəyişibsə və ya öz
-   məlumatlarını əlavə edibsə, heç nəyə toxunmuruq.
+   OLD DEMO CLEANUP
 ========================================================= */
 
 function isExactOldDemo(data){
@@ -1333,41 +1969,59 @@ function isExactOldDemo(data){
     if(data.students.length !== 3) return false;
     if(data.lessons.length !== 3) return false;
 
+
     const students = data.students;
 
-    const hasAysel = students.some(s =>
-        Number(s.id) === 1 &&
-        s.name === "Aysel" &&
-        s.level === "B1"
-    );
 
-    const hasMurad = students.some(s =>
-        Number(s.id) === 2 &&
-        s.name === "Murad" &&
-        s.level === "A2"
-    );
+    const hasAysel =
+        students.some(s =>
+            Number(s.id) === 1 &&
+            s.name === "Aysel" &&
+            s.level === "B1"
+        );
 
-    const hasLeyla = students.some(s =>
-        Number(s.id) === 3 &&
-        s.name === "Leyla" &&
-        s.level === "C1"
-    );
 
-    if(!hasAysel || !hasMurad || !hasLeyla){
+    const hasMurad =
+        students.some(s =>
+            Number(s.id) === 2 &&
+            s.name === "Murad" &&
+            s.level === "A2"
+        );
+
+
+    const hasLeyla =
+        students.some(s =>
+            Number(s.id) === 3 &&
+            s.name === "Leyla" &&
+            s.level === "C1"
+        );
+
+
+    if(
+        !hasAysel ||
+        !hasMurad ||
+        !hasLeyla
+    ){
         return false;
     }
 
-    const lessons = data.lessons;
 
-    const demoLessonStudents = lessons
-        .map(l => Number(l.studentId))
-        .sort((a,b) => a-b);
+    const lessonStudents =
+        data.lessons
+            .map(l => Number(l.studentId))
+            .sort((a,b) => a-b);
+
 
     const expected = [1,2,3];
 
-    if(JSON.stringify(demoLessonStudents) !== JSON.stringify(expected)){
+
+    if(
+        JSON.stringify(lessonStudents) !==
+        JSON.stringify(expected)
+    ){
         return false;
     }
+
 
     return true;
 }
@@ -1375,19 +2029,30 @@ function isExactOldDemo(data){
 
 function cleanOldDemoOnce(){
 
-    if(localStorage.getItem(DEMO_CLEAN_FLAG)){
+    if(
+        localStorage.getItem(
+            DEMO_CLEAN_FLAG
+        )
+    ){
         return;
     }
 
+
     try{
 
-        const raw = localStorage.getItem(KEY);
+        const raw =
+            localStorage.getItem(KEY);
+
 
         if(raw){
 
-            const stored = JSON.parse(raw);
+            const stored =
+                JSON.parse(raw);
 
-            if(isExactOldDemo(stored)){
+
+            if(
+                isExactOldDemo(stored)
+            ){
 
                 localStorage.setItem(
                     KEY,
@@ -1400,11 +2065,19 @@ function cleanOldDemoOnce(){
 
     }catch(e){
 
-        console.log("Demo cleanup skipped.", e);
+        console.log(
+            "Demo cleanup skipped.",
+            e
+        );
 
     }
 
-    localStorage.setItem(DEMO_CLEAN_FLAG,"1");
+
+    localStorage.setItem(
+        DEMO_CLEAN_FLAG,
+        "1"
+    );
+
 }
 
 
@@ -1416,6 +2089,7 @@ cleanOldDemoOnce();
 ========================================================= */
 
 let data;
+
 
 try{
 
@@ -1436,9 +2110,10 @@ if(
     !Array.isArray(data.lessons)
 ){
 
-    data = JSON.parse(
-        JSON.stringify(defaultData)
-    );
+    data =
+        JSON.parse(
+            JSON.stringify(defaultData)
+        );
 
     saveData();
 
@@ -1451,9 +2126,11 @@ if(
 
 let currentPage = "home";
 
-let selectedDate = new Date();
+let selectedDate =
+    new Date();
 
-let selectedStudentId = null;
+let selectedStudentId =
+    null;
 
 
 /* =========================================================
@@ -1485,28 +2162,23 @@ const dayNames = [
 ];
 
 
-const fullDayNames = [
-    "Sunday",
-    "Monday",
-    "Tuesday",
-    "Wednesday",
-    "Thursday",
-    "Friday",
-    "Saturday"
-];
-
-
 function dateKey(date){
 
-    const y = date.getFullYear();
+    const y =
+        date.getFullYear();
 
-    const m = String(
-        date.getMonth()+1
-    ).padStart(2,"0");
 
-    const d = String(
-        date.getDate()
-    ).padStart(2,"0");
+    const m =
+        String(
+            date.getMonth()+1
+        ).padStart(2,"0");
+
+
+    const d =
+        String(
+            date.getDate()
+        ).padStart(2,"0");
+
 
     return `${y}-${m}-${d}`;
 
@@ -1527,59 +2199,60 @@ function formatDate(date){
 }
 
 
-function formatShortDate(date){
-
-    return date.toLocaleDateString(
-        undefined,
-        {
-            month:"short",
-            day:"numeric"
-        }
-    );
-
-}
-
-
 /* =========================================================
    GREETING
 ========================================================= */
 
 function renderGreeting(){
 
-    const hour = new Date().getHours();
+    const hour =
+        new Date().getHours();
+
 
     let greeting;
 
-    if(hour >= 5 && hour < 12){
 
-        greeting = "Good morning, Sunshine ☀️";
+    if(
+        hour >= 5 &&
+        hour < 12
+    ){
 
-    }else if(hour >= 12 && hour < 18){
+        greeting =
+            "Good morning, Sunshine ☀️";
 
-        greeting = "Good afternoon, Sunshine 🌤️";
+    }else if(
+        hour >= 12 &&
+        hour < 18
+    ){
+
+        greeting =
+            "Good afternoon, Sunshine 🌤️";
 
     }else{
 
-        greeting = "Good evening, Sunshine 🌙";
+        greeting =
+            "Good evening, Sunshine 🌙";
 
     }
 
 
     document.getElementById(
         "greetingText"
-    ).textContent = greeting;
+    ).textContent =
+        greeting;
 
 
     document.getElementById(
         "todayText"
-    ).textContent = new Date().toLocaleDateString(
-        undefined,
-        {
-            weekday:"long",
-            month:"long",
-            day:"numeric"
-        }
-    );
+    ).textContent =
+        new Date().toLocaleDateString(
+            undefined,
+            {
+                weekday:"long",
+                month:"long",
+                day:"numeric"
+            }
+        );
 
 }
 
@@ -1592,22 +2265,39 @@ function showPage(page){
 
     currentPage = page;
 
-    document.querySelectorAll(".page").forEach(
-        el => el.classList.remove("active")
+
+    document.querySelectorAll(
+        ".page"
+    ).forEach(
+        el =>
+            el.classList.remove(
+                "active"
+            )
     );
 
 
-    const pageEl = document.getElementById(
-        page + "Page"
-    );
+    const pageEl =
+        document.getElementById(
+            page + "Page"
+        );
+
 
     if(pageEl){
-        pageEl.classList.add("active");
+
+        pageEl.classList.add(
+            "active"
+        );
+
     }
 
 
-    document.querySelectorAll(".nav-btn").forEach(
-        el => el.classList.remove("active")
+    document.querySelectorAll(
+        ".nav-btn"
+    ).forEach(
+        el =>
+            el.classList.remove(
+                "active"
+            )
     );
 
 
@@ -1640,6 +2330,7 @@ function showPage(page){
 
     renderAll();
 
+
     window.scrollTo({
         top:0,
         behavior:"smooth"
@@ -1654,21 +2345,36 @@ function showPage(page){
 
 function openSettings(){
 
-    document.querySelectorAll(".page").forEach(
-        el => el.classList.remove("active")
+    document.querySelectorAll(
+        ".page"
+    ).forEach(
+        el =>
+            el.classList.remove(
+                "active"
+            )
     );
+
 
     document.getElementById(
         "settingsPage"
-    ).classList.add("active");
-
-
-    document.querySelectorAll(".nav-btn").forEach(
-        el => el.classList.remove("active")
+    ).classList.add(
+        "active"
     );
 
 
-    currentPage = "settings";
+    document.querySelectorAll(
+        ".nav-btn"
+    ).forEach(
+        el =>
+            el.classList.remove(
+                "active"
+            )
+    );
+
+
+    currentPage =
+        "settings";
+
 
     window.scrollTo({
         top:0,
@@ -1684,25 +2390,36 @@ function openSettings(){
 
 function renderHome(){
 
-    const container = document.getElementById(
-        "homeContent"
-    );
+    const container =
+        document.getElementById(
+            "homeContent"
+        );
 
-    const today = new Date();
 
-    const todayKey = dateKey(today);
+    const today =
+        new Date();
 
-    const todayLessons = data.lessons
-        .filter(l => l.date === todayKey)
-        .sort((a,b) => a.time.localeCompare(b.time));
+
+    const todayKey =
+        dateKey(today);
+
+
+    const todayLessons =
+        data.lessons
+            .filter(
+                l =>
+                    l.date === todayKey
+            )
+            .sort(
+                (a,b) =>
+                    a.time.localeCompare(
+                        b.time
+                    )
+            );
 
 
     let html = "";
 
-
-    /*
-       Empty state
-    */
 
     if(
         data.students.length === 0 &&
@@ -1733,53 +2450,69 @@ function renderHome(){
     }
 
 
-    /*
-       Next lesson
-    */
+    /* NEXT LESSON */
 
-    const futureLessons = data.lessons
-        .map(l => {
+    const futureLessons =
+        data.lessons
+            .map(l => {
 
-            const student = data.students.find(
-                s => Number(s.id) === Number(l.studentId)
+                const student =
+                    data.students.find(
+                        s =>
+                            Number(s.id) ===
+                            Number(l.studentId)
+                    );
+
+
+                return {
+                    ...l,
+                    student
+                };
+
+            })
+            .filter(
+                l => l.student
             );
 
-            return {
-                ...l,
-                student
-            };
 
-        })
-        .filter(l => l.student);
+    const now =
+        new Date();
 
 
-    const now = new Date();
+    const nextLesson =
+        futureLessons
+            .filter(l => {
 
-    const nextLesson = futureLessons
-        .filter(l => {
+                const dt =
+                    new Date(
+                        l.date +
+                        "T" +
+                        l.time
+                    );
 
-            const dt = new Date(
-                l.date + "T" + l.time
-            );
 
-            return dt >= now;
+                return dt >= now;
 
-        })
-        .sort((a,b) => {
-
-            return (
-                new Date(a.date+"T"+a.time) -
-                new Date(b.date+"T"+b.time)
-            );
-
-        })[0];
+            })
+            .sort(
+                (a,b) =>
+                    new Date(
+                        a.date+"T"+a.time
+                    ) -
+                    new Date(
+                        b.date+"T"+b.time
+                    )
+            )[0];
 
 
     if(nextLesson){
 
-        const nextDate = new Date(
-            nextLesson.date + "T" + nextLesson.time
-        );
+        const nextDate =
+            new Date(
+                nextLesson.date +
+                "T" +
+                nextLesson.time
+            );
 
 
         html += `
@@ -1791,7 +2524,9 @@ function renderHome(){
                 </div>
 
                 <div class="next-name">
-                    ${escapeHtml(nextLesson.student.name)}
+                    ${escapeHtml(
+                        nextLesson.student.name
+                    )}
                 </div>
 
                 <div class="next-meta">
@@ -1804,11 +2539,15 @@ function renderHome(){
                         }
                     )}
                     ·
-                    ${escapeHtml(nextLesson.student.level)}
+                    ${escapeHtml(
+                        nextLesson.student.level
+                    )}
                 </div>
 
                 <div class="next-time">
-                    ${formatTime(nextLesson.time)}
+                    ${formatTime(
+                        nextLesson.time
+                    )}
                 </div>
 
             </div>
@@ -1818,9 +2557,7 @@ function renderHome(){
     }
 
 
-    /*
-       Today's lessons
-    */
+    /* TODAY */
 
     html += `
 
@@ -1831,7 +2568,8 @@ function renderHome(){
             </div>
 
             <div class="section-action">
-                ${todayLessons.length} lesson${todayLessons.length === 1 ? "" : "s"}
+                ${todayLessons.length}
+                lesson${todayLessons.length === 1 ? "" : "s"}
             </div>
 
         </div>
@@ -1839,7 +2577,9 @@ function renderHome(){
     `;
 
 
-    if(todayLessons.length === 0){
+    if(
+        todayLessons.length === 0
+    ){
 
         html += `
 
@@ -1867,17 +2607,22 @@ function renderHome(){
         todayLessons.forEach(
             lesson => {
 
-                const student = data.students.find(
-                    s => Number(s.id) === Number(lesson.studentId)
-                );
+                const student =
+                    data.students.find(
+                        s =>
+                            Number(s.id) ===
+                            Number(lesson.studentId)
+                    );
+
 
                 if(!student) return;
 
 
-                html += lessonCardHtml(
-                    lesson,
-                    student
-                );
+                html +=
+                    lessonCardHtml(
+                        lesson,
+                        student
+                    );
 
             }
         );
@@ -1885,9 +2630,7 @@ function renderHome(){
     }
 
 
-    /*
-       Stats
-    */
+    /* OVERVIEW */
 
     html += `
 
@@ -1898,6 +2641,7 @@ function renderHome(){
             </div>
 
         </div>
+
 
         <div class="stats">
 
@@ -1931,7 +2675,8 @@ function renderHome(){
     `;
 
 
-    container.innerHTML = html;
+    container.innerHTML =
+        html;
 
 }
 
@@ -1950,24 +2695,34 @@ function lessonCardHtml(
         <div class="lesson-card">
 
             <div class="lesson-time">
-                ${formatTime(lesson.time)}
+                ${formatTime(
+                    lesson.time
+                )}
             </div>
 
+
             <div class="lesson-line"></div>
+
 
             <div class="lesson-info">
 
                 <div class="lesson-name">
-                    ${escapeHtml(student.name)}
+                    ${escapeHtml(
+                        student.name
+                    )}
                 </div>
 
                 <div class="lesson-level">
-                    ${escapeHtml(student.level)}
+                    ${escapeHtml(
+                        student.level
+                    )}
                     ·
-                    ${lesson.duration || 60} min
+                    ${lesson.duration || 60}
+                    min
                 </div>
 
             </div>
+
 
             <button
                 class="lesson-delete"
@@ -1992,24 +2747,44 @@ function renderSchedule(){
 
     renderWeek();
 
+
     document.getElementById(
         "scheduleDate"
-    ).textContent = formatDate(selectedDate);
+    ).textContent =
+        formatDate(
+            selectedDate
+        );
 
 
-    const selectedKey = dateKey(selectedDate);
-
-    const lessons = data.lessons
-        .filter(l => l.date === selectedKey)
-        .sort((a,b) => a.time.localeCompare(b.time));
-
-
-    const container = document.getElementById(
-        "scheduleLessons"
-    );
+    const selectedKey =
+        dateKey(
+            selectedDate
+        );
 
 
-    if(lessons.length === 0){
+    const lessons =
+        data.lessons
+            .filter(
+                l =>
+                    l.date === selectedKey
+            )
+            .sort(
+                (a,b) =>
+                    a.time.localeCompare(
+                        b.time
+                    )
+            );
+
+
+    const container =
+        document.getElementById(
+            "scheduleLessons"
+        );
+
+
+    if(
+        lessons.length === 0
+    ){
 
         container.innerHTML = `
 
@@ -2036,22 +2811,29 @@ function renderSchedule(){
     }
 
 
-    container.innerHTML = lessons.map(
-        lesson => {
+    container.innerHTML =
+        lessons.map(
+            lesson => {
 
-            const student = data.students.find(
-                s => Number(s.id) === Number(lesson.studentId)
-            );
+                const student =
+                    data.students.find(
+                        s =>
+                            Number(s.id) ===
+                            Number(lesson.studentId)
+                    );
 
-            if(!student) return "";
 
-            return lessonCardHtml(
-                lesson,
-                student
-            );
+                if(!student)
+                    return "";
 
-        }
-    ).join("");
+
+                return lessonCardHtml(
+                    lesson,
+                    student
+                );
+
+            }
+        ).join("");
 
 }
 
@@ -2062,39 +2844,60 @@ function renderSchedule(){
 
 function renderWeek(){
 
-    const container = document.getElementById(
-        "weekDays"
-    );
+    const container =
+        document.getElementById(
+            "weekDays"
+        );
 
-    const base = new Date(selectedDate);
 
-    const day = base.getDay();
+    const base =
+        new Date(
+            selectedDate
+        );
+
+
+    const day =
+        base.getDay();
+
 
     const mondayOffset =
-        day === 0 ? -6 : 1 - day;
+        day === 0
+            ? -6
+            : 1 - day;
 
 
-    const monday = new Date(base);
+    const monday =
+        new Date(base);
+
 
     monday.setDate(
-        base.getDate() + mondayOffset
+        base.getDate() +
+        mondayOffset
     );
 
 
     let html = "";
 
 
-    for(let i=0;i<7;i++){
+    for(
+        let i=0;
+        i<7;
+        i++
+    ){
 
-        const d = new Date(monday);
+        const d =
+            new Date(monday);
+
 
         d.setDate(
-            monday.getDate() + i
+            monday.getDate() +
+            i
         );
 
 
         const active =
-            dateKey(d) === dateKey(selectedDate);
+            dateKey(d) ===
+            dateKey(selectedDate);
 
 
         html += `
@@ -2119,7 +2922,8 @@ function renderWeek(){
     }
 
 
-    container.innerHTML = html;
+    container.innerHTML =
+        html;
 
 }
 
@@ -2130,9 +2934,11 @@ function renderWeek(){
 
 function selectDate(key){
 
-    selectedDate = new Date(
-        key + "T12:00:00"
-    );
+    selectedDate =
+        new Date(
+            key + "T12:00:00"
+        );
+
 
     renderSchedule();
 
@@ -2145,12 +2951,15 @@ function selectDate(key){
 
 function renderStudents(){
 
-    const container = document.getElementById(
-        "studentsList"
-    );
+    const container =
+        document.getElementById(
+            "studentsList"
+        );
 
 
-    if(data.students.length === 0){
+    if(
+        data.students.length === 0
+    ){
 
         container.innerHTML = `
 
@@ -2178,46 +2987,57 @@ function renderStudents(){
     }
 
 
-    container.innerHTML = data.students
-        .map(student => {
+    container.innerHTML =
+        data.students
+            .map(student => {
 
-            const initials =
-                getInitials(student.name);
+                const initials =
+                    getInitials(
+                        student.name
+                    );
 
 
-            return `
+                return `
 
-                <div
-                    class="student-card"
-                    onclick="openStudent(${Number(student.id)})"
-                >
+                    <div
+                        class="student-card"
+                        onclick="openStudent(${Number(student.id)})"
+                    >
 
-                    <div class="avatar">
-                        ${escapeHtml(initials)}
-                    </div>
-
-                    <div class="student-info">
-
-                        <div class="student-name">
-                            ${escapeHtml(student.name)}
+                        <div class="avatar">
+                            ${escapeHtml(
+                                initials
+                            )}
                         </div>
 
-                        <div class="student-level">
-                            ${escapeHtml(student.level)}
+
+                        <div class="student-info">
+
+                            <div class="student-name">
+                                ${escapeHtml(
+                                    student.name
+                                )}
+                            </div>
+
+                            <div class="student-level">
+                                ${escapeHtml(
+                                    student.level
+                                )}
+                            </div>
+
+                        </div>
+
+
+                        <div class="chevron">
+                            ›
                         </div>
 
                     </div>
 
-                    <div class="chevron">
-                        ›
-                    </div>
+                `;
 
-                </div>
-
-            `;
-
-        })
-        .join("");
+            })
+            .join("");
 
 }
 
@@ -2228,26 +3048,43 @@ function renderStudents(){
 
 function openStudent(id){
 
-    selectedStudentId = Number(id);
+    selectedStudentId =
+        Number(id);
 
-    document.querySelectorAll(".page").forEach(
-        el => el.classList.remove("active")
+
+    document.querySelectorAll(
+        ".page"
+    ).forEach(
+        el =>
+            el.classList.remove(
+                "active"
+            )
     );
 
 
     document.getElementById(
         "profilePage"
-    ).classList.add("active");
-
-
-    document.querySelectorAll(".nav-btn").forEach(
-        el => el.classList.remove("active")
+    ).classList.add(
+        "active"
     );
 
 
-    currentPage = "profile";
+    document.querySelectorAll(
+        ".nav-btn"
+    ).forEach(
+        el =>
+            el.classList.remove(
+                "active"
+            )
+    );
+
+
+    currentPage =
+        "profile";
+
 
     renderProfile();
+
 
     window.scrollTo({
         top:0,
@@ -2259,43 +3096,55 @@ function openStudent(id){
 
 function renderProfile(){
 
-    const student = data.students.find(
-        s => Number(s.id) === Number(selectedStudentId)
-    );
+    const student =
+        data.students.find(
+            s =>
+                Number(s.id) ===
+                Number(selectedStudentId)
+        );
 
 
     if(!student){
 
-        showPage("students");
+        showPage(
+            "students"
+        );
 
         return;
 
     }
 
 
-    const lessons = data.lessons
-        .filter(
-            l => Number(l.studentId) === Number(student.id)
-        )
-        .sort((a,b) => {
-
-            return (
-                new Date(a.date+"T"+a.time) -
-                new Date(b.date+"T"+b.time)
+    const lessons =
+        data.lessons
+            .filter(
+                l =>
+                    Number(l.studentId) ===
+                    Number(student.id)
+            )
+            .sort(
+                (a,b) =>
+                    new Date(
+                        a.date+"T"+a.time
+                    ) -
+                    new Date(
+                        b.date+"T"+b.time
+                    )
             );
 
-        });
 
-
-    const initials = getInitials(
-        student.name
-    );
+    const initials =
+        getInitials(
+            student.name
+        );
 
 
     let lessonHtml = "";
 
 
-    if(lessons.length === 0){
+    if(
+        lessons.length === 0
+    ){
 
         lessonHtml = `
 
@@ -2307,56 +3156,66 @@ function renderProfile(){
 
     }else{
 
-        lessonHtml = lessons
-            .map(lesson => {
+        lessonHtml =
+            lessons
+                .map(
+                    lesson => {
 
-                const d = new Date(
-                    lesson.date + "T" + lesson.time
-                );
+                        const d =
+                            new Date(
+                                lesson.date +
+                                "T" +
+                                lesson.time
+                            );
 
 
-                return `
+                        return `
 
-                    <div class="lesson-card">
+                            <div class="lesson-card">
 
-                        <div class="lesson-time">
-                            ${formatTime(lesson.time)}
-                        </div>
+                                <div class="lesson-time">
+                                    ${formatTime(
+                                        lesson.time
+                                    )}
+                                </div>
 
-                        <div class="lesson-line"></div>
+                                <div class="lesson-line"></div>
 
-                        <div class="lesson-info">
+                                <div class="lesson-info">
 
-                            <div class="lesson-name">
-                                ${d.toLocaleDateString(
-                                    undefined,
-                                    {
-                                        weekday:"short",
-                                        month:"short",
-                                        day:"numeric"
-                                    }
-                                )}
+                                    <div class="lesson-name">
+                                        ${d.toLocaleDateString(
+                                            undefined,
+                                            {
+                                                weekday:"short",
+                                                month:"short",
+                                                day:"numeric"
+                                            }
+                                        )}
+                                    </div>
+
+                                    <div class="lesson-level">
+                                        ${lesson.duration || 60}
+                                        min
+                                    </div>
+
+                                </div>
+
+
+                                <button
+                                    class="lesson-delete"
+                                    onclick="deleteLesson(${Number(lesson.id)}); renderProfile();"
+                                >
+                                    ×
+                                </button>
+
                             </div>
 
-                            <div class="lesson-level">
-                                ${lesson.duration || 60} min
-                            </div>
+                        `;
 
-                        </div>
-
-                        <button
-                            class="lesson-delete"
-                            onclick="deleteLesson(${Number(lesson.id)}); renderProfile();"
-                        >
-                            ×
-                        </button>
-
-                    </div>
-
-                `;
-
-            })
-            .join("");
+                    }
+                )
+                .join("");
 
     }
 
@@ -2368,15 +3227,23 @@ function renderProfile(){
         <div class="profile-header">
 
             <div class="profile-avatar">
-                ${escapeHtml(initials)}
+                ${escapeHtml(
+                    initials
+                )}
             </div>
+
 
             <div class="profile-name">
-                ${escapeHtml(student.name)}
+                ${escapeHtml(
+                    student.name
+                )}
             </div>
 
+
             <div class="profile-level">
-                ${escapeHtml(student.level)}
+                ${escapeHtml(
+                    student.level
+                )}
             </div>
 
         </div>
@@ -2388,10 +3255,13 @@ function renderProfile(){
                 Notes
             </div>
 
+
             <div class="profile-notes">
                 ${
                     student.notes
-                    ? escapeHtml(student.notes)
+                    ? escapeHtml(
+                        student.notes
+                    )
                     : "No notes yet."
                 }
             </div>
@@ -2404,6 +3274,7 @@ function renderProfile(){
             <div class="profile-section-title">
                 Lessons
             </div>
+
 
             ${lessonHtml}
 
@@ -2432,9 +3303,11 @@ function openStudentModal(){
         "studentName"
     ).value = "";
 
+
     document.getElementById(
         "studentLevel"
     ).value = "B1";
+
 
     document.getElementById(
         "studentNotes"
@@ -2443,16 +3316,21 @@ function openStudentModal(){
 
     document.getElementById(
         "studentModal"
-    ).classList.add("show");
+    ).classList.add(
+        "show"
+    );
 
 
-    setTimeout(() => {
+    setTimeout(
+        () => {
 
-        document.getElementById(
-            "studentName"
-        ).focus();
+            document.getElementById(
+                "studentName"
+            ).focus();
 
-    },150);
+        },
+        150
+    );
 
 }
 
@@ -2479,20 +3357,18 @@ function saveStudent(){
 
     if(!name){
 
-        alert("Please enter the student's name.");
+        alert(
+            "Please enter the student's name."
+        );
 
         return;
 
     }
 
 
-    const newId =
-        Date.now();
-
-
     data.students.push({
 
-        id:newId,
+        id:Date.now(),
 
         name:name,
 
@@ -2505,7 +3381,11 @@ function saveStudent(){
 
     saveData();
 
-    closeModal("studentModal");
+
+    closeModal(
+        "studentModal"
+    );
+
 
     renderAll();
 
@@ -2518,35 +3398,50 @@ function saveStudent(){
 
 function deleteStudent(id){
 
-    const student = data.students.find(
-        s => Number(s.id) === Number(id)
-    );
+    const student =
+        data.students.find(
+            s =>
+                Number(s.id) ===
+                Number(id)
+        );
 
 
-    if(!student) return;
+    if(!student)
+        return;
 
 
-    const confirmed = confirm(
-        `Delete ${student.name}?`
-    );
+    const confirmed =
+        confirm(
+            `Delete ${student.name}?`
+        );
 
 
-    if(!confirmed) return;
+    if(!confirmed)
+        return;
 
 
-    data.students = data.students.filter(
-        s => Number(s.id) !== Number(id)
-    );
+    data.students =
+        data.students.filter(
+            s =>
+                Number(s.id) !==
+                Number(id)
+        );
 
 
-    data.lessons = data.lessons.filter(
-        l => Number(l.studentId) !== Number(id)
-    );
+    data.lessons =
+        data.lessons.filter(
+            l =>
+                Number(l.studentId) !==
+                Number(id)
+        );
 
 
     saveData();
 
-    showPage("students");
+
+    showPage(
+        "students"
+    );
 
 }
 
@@ -2557,13 +3452,19 @@ function deleteStudent(id){
 
 function openLessonModal(){
 
-    if(data.students.length === 0){
+    if(
+        data.students.length === 0
+    ){
 
         alert(
             "Add a student first."
         );
 
-        showPage("students");
+
+        showPage(
+            "students"
+        );
+
 
         return;
 
@@ -2576,37 +3477,53 @@ function openLessonModal(){
         );
 
 
-    select.innerHTML = data.students
-        .map(student => `
+    select.innerHTML =
+        data.students
+            .map(
+                student => `
 
-            <option value="${Number(student.id)}">
-                ${escapeHtml(student.name)}
-                ·
-                ${escapeHtml(student.level)}
-            </option>
+                    <option
+                        value="${Number(student.id)}"
+                    >
+                        ${escapeHtml(
+                            student.name
+                        )}
+                        ·
+                        ${escapeHtml(
+                            student.level
+                        )}
+                    </option>
 
-        `)
-        .join("");
+                `
+            )
+            .join("");
 
 
     document.getElementById(
         "lessonDate"
-    ).value = dateKey(selectedDate);
+    ).value =
+        dateKey(
+            selectedDate
+        );
 
 
     document.getElementById(
         "lessonTime"
-    ).value = "10:00";
+    ).value =
+        "10:00";
 
 
     document.getElementById(
         "lessonDuration"
-    ).value = "60";
+    ).value =
+        "60";
 
 
     document.getElementById(
         "lessonModal"
-    ).classList.add("show");
+    ).classList.add(
+        "show"
+    );
 
 }
 
@@ -2647,7 +3564,9 @@ function saveLesson(){
         !time
     ){
 
-        alert("Please fill in all fields.");
+        alert(
+            "Please fill in all fields."
+        );
 
         return;
 
@@ -2672,12 +3591,16 @@ function saveLesson(){
     saveData();
 
 
-    selectedDate = new Date(
-        date + "T12:00:00"
+    selectedDate =
+        new Date(
+            date + "T12:00:00"
+        );
+
+
+    closeModal(
+        "lessonModal"
     );
 
-
-    closeModal("lessonModal");
 
     renderAll();
 
@@ -2690,20 +3613,26 @@ function saveLesson(){
 
 function deleteLesson(id){
 
-    const confirmed = confirm(
-        "Delete this lesson?"
-    );
+    const confirmed =
+        confirm(
+            "Delete this lesson?"
+        );
 
 
-    if(!confirmed) return;
+    if(!confirmed)
+        return;
 
 
-    data.lessons = data.lessons.filter(
-        l => Number(l.id) !== Number(id)
-    );
+    data.lessons =
+        data.lessons.filter(
+            l =>
+                Number(l.id) !==
+                Number(id)
+        );
 
 
     saveData();
+
 
     renderAll();
 
@@ -2722,46 +3651,57 @@ function backupData(){
 
         version:4,
 
-        createdAt:new Date().toISOString(),
+        createdAt:
+            new Date().toISOString(),
 
         data:{
 
-            students:data.students,
+            students:
+                data.students,
 
-            lessons:data.lessons
+            lessons:
+                data.lessons
 
         }
 
     };
 
 
-    const blob = new Blob(
-        [
-            JSON.stringify(
-                backup,
-                null,
-                2
-            )
-        ],
-        {
-            type:"application/json"
-        }
-    );
+    const blob =
+        new Blob(
+            [
+                JSON.stringify(
+                    backup,
+                    null,
+                    2
+                )
+            ],
+            {
+                type:"application/json"
+            }
+        );
 
 
     const url =
-        URL.createObjectURL(blob);
+        URL.createObjectURL(
+            blob
+        );
 
 
     const a =
-        document.createElement("a");
+        document.createElement(
+            "a"
+        );
 
 
     const today =
-        new Date().toISOString().slice(0,10);
+        new Date()
+            .toISOString()
+            .slice(0,10);
 
 
     a.href = url;
+
 
     a.download =
         `teacher-planner-backup-${today}.json`;
@@ -2769,13 +3709,18 @@ function backupData(){
 
     document.body.appendChild(a);
 
+
     a.click();
+
 
     a.remove();
 
 
     setTimeout(
-        () => URL.revokeObjectURL(url),
+        () =>
+            URL.revokeObjectURL(
+                url
+            ),
         1000
     );
 
@@ -2797,97 +3742,92 @@ function restoreData(event){
         event.target.files[0];
 
 
-    if(!file){
-
+    if(!file)
         return;
-
-    }
 
 
     const reader =
         new FileReader();
 
 
-    reader.onload = function(){
+    reader.onload =
+        function(){
 
-        try{
+            try{
 
-            const backup =
-                JSON.parse(
-                    reader.result
-                );
+                const backup =
+                    JSON.parse(
+                        reader.result
+                    );
 
 
-            if(
-                !backup ||
-                !backup.data ||
-                !Array.isArray(
-                    backup.data.students
-                ) ||
-                !Array.isArray(
-                    backup.data.lessons
-                )
-            ){
+                if(
+                    !backup ||
+                    !backup.data ||
+                    !Array.isArray(
+                        backup.data.students
+                    ) ||
+                    !Array.isArray(
+                        backup.data.lessons
+                    )
+                ){
+
+                    alert(
+                        "This file is not a valid Teacher Planner backup."
+                    );
+
+                    return;
+
+                }
+
+
+                const confirmed =
+                    confirm(
+                        "Restore this backup? Current data on this device will be replaced."
+                    );
+
+
+                if(!confirmed)
+                    return;
+
+
+                data = {
+
+                    students:
+                        backup.data.students,
+
+                    lessons:
+                        backup.data.lessons
+
+                };
+
+
+                saveData();
+
 
                 alert(
-                    "This file is not a valid Teacher Planner backup."
+                    "Backup restored successfully."
                 );
 
-                return;
+
+                renderAll();
+
+
+            }catch(error){
+
+                alert(
+                    "Could not read this backup file."
+                );
 
             }
 
-
-            const confirmed = confirm(
-                "Restore this backup? Current data on this device will be replaced."
-            );
+        };
 
 
-            if(!confirmed){
+    reader.readAsText(
+        file
+    );
 
-                return;
-
-            }
-
-
-            data = {
-
-                students:
-                    backup.data.students,
-
-                lessons:
-                    backup.data.lessons
-
-            };
-
-
-            saveData();
-
-            alert(
-                "Backup restored successfully."
-            );
-
-
-            renderAll();
-
-
-        }catch(error){
-
-            alert(
-                "Could not read this backup file."
-            );
-
-        }
-
-    };
-
-
-    reader.readAsText(file);
-
-
-    /*
-       Same file can be selected again later.
-    */
 
     event.target.value = "";
 
@@ -2906,7 +3846,8 @@ function clearAllData(){
         );
 
 
-    if(!first) return;
+    if(!first)
+        return;
 
 
     const second =
@@ -2915,7 +3856,8 @@ function clearAllData(){
         );
 
 
-    if(!second) return;
+    if(!second)
+        return;
 
 
     data = {
@@ -2929,12 +3871,15 @@ function clearAllData(){
 
     saveData();
 
+
     alert(
         "All planner data has been cleared."
     );
 
 
-    showPage("home");
+    showPage(
+        "home"
+    );
 
 }
 
@@ -2947,7 +3892,9 @@ function closeModal(id){
 
     document.getElementById(
         id
-    ).classList.remove("show");
+    ).classList.remove(
+        "show"
+    );
 
 }
 
@@ -2961,7 +3908,9 @@ function backdropClose(
         event.target.id === id
     ){
 
-        closeModal(id);
+        closeModal(
+            id
+        );
 
     }
 
@@ -2983,7 +3932,9 @@ function renderAll(){
     renderStudents();
 
 
-    if(currentPage === "profile"){
+    if(
+        currentPage === "profile"
+    ){
 
         renderProfile();
 
@@ -3003,7 +3954,8 @@ function getInitials(name){
         .filter(Boolean)
         .slice(0,2)
         .map(
-            word => word[0]
+            word =>
+                word[0]
         )
         .join("")
         .toUpperCase();
@@ -3013,33 +3965,61 @@ function getInitials(name){
 
 function formatTime(time){
 
-    if(!time) return "";
+    if(!time)
+        return "";
 
-    const [hour,minute] =
-        time.split(":").map(Number);
+
+    const [
+        hour,
+        minute
+    ] =
+        time
+            .split(":")
+            .map(Number);
 
 
     const suffix =
-        hour >= 12 ? "PM" : "AM";
+        hour >= 12
+            ? "PM"
+            : "AM";
 
 
     const h =
         hour % 12 || 12;
 
 
-    return `${h}:${String(minute).padStart(2,"0")} ${suffix}`;
+    return `${h}:${String(
+        minute
+    ).padStart(2,"0")} ${suffix}`;
 
 }
 
 
 function escapeHtml(value){
 
-    return String(value ?? "")
-        .replace(/&/g,"&amp;")
-        .replace(/</g,"&lt;")
-        .replace(/>/g,"&gt;")
-        .replace(/"/g,"&quot;")
-        .replace(/'/g,"&#039;");
+    return String(
+        value ?? ""
+    )
+    .replace(
+        /&/g,
+        "&amp;"
+    )
+    .replace(
+        /</g,
+        "&lt;"
+    )
+    .replace(
+        />/g,
+        "&gt;"
+    )
+    .replace(
+        /"/g,
+        "&quot;"
+    )
+    .replace(
+        /'/g,
+        "&#039;"
+    );
 
 }
 
@@ -3050,30 +4030,7 @@ function escapeHtml(value){
 
 renderAll();
 
-
-/* =========================================================
-   SERVICE WORKER
-========================================================= */
-
-if(
-    "serviceWorker" in navigator
-){
-
-    window.addEventListener(
-        "load",
-        () => {
-
-            /*
-               Service worker gələcəkdə əlavə edilə bilər.
-               Hazırda app localStorage ilə işləyir.
-            */
-
-        }
-    );
-
-}
-
 </script>
 
 </body>
-  </html> 
+                  </html> 
