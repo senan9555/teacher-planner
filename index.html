@@ -1,8 +1,1255 @@
+<!DOCTYPE html>
+<html lang="en">
 <head>
-<link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#f6f7fb">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="default">
-<meta name="apple-mobile-web-app-title" content="Teacher Planner">
+  <meta charset="UTF-8">
 
-...
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1, viewport-fit=cover">
+
+  <meta name="theme-color" content="#f6f7fb">
+
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="Teacher Planner">
+
+  <link rel="manifest" href="manifest.json">
+
+  <title>Teacher Planner</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family:
+        -apple-system,
+        BlinkMacSystemFont,
+        "SF Pro Display",
+        "Segoe UI",
+        sans-serif;
+      background: #f6f7fb;
+      color: #17181c;
+    }
+
+    button,
+    input,
+    select,
+    textarea {
+      font: inherit;
+    }
+
+    button {
+      border: 0;
+      cursor: pointer;
+    }
+
+    .app {
+      max-width: 560px;
+      min-height: 100vh;
+      margin: auto;
+      padding: 24px 18px 100px;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 22px;
+    }
+
+    .eyebrow {
+      font-size: 13px;
+      color: #747782;
+      margin-bottom: 4px;
+    }
+
+    .title {
+      font-size: 29px;
+      font-weight: 750;
+      letter-spacing: -0.7px;
+    }
+
+    .avatar {
+      width: 44px;
+      height: 44px;
+      border-radius: 15px;
+      background: #17181c;
+      color: white;
+      display: grid;
+      place-items: center;
+      font-weight: 700;
+    }
+
+    .card {
+      background: white;
+      border: 1px solid #ececf1;
+      border-radius: 22px;
+      padding: 18px;
+      box-shadow: 0 5px 18px rgba(0,0,0,.03);
+      margin-bottom: 14px;
+    }
+
+    .section-title {
+      font-size: 17px;
+      font-weight: 700;
+      margin: 4px 0 14px;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .stat {
+      background: #f0f1ff;
+      border-radius: 18px;
+      padding: 15px;
+    }
+
+    .stat b {
+      display: block;
+      font-size: 25px;
+    }
+
+    .stat span {
+      font-size: 12px;
+      color: #666a76;
+    }
+
+    .lesson {
+      display: flex;
+      gap: 13px;
+      align-items: center;
+      padding: 13px 0;
+      border-top: 1px solid #f0f0f3;
+    }
+
+    .lesson:first-of-type {
+      border-top: 0;
+    }
+
+    .time {
+      width: 52px;
+      font-size: 13px;
+      font-weight: 700;
+      color: #565a66;
+    }
+
+    .dot {
+      width: 9px;
+      height: 38px;
+      border-radius: 9px;
+      background: #6d5dfc;
+    }
+
+    .lesson-main {
+      flex: 1;
+    }
+
+    .student {
+      font-weight: 700;
+    }
+
+    .meta {
+      font-size: 12px;
+      color: #777b86;
+      margin-top: 3px;
+    }
+
+    .badge {
+      font-size: 11px;
+      background: #f0f0f4;
+      padding: 6px 8px;
+      border-radius: 9px;
+    }
+
+    .nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: rgba(255,255,255,.94);
+      backdrop-filter: blur(18px);
+      border-top: 1px solid #e8e8ed;
+      z-index: 5;
+    }
+
+    .nav-inner {
+      max-width: 560px;
+      width: 100%;
+      margin: auto;
+      display: grid;
+      grid-template-columns: repeat(3,1fr);
+      padding: 9px 12px calc(9px + env(safe-area-inset-bottom));
+    }
+
+    .nav button {
+      background: none;
+      color: #777;
+      font-size: 12px;
+      padding: 6px;
+    }
+
+    .nav button.active {
+      color: #5b4df3;
+      font-weight: 700;
+    }
+
+    .ico {
+      display: block;
+      font-size: 20px;
+      margin-bottom: 2px;
+    }
+
+    .page {
+      display: none;
+    }
+
+    .page.active {
+      display: block;
+    }
+
+    .toprow {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 14px;
+    }
+
+    .add {
+      background: #17181c;
+      color: white;
+      padding: 11px 14px;
+      border-radius: 13px;
+      font-weight: 650;
+    }
+
+    .student-card {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .initial {
+      width: 44px;
+      height: 44px;
+      border-radius: 14px;
+      background: #eeeefe;
+      display: grid;
+      place-items: center;
+      font-weight: 700;
+      color: #5649e8;
+    }
+
+    .grow {
+      flex: 1;
+    }
+
+    .student-card + .student-card {
+      margin-top: 10px;
+    }
+
+    .days {
+      display: grid;
+      grid-template-columns: repeat(7,1fr);
+      gap: 5px;
+      margin-bottom: 12px;
+    }
+
+    .day {
+      padding: 8px 2px;
+      border-radius: 12px;
+      text-align: center;
+      font-size: 11px;
+      color: #777;
+    }
+
+    .day.active {
+      background: #17181c;
+      color: white;
+    }
+
+    .schedule-row {
+      display: flex;
+      min-height: 72px;
+      border-top: 1px solid #eeeef2;
+      padding: 10px 0;
+    }
+
+    .schedule-time {
+      width: 58px;
+      font-size: 12px;
+      color: #777;
+    }
+
+    .slot {
+      flex: 1;
+      border-radius: 13px;
+      background: #f0f1ff;
+      padding: 10px;
+    }
+
+    .slot b {
+      font-size: 13px;
+    }
+
+    .slot small {
+      display: block;
+      color: #676b78;
+      margin-top: 3px;
+    }
+
+    .modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,.4);
+      display: none;
+      align-items: flex-end;
+      z-index: 10;
+    }
+
+    .modal.show {
+      display: flex;
+    }
+
+    .sheet {
+      background: white;
+      width: 100%;
+      max-width: 560px;
+      margin: auto;
+      border-radius: 26px 26px 0 0;
+      padding: 22px 18px calc(24px + env(safe-area-inset-bottom));
+      max-height: 90vh;
+      overflow: auto;
+    }
+
+    .sheet h2 {
+      margin: 0 0 18px;
+    }
+
+    .field {
+      margin: 11px 0;
+    }
+
+    .field label {
+      display: block;
+      font-size: 12px;
+      color: #70737d;
+      margin-bottom: 6px;
+    }
+
+    .field input,
+    .field select,
+    .field textarea {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #dddde4;
+      border-radius: 13px;
+      background: #fafafd;
+      outline: none;
+    }
+
+    .actions {
+      display: flex;
+      gap: 10px;
+      margin-top: 18px;
+    }
+
+    .actions button {
+      flex: 1;
+      padding: 13px;
+      border-radius: 13px;
+    }
+
+    .cancel {
+      background: #eeeef2;
+    }
+
+    .save {
+      background: #17181c;
+      color: white;
+    }
+
+    .empty {
+      padding: 30px;
+      text-align: center;
+      color: #858894;
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="app">
+
+  <!-- TODAY -->
+
+  <section id="today" class="page active">
+
+    <header>
+      <div>
+        <div class="eyebrow" id="dateLabel"></div>
+        <div class="title">Today</div>
+      </div>
+
+      <div class="avatar">T</div>
+    </header>
+
+    <div class="stats">
+
+      <div class="stat">
+        <b id="todayCount">0</b>
+        <span>Today's lessons</span>
+      </div>
+
+      <div class="stat">
+        <b id="studentCount">0</b>
+        <span>Students</span>
+      </div>
+
+    </div>
+
+    <div class="card" style="margin-top:14px">
+
+      <div class="section-title">
+        Today's schedule
+      </div>
+
+      <div id="todayLessons"></div>
+
+    </div>
+
+  </section>
+
+
+  <!-- SCHEDULE -->
+
+  <section id="schedule" class="page">
+
+    <header>
+
+      <div>
+        <div class="eyebrow">Weekly plan</div>
+        <div class="title">Schedule</div>
+      </div>
+
+      <button class="add" onclick="openLesson()">
+        + Lesson
+      </button>
+
+    </header>
+
+    <div class="card">
+
+      <div class="days" id="days"></div>
+
+      <div id="scheduleList"></div>
+
+    </div>
+
+  </section>
+
+
+  <!-- STUDENTS -->
+
+  <section id="students" class="page">
+
+    <header>
+
+      <div>
+        <div class="eyebrow">Your classes</div>
+        <div class="title">Students</div>
+      </div>
+
+      <button class="add" onclick="openStudent()">
+        + Student
+      </button>
+
+    </header>
+
+    <div id="studentsList"></div>
+
+  </section>
+
+</div>
+
+
+<!-- NAVIGATION -->
+
+<nav class="nav">
+
+  <div class="nav-inner">
+
+    <button class="active"
+            onclick="showPage('today',this)">
+
+      <span class="ico">⌂</span>
+      Today
+
+    </button>
+
+
+    <button onclick="showPage('schedule',this)">
+
+      <span class="ico">▦</span>
+      Schedule
+
+    </button>
+
+
+    <button onclick="showPage('students',this)">
+
+      <span class="ico">♙</span>
+      Students
+
+    </button>
+
+  </div>
+
+</nav>
+
+
+<!-- MODAL -->
+
+<div class="modal" id="modal">
+
+  <div class="sheet" id="sheet"></div>
+
+</div>
+
+
+<script>
+
+const KEY = "teacherPlanner_v1";
+
+let data = JSON.parse(
+  localStorage.getItem(KEY) || "null"
+) || {
+
+  students: [
+    {
+      id: 1,
+      name: "Aysel",
+      level: "B1",
+      days: "Mon, Wed",
+      time: "18:00",
+      duration: "60"
+    },
+    {
+      id: 2,
+      name: "Murad",
+      level: "A2",
+      days: "Tue, Thu",
+      time: "14:00",
+      duration: "60"
+    },
+    {
+      id: 3,
+      name: "Leyla",
+      level: "B2",
+      days: "Mon, Fri",
+      time: "10:00",
+      duration: "90"
+    }
+  ],
+
+  lessons: [
+    {
+      id: 1,
+      studentId: 1,
+      day: 1,
+      time: "18:00"
+    },
+    {
+      id: 2,
+      studentId: 2,
+      day: 2,
+      time: "14:00"
+    },
+    {
+      id: 3,
+      studentId: 3,
+      day: 1,
+      time: "10:00"
+    }
+  ]
+
+};
+
+
+function save() {
+
+  localStorage.setItem(
+    KEY,
+    JSON.stringify(data)
+  );
+
+}
+
+
+const dayAz = [
+  "B.e.",
+  "Ç.a.",
+  "Ç.",
+  "C.a.",
+  "C.",
+  "Ş.",
+  "B."
+];
+
+
+function student(id) {
+
+  return data.students.find(
+    s => s.id == id
+  );
+
+}
+
+
+function esc(value) {
+
+  return String(value)
+    .replace(/[&<>"']/g, function(c) {
+
+      return {
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        '"': "&quot;",
+        "'": "&#39;"
+      }[c];
+
+    });
+
+}
+
+
+function showPage(id, btn) {
+
+  document
+    .querySelectorAll(".page")
+    .forEach(x =>
+      x.classList.remove("active")
+    );
+
+  document
+    .getElementById(id)
+    .classList.add("active");
+
+
+  document
+    .querySelectorAll(".nav button")
+    .forEach(x =>
+      x.classList.remove("active")
+    );
+
+  btn.classList.add("active");
+
+  render();
+
+}
+
+
+function lessonHTML(x) {
+
+  const s = student(x.studentId);
+
+  return `
+    <div class="lesson">
+
+      <div class="time">
+        ${x.time}
+      </div>
+
+      <div class="dot"></div>
+
+      <div class="lesson-main">
+
+        <div class="student">
+          ${esc(s?.name || "Unknown")}
+        </div>
+
+        <div class="meta">
+          ${esc(s?.level || "")}
+          ·
+          ${esc(s?.duration || 60)} min
+        </div>
+
+      </div>
+
+      <span class="badge">
+        ${dayAz[x.day]}
+      </span>
+
+    </div>
+  `;
+
+}
+
+
+function render() {
+
+  const today = new Date();
+
+  document.getElementById("dateLabel")
+    .textContent =
+      new Intl.DateTimeFormat(
+        "en-US",
+        {
+          weekday: "long",
+          day: "numeric",
+          month: "long"
+        }
+      ).format(today);
+
+
+  document.getElementById("studentCount")
+    .textContent =
+      data.students.length;
+
+
+  const currentDay =
+    today.getDay();
+
+
+  const todayLessons =
+    data.lessons
+      .filter(x =>
+        x.day == currentDay
+      )
+      .sort((a,b) =>
+        a.time.localeCompare(b.time)
+      );
+
+
+  document.getElementById("todayCount")
+    .textContent =
+      todayLessons.length;
+
+
+  document.getElementById("todayLessons")
+    .innerHTML =
+      todayLessons.length
+      ? todayLessons.map(lessonHTML).join("")
+      : `<div class="empty">
+           No lessons today
+         </div>`;
+
+
+  document.getElementById("studentsList")
+    .innerHTML =
+      data.students.length
+      ? data.students.map(s => `
+
+          <div class="card student-card">
+
+            <div class="initial">
+              ${esc(s.name[0] || "?")}
+            </div>
+
+            <div class="grow">
+
+              <div class="student">
+                ${esc(s.name)}
+              </div>
+
+              <div class="meta">
+                ${esc(s.level)}
+                ·
+                ${esc(s.days)}
+                ·
+                ${esc(s.time)}
+              </div>
+
+            </div>
+
+            <button
+              class="badge"
+              onclick="openStudent(${s.id})">
+
+              Edit
+
+            </button>
+
+          </div>
+
+        `).join("")
+      : `<div class="empty">
+           No students yet
+         </div>`;
+
+
+  document.getElementById("days")
+    .innerHTML =
+      dayAz.map((day,i) => `
+
+        <div class="day ${
+          i == currentDay ? "active" : ""
+        }">
+
+          ${day}
+
+        </div>
+
+      `).join("");
+
+
+  const week = [
+    1,2,3,4,5,6,0
+  ];
+
+  let output = "";
+
+
+  week.forEach(day => {
+
+    const lessons =
+      data.lessons
+        .filter(x => x.day == day)
+        .sort((a,b) =>
+          a.time.localeCompare(b.time)
+        );
+
+
+    lessons.forEach(x => {
+
+      const s =
+        student(x.studentId);
+
+
+      output += `
+
+        <div class="schedule-row">
+
+          <div class="schedule-time">
+
+            ${dayAz[day]}<br>
+            ${x.time}
+
+          </div>
+
+
+          <div class="slot">
+
+            <b>
+              ${esc(s?.name || "Unknown")}
+            </b>
+
+            <small>
+              ${esc(s?.level || "")}
+              ·
+              ${esc(s?.duration || 60)} min
+            </small>
+
+          </div>
+
+        </div>
+
+      `;
+
+    });
+
+  });
+
+
+  document.getElementById("scheduleList")
+    .innerHTML =
+      output ||
+      `<div class="empty">
+         No lessons yet
+       </div>`;
+
+}
+
+
+function closeModal() {
+
+  document
+    .getElementById("modal")
+    .classList.remove("show");
+
+}
+
+
+function openStudent(id) {
+
+  const s =
+    student(id) || {
+
+      name: "",
+      level: "A1",
+      days: "",
+      time: "",
+      duration: "60"
+
+    };
+
+
+  document.getElementById("sheet")
+    .innerHTML = `
+
+      <h2>
+        ${id ? "Edit" : "New"} student
+      </h2>
+
+
+      <div class="field">
+
+        <label>
+          Name
+        </label>
+
+        <input
+          id="fName"
+          value="${esc(s.name)}"
+        >
+
+      </div>
+
+
+      <div class="field">
+
+        <label>
+          Level
+        </label>
+
+        <select id="fLevel">
+
+          ${
+            ["A1","A2","B1","B2","C1","C2"]
+              .map(x => `
+                <option
+                  ${x == s.level ? "selected" : ""}>
+                  ${x}
+                </option>
+              `)
+              .join("")
+          }
+
+        </select>
+
+      </div>
+
+
+      <div class="field">
+
+        <label>
+          Days
+        </label>
+
+        <input
+          id="fDays"
+          placeholder="Mon, Wed"
+          value="${esc(s.days)}"
+        >
+
+      </div>
+
+
+      <div class="field">
+
+        <label>
+          Time
+        </label>
+
+        <input
+          id="fTime"
+          type="time"
+          value="${esc(s.time)}"
+        >
+
+      </div>
+
+
+      <div class="field">
+
+        <label>
+          Duration
+        </label>
+
+        <select id="fDuration">
+
+          ${["45","60","90","120"]
+            .map(x => `
+              <option
+                ${x == s.duration ? "selected" : ""}>
+                ${x}
+              </option>
+            `)
+            .join("")
+          }
+
+        </select>
+
+      </div>
+
+
+      <div class="actions">
+
+        <button
+          class="cancel"
+          onclick="closeModal()">
+
+          Cancel
+
+        </button>
+
+
+        <button
+          class="save"
+          onclick="saveStudent(${id || 0})">
+
+          Save
+
+        </button>
+
+      </div>
+
+    `;
+
+
+  document
+    .getElementById("modal")
+    .classList.add("show");
+
+}
+
+
+function saveStudent(id) {
+
+  const obj = {
+
+    id: id || Date.now(),
+
+    name:
+      document
+        .getElementById("fName")
+        .value
+        .trim(),
+
+    level:
+      document
+        .getElementById("fLevel")
+        .value,
+
+    days:
+      document
+        .getElementById("fDays")
+        .value
+        .trim(),
+
+    time:
+      document
+        .getElementById("fTime")
+        .value,
+
+    duration:
+      document
+        .getElementById("fDuration")
+        .value
+
+  };
+
+
+  if (!obj.name) {
+    return;
+  }
+
+
+  if (id) {
+
+    data.students =
+      data.students.map(
+        s => s.id == id ? obj : s
+      );
+
+  } else {
+
+    data.students.push(obj);
+
+  }
+
+
+  save();
+
+  closeModal();
+
+  render();
+
+}
+
+
+function openLesson() {
+
+  if (!data.students.length) {
+
+    openStudent();
+
+    return;
+
+  }
+
+
+  document.getElementById("sheet")
+    .innerHTML = `
+
+      <h2>
+        New lesson
+      </h2>
+
+
+      <div class="field">
+
+        <label>
+          Student
+        </label>
+
+        <select id="lStudent">
+
+          ${
+            data.students
+              .map(s => `
+                <option value="${s.id}">
+                  ${esc(s.name)}
+                  —
+                  ${esc(s.level)}
+                </option>
+              `)
+              .join("")
+          }
+
+        </select>
+
+      </div>
+
+
+      <div class="field">
+
+        <label>
+          Day
+        </label>
+
+        <select id="lDay">
+
+          ${
+            dayAz
+              .map((x,i) => `
+                <option value="${i}">
+                  ${x}
+                </option>
+              `)
+              .join("")
+          }
+
+        </select>
+
+      </div>
+
+
+      <div class="field">
+
+        <label>
+          Time
+        </label>
+
+        <input
+          id="lTime"
+          type="time"
+          value="18:00"
+        >
+
+      </div>
+
+
+      <div class="actions">
+
+        <button
+          class="cancel"
+          onclick="closeModal()">
+
+          Cancel
+
+        </button>
+
+
+        <button
+          class="save"
+          onclick="saveLesson()">
+
+          Add lesson
+
+        </button>
+
+      </div>
+
+    `;
+
+
+  document
+    .getElementById("modal")
+    .classList.add("show");
+
+}
+
+
+function saveLesson() {
+
+  data.lessons.push({
+
+    id: Date.now(),
+
+    studentId:
+      Number(
+        document
+          .getElementById("lStudent")
+          .value
+      ),
+
+    day:
+      Number(
+        document
+          .getElementById("lDay")
+          .value
+      ),
+
+    time:
+      document
+        .getElementById("lTime")
+        .value
+
+  });
+
+
+  save();
+
+  closeModal();
+
+  render();
+
+}
+
+
+document
+  .getElementById("modal")
+  .addEventListener(
+    "click",
+    function(e) {
+
+      if (e.target.id === "modal") {
+        closeModal();
+      }
+
+    }
+  );
+
+
+render();
+
+</script>
+
+</body>
+</html>
