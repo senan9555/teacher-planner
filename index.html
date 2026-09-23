@@ -3,2103 +3,1292 @@
 <head>
 <meta charset="UTF-8">
 
-<meta
-  name="viewport"
-  content="width=device-width, initial-scale=1.0, viewport-fit=cover"
->
-
-<meta name="theme-color" content="#f7f7fb">
-
-<meta
-  name="apple-mobile-web-app-capable"
-  content="yes"
->
-
-<meta
-  name="apple-mobile-web-app-status-bar-style"
-  content="default"
->
-
-<meta
-  name="apple-mobile-web-app-title"
-  content="Teacher Planner"
->
-
-<link rel="manifest" href="manifest.json">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover">
 
 <title>Teacher Planner</title>
 
+<link rel="manifest" href="manifest.json">
+
+<meta name="theme-color" content="#f6f7fb">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Teacher Planner">
+
 <style>
 
-/* =========================================================
-   ROOT
-========================================================= */
-
-:root{
-  --bg:#f7f7fb;
-  --surface:#ffffff;
-  --surface-soft:#f1f0ff;
-
-  --text:#17171c;
-  --text-soft:#686a75;
-  --text-light:#9a9ca5;
-
-  --purple:#6659dc;
-  --purple-dark:#5548c9;
-  --purple-soft:#eeecff;
-
-  --blue:#5d9eea;
-  --blue-soft:#eaf4ff;
-
-  --green:#54aa7c;
-  --green-soft:#eaf8f0;
-
-  --orange:#e39a51;
-  --orange-soft:#fff4e7;
-
-  --red:#df6872;
-  --red-soft:#fff0f2;
-
-  --line:#ececf1;
-
-  --radius-xl:32px;
-  --radius-lg:25px;
-  --radius-md:18px;
-
-  --shadow:
-    0 12px 35px rgba(27,27,50,.065);
-
-  --shadow-small:
-    0 5px 18px rgba(27,27,50,.055);
-}
-
-
-/* =========================================================
-   RESET
-========================================================= */
-
 *{
-  box-sizing:border-box;
+    box-sizing:border-box;
+    -webkit-tap-highlight-color:transparent;
 }
 
 html{
-  scroll-behavior:smooth;
+    background:#f6f7fb;
 }
 
 body{
-  margin:0;
-  background:var(--bg);
-  color:var(--text);
-
-  font-family:
-    -apple-system,
-    BlinkMacSystemFont,
-    "SF Pro Display",
-    "SF Pro Text",
-    Inter,
-    Helvetica,
-    Arial,
-    sans-serif;
-
-  -webkit-font-smoothing:antialiased;
-  text-rendering:optimizeLegibility;
+    margin:0;
+    font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text",
+    "Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    background:#f6f7fb;
+    color:#17181c;
+    min-height:100vh;
+    padding-bottom:env(safe-area-inset-bottom);
 }
 
 button,
 input,
 select,
 textarea{
-  font:inherit;
+    font:inherit;
 }
 
 button{
-  border:0;
-  cursor:pointer;
-  -webkit-tap-highlight-color:transparent;
+    border:none;
+    cursor:pointer;
+    touch-action:manipulation;
 }
-
-button:active{
-  transform:scale(.97);
-}
-
-input,
-select,
-textarea{
-  outline:none;
-}
-
-::-webkit-scrollbar{
-  display:none;
-}
-
-
-/* =========================================================
-   APP
-========================================================= */
 
 .app{
-  min-height:100vh;
-  padding-bottom:105px;
+    max-width:520px;
+    margin:0 auto;
+    min-height:100vh;
+    padding:18px 16px 32px;
 }
 
+/* =========================
+   TOP BAR
+========================= */
+
+.topbar{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    margin-bottom:24px;
+}
+
+.brand{
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
+
+.brand-icon{
+    width:42px;
+    height:42px;
+    border-radius:14px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:linear-gradient(145deg,#1d1e23,#3b3d45);
+    color:white;
+    font-size:20px;
+    box-shadow:0 8px 18px rgba(0,0,0,.12);
+}
+
+.brand-text{
+    font-size:19px;
+    font-weight:750;
+    letter-spacing:-.4px;
+}
+
+.brand-sub{
+    font-size:11px;
+    color:#8c8e96;
+    margin-top:2px;
+}
+
+.icon-btn{
+    width:42px;
+    height:42px;
+    border-radius:14px;
+    background:white;
+    color:#27282d;
+    box-shadow:0 5px 18px rgba(0,0,0,.07);
+    font-size:19px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    transition:.15s ease;
+}
+
+.icon-btn:active{
+    transform:scale(.93);
+}
+
+/* =========================
+   PAGES
+========================= */
+
 .page{
-  display:none;
-  min-height:100vh;
+    display:none;
 }
 
 .page.active{
-  display:block;
+    display:block;
 }
 
-
-/* =========================================================
-   GLOBAL HEADER
-========================================================= */
-
-.page-header{
-  padding:
-    calc(26px + env(safe-area-inset-top))
-    24px
-    18px;
-}
-
-.small-label{
-  color:var(--text-light);
-  font-size:14px;
-  font-weight:600;
-  letter-spacing:.1px;
-  margin-bottom:7px;
-}
-
-.page-title{
-  font-size:38px;
-  line-height:1.05;
-  letter-spacing:-1.5px;
-  font-weight:760;
-}
-
-.header-row{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  gap:15px;
-}
-
-
-/* =========================================================
-   HOME HEADER
-========================================================= */
-
-.home-header{
-  padding:
-    calc(31px + env(safe-area-inset-top))
-    24px
-    15px;
-}
-
-.home-date{
-  color:var(--text-light);
-  font-size:15px;
-  font-weight:500;
-  margin-bottom:10px;
-}
-
-.home-header-row{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:15px;
-}
+/* =========================
+   HOME
+========================= */
 
 .greeting{
-  font-size:37px;
-  line-height:1.07;
-  font-weight:760;
-  letter-spacing:-1.6px;
+    margin-bottom:18px;
 }
 
-.profile-button{
-  width:57px;
-  height:57px;
-  border-radius:20px;
-
-  background:
-    linear-gradient(
-      145deg,
-      #202024,
-      #111114
-    );
-
-  color:white;
-
-  font-size:20px;
-  font-weight:700;
-
-  box-shadow:
-    0 8px 20px rgba(0,0,0,.12);
-
-  flex:none;
+.greeting-small{
+    font-size:13px;
+    color:#8c8e96;
+    margin-bottom:5px;
 }
 
-
-/* =========================================================
-   CONTENT
-========================================================= */
-
-.content{
-  padding:0 24px;
-  max-width:760px;
-  margin:auto;
+.greeting-title{
+    font-size:30px;
+    font-weight:800;
+    letter-spacing:-1.2px;
 }
 
+.greeting-title span{
+    display:inline-block;
+}
 
-/* =========================================================
-   NEXT LESSON
-========================================================= */
+/* Welcome */
+
+.welcome-card{
+    background:linear-gradient(145deg,#202126,#363840);
+    color:white;
+    border-radius:24px;
+    padding:22px;
+    margin-bottom:18px;
+    box-shadow:0 14px 30px rgba(0,0,0,.14);
+    position:relative;
+    overflow:hidden;
+}
+
+.welcome-card:after{
+    content:"";
+    position:absolute;
+    width:150px;
+    height:150px;
+    border-radius:50%;
+    background:rgba(255,255,255,.055);
+    right:-45px;
+    top:-55px;
+}
+
+.welcome-icon{
+    width:48px;
+    height:48px;
+    border-radius:16px;
+    background:rgba(255,255,255,.1);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:23px;
+    margin-bottom:18px;
+}
+
+.welcome-title{
+    font-size:20px;
+    font-weight:750;
+    margin-bottom:7px;
+}
+
+.welcome-text{
+    color:rgba(255,255,255,.68);
+    line-height:1.5;
+    font-size:13px;
+    max-width:330px;
+}
+
+/* Next lesson */
 
 .next-card{
-  position:relative;
-  overflow:hidden;
-
-  background:
-    linear-gradient(
-      135deg,
-      #7165e5 0%,
-      #5b50ce 100%
-    );
-
-  color:white;
-
-  border-radius:32px;
-
-  padding:25px;
-
-  margin:12px 0 18px;
-
-  box-shadow:
-    0 15px 35px rgba(91,80,206,.22);
-}
-
-.next-card::after{
-  content:"";
-  position:absolute;
-
-  width:180px;
-  height:180px;
-
-  border-radius:50%;
-
-  background:
-    rgba(255,255,255,.075);
-
-  right:-65px;
-  top:-75px;
-}
-
-.next-card::before{
-  content:"";
-  position:absolute;
-
-  width:120px;
-  height:120px;
-
-  border-radius:50%;
-
-  background:
-    rgba(255,255,255,.05);
-
-  right:55px;
-  bottom:-75px;
+    background:linear-gradient(145deg,#202126,#34363e);
+    color:white;
+    border-radius:24px;
+    padding:20px;
+    margin-bottom:18px;
+    box-shadow:0 14px 30px rgba(0,0,0,.14);
 }
 
 .next-label{
-  font-size:13px;
-  font-weight:650;
-  opacity:.75;
-  text-transform:uppercase;
-  letter-spacing:.8px;
+    font-size:11px;
+    color:rgba(255,255,255,.6);
+    text-transform:uppercase;
+    letter-spacing:1px;
+    margin-bottom:8px;
 }
 
-.next-main{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:15px;
-
-  margin-top:18px;
-  position:relative;
-  z-index:2;
+.next-name{
+    font-size:22px;
+    font-weight:750;
+    letter-spacing:-.5px;
 }
 
-.next-student{
-  font-size:27px;
-  font-weight:740;
-  letter-spacing:-.7px;
-}
-
-.next-info{
-  margin-top:5px;
-  font-size:14px;
-  opacity:.78;
+.next-meta{
+    color:rgba(255,255,255,.7);
+    font-size:13px;
+    margin-top:5px;
 }
 
 .next-time{
-  font-size:27px;
-  font-weight:720;
-  white-space:nowrap;
+    font-size:31px;
+    font-weight:800;
+    margin-top:15px;
+    letter-spacing:-1px;
 }
 
-.next-arrow{
-  display:inline-block;
-  margin-left:3px;
-  opacity:.65;
-}
+/* Sections */
 
-
-/* =========================================================
-   STATS
-========================================================= */
-
-.stats{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:13px;
-  margin-bottom:18px;
-}
-
-.stat-card{
-  min-height:116px;
-  border-radius:26px;
-  padding:22px;
-
-  position:relative;
-  overflow:hidden;
-}
-
-.stat-card.purple{
-  background:var(--purple-soft);
-}
-
-.stat-card.blue{
-  background:var(--blue-soft);
-}
-
-.stat-icon{
-  width:35px;
-  height:35px;
-
-  border-radius:12px;
-
-  display:flex;
-  align-items:center;
-  justify-content:center;
-
-  font-size:17px;
-  margin-bottom:15px;
-}
-
-.purple .stat-icon{
-  background:#dedaff;
-  color:var(--purple);
-}
-
-.blue .stat-icon{
-  background:#d9edff;
-  color:var(--blue);
-}
-
-.stat-number{
-  font-size:29px;
-  font-weight:750;
-  line-height:1;
-  letter-spacing:-.7px;
-}
-
-.stat-label{
-  margin-top:5px;
-  color:var(--text-soft);
-  font-size:13px;
-  font-weight:550;
-}
-
-
-/* =========================================================
-   SECTION
-========================================================= */
-
-.section{
-  margin-top:27px;
-}
-
-.section-heading{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  margin-bottom:13px;
+.section-head{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    margin:24px 2px 11px;
 }
 
 .section-title{
-  font-size:22px;
-  font-weight:730;
-  letter-spacing:-.5px;
+    font-size:17px;
+    font-weight:750;
+    letter-spacing:-.3px;
 }
 
-.section-link{
-  color:var(--purple);
-  font-size:14px;
-  font-weight:650;
-  background:transparent;
-  padding:5px;
+.section-action{
+    font-size:12px;
+    color:#7b7d85;
 }
 
+/* Lesson cards */
 
-/* =========================================================
-   SCHEDULE CARD
-========================================================= */
-
-.schedule-card{
-  background:var(--surface);
-  border-radius:28px;
-  box-shadow:var(--shadow-small);
-  padding:7px 20px;
-}
-
-.lesson{
-  display:flex;
-  align-items:center;
-  gap:15px;
-
-  min-height:79px;
-
-  border-bottom:1px solid var(--line);
-}
-
-.lesson:last-child{
-  border-bottom:0;
+.lesson-card{
+    background:white;
+    border-radius:19px;
+    padding:16px;
+    margin-bottom:10px;
+    display:flex;
+    align-items:center;
+    gap:14px;
+    box-shadow:0 5px 18px rgba(0,0,0,.045);
 }
 
 .lesson-time{
-  width:48px;
-  flex:none;
-
-  color:var(--text-soft);
-  font-size:13px;
-  font-weight:650;
+    min-width:56px;
+    font-size:14px;
+    font-weight:750;
 }
 
 .lesson-line{
-  width:3px;
-  height:38px;
-  border-radius:3px;
-  background:var(--purple);
+    width:1px;
+    height:38px;
+    background:#e9e9ed;
 }
 
 .lesson-info{
-  min-width:0;
-  flex:1;
+    flex:1;
+    min-width:0;
 }
 
-.lesson-student{
-  font-size:16px;
-  font-weight:680;
-
-  white-space:nowrap;
-  overflow:hidden;
-  text-overflow:ellipsis;
+.lesson-name{
+    font-size:15px;
+    font-weight:700;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
 }
 
-.lesson-details{
-  color:var(--text-light);
-  font-size:13px;
-  margin-top:4px;
+.lesson-level{
+    font-size:12px;
+    color:#92949b;
+    margin-top:3px;
 }
 
-.level-pill{
-  padding:7px 10px;
-  border-radius:11px;
-
-  color:var(--purple);
-  background:var(--purple-soft);
-
-  font-size:12px;
-  font-weight:700;
+.lesson-delete{
+    width:32px;
+    height:32px;
+    border-radius:10px;
+    background:#f5f5f7;
+    color:#9a9ba1;
+    font-size:14px;
 }
 
-.empty-state{
-  min-height:150px;
+.lesson-delete:active{
+    transform:scale(.9);
+}
 
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:center;
+/* Empty */
 
-  color:var(--text-light);
-  text-align:center;
-
-  gap:7px;
+.empty-card{
+    background:white;
+    border-radius:21px;
+    padding:25px 20px;
+    text-align:center;
+    box-shadow:0 5px 18px rgba(0,0,0,.045);
 }
 
 .empty-icon{
-  font-size:28px;
-  opacity:.6;
+    width:52px;
+    height:52px;
+    margin:0 auto 13px;
+    border-radius:17px;
+    background:#f2f2f5;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:22px;
 }
 
 .empty-title{
-  color:var(--text-soft);
-  font-weight:650;
-  font-size:15px;
+    font-weight:750;
+    font-size:15px;
+    margin-bottom:5px;
 }
 
 .empty-text{
-  font-size:13px;
+    font-size:12px;
+    color:#94959c;
+    line-height:1.5;
 }
 
+/* Stats */
 
-/* =========================================================
-   SCHEDULE PAGE
-========================================================= */
-
-.schedule-header{
-  padding-bottom:10px;
-}
-
-.add-button{
-  width:45px;
-  height:45px;
-
-  border-radius:15px;
-
-  background:var(--purple);
-  color:white;
-
-  font-size:25px;
-  line-height:1;
-
-  box-shadow:
-    0 7px 18px rgba(101,89,220,.22);
-}
-
-.week-card{
-  background:var(--surface);
-  border-radius:29px;
-  box-shadow:var(--shadow-small);
-
-  padding:15px 10px 10px;
-}
-
-.week-days{
-  display:flex;
-  gap:5px;
-
-  overflow-x:auto;
-
-  padding-bottom:14px;
-}
-
-.day-button{
-  min-width:61px;
-
-  background:transparent;
-
-  border-radius:18px;
-
-  padding:11px 7px;
-
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-
-  gap:6px;
-
-  color:var(--text-light);
-}
-
-.day-button .day-name{
-  font-size:11px;
-  font-weight:650;
-  text-transform:uppercase;
-}
-
-.day-button .day-number{
-  width:35px;
-  height:35px;
-
-  display:flex;
-  align-items:center;
-  justify-content:center;
-
-  border-radius:12px;
-
-  font-size:16px;
-  font-weight:700;
-}
-
-.day-button.active{
-  background:var(--purple-soft);
-  color:var(--purple);
-}
-
-.day-button.active .day-number{
-  background:var(--purple);
-  color:white;
-}
-
-.day-button.today:not(.active) .day-number{
-  background:#f0eff4;
-  color:var(--text);
-}
-
-.day-content{
-  padding:5px 10px 15px;
-}
-
-.selected-date{
-  font-size:15px;
-  color:var(--text-soft);
-  font-weight:600;
-  margin:7px 0 12px;
-}
-
-.schedule-item{
-  display:flex;
-  align-items:center;
-  gap:14px;
-
-  padding:14px 2px;
-
-  border-bottom:1px solid var(--line);
-}
-
-.schedule-item:last-child{
-  border-bottom:0;
-}
-
-.schedule-item-time{
-  width:48px;
-  flex:none;
-
-  color:var(--text-soft);
-  font-size:13px;
-  font-weight:700;
-}
-
-.schedule-item-body{
-  flex:1;
-  min-width:0;
-}
-
-.schedule-item-name{
-  font-size:16px;
-  font-weight:680;
-}
-
-.schedule-item-meta{
-  color:var(--text-light);
-  font-size:12px;
-  margin-top:4px;
-}
-
-.delete-small{
-  background:var(--red-soft);
-  color:var(--red);
-
-  border-radius:10px;
-
-  padding:8px 9px;
-
-  font-size:11px;
-  font-weight:700;
-}
-
-
-/* =========================================================
-   STUDENTS PAGE
-========================================================= */
-
-.students-header{
-  padding-bottom:15px;
-}
-
-.student-count-label{
-  color:var(--text-light);
-  font-size:14px;
-  margin-top:7px;
-}
-
-.student-add{
-  width:45px;
-  height:45px;
-
-  border-radius:15px;
-
-  background:var(--purple);
-  color:white;
-
-  font-size:25px;
-
-  box-shadow:
-    0 7px 18px rgba(101,89,220,.22);
-}
-
-.students-list{
-  display:grid;
-  gap:12px;
-}
-
-.student-card{
-  background:var(--surface);
-  border-radius:25px;
-
-  padding:17px;
-
-  display:flex;
-  align-items:center;
-  gap:14px;
-
-  box-shadow:var(--shadow-small);
-
-  transition:.15s;
-}
-
-.student-card:active{
-  transform:scale(.985);
-}
-
-.student-avatar{
-  width:53px;
-  height:53px;
-
-  border-radius:18px;
-
-  background:var(--purple-soft);
-  color:var(--purple);
-
-  display:flex;
-  align-items:center;
-  justify-content:center;
-
-  font-size:17px;
-  font-weight:750;
-
-  flex:none;
-}
-
-.student-body{
-  min-width:0;
-  flex:1;
-}
-
-.student-name{
-  font-size:17px;
-  font-weight:700;
-
-  white-space:nowrap;
-  overflow:hidden;
-  text-overflow:ellipsis;
-}
-
-.student-meta{
-  color:var(--text-light);
-  font-size:13px;
-  margin-top:4px;
-}
-
-.student-chevron{
-  color:#b2b3ba;
-  font-size:24px;
-}
-
-
-/* =========================================================
-   STUDENT PROFILE
-========================================================= */
-
-.profile-top{
-  padding-bottom:20px;
-}
-
-.back-button{
-  background:transparent;
-  color:var(--purple);
-
-  padding:4px 0;
-
-  font-size:15px;
-  font-weight:650;
-
-  margin-bottom:17px;
-}
-
-.profile-main{
-  display:flex;
-  align-items:center;
-  gap:16px;
-}
-
-.profile-big-avatar{
-  width:70px;
-  height:70px;
-
-  border-radius:23px;
-
-  background:var(--purple-soft);
-  color:var(--purple);
-
-  display:flex;
-  align-items:center;
-  justify-content:center;
-
-  font-size:23px;
-  font-weight:750;
-}
-
-.profile-name{
-  font-size:27px;
-  font-weight:750;
-  letter-spacing:-.7px;
-}
-
-.profile-sub{
-  color:var(--text-light);
-  font-size:14px;
-  margin-top:5px;
-}
-
-.profile-card{
-  background:var(--surface);
-  border-radius:27px;
-
-  padding:22px;
-
-  box-shadow:var(--shadow-small);
-
-  margin-bottom:13px;
-}
-
-.profile-card-title{
-  font-size:19px;
-  font-weight:720;
-  margin-bottom:16px;
+.stats{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:10px;
+    margin-top:12px;
 }
 
-.profile-grid{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:10px;
+.stat-card{
+    background:white;
+    border-radius:19px;
+    padding:17px;
+    box-shadow:0 5px 18px rgba(0,0,0,.045);
 }
 
-.profile-info{
-  background:#f8f8fa;
-  border-radius:17px;
-  padding:15px;
+.stat-number{
+    font-size:24px;
+    font-weight:800;
 }
 
-.profile-info-label{
-  color:var(--text-light);
-  font-size:12px;
+.stat-label{
+    color:#92949b;
+    font-size:11px;
+    margin-top:3px;
 }
-
-.profile-info-value{
-  font-size:17px;
-  font-weight:700;
-  margin-top:5px;
-}
-
-.note-text{
-  color:var(--text-soft);
-  font-size:14px;
-  line-height:1.55;
-}
-
-.profile-lesson{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-
-  padding:13px 0;
-
-  border-bottom:1px solid var(--line);
-}
-
-.profile-lesson:last-child{
-  border-bottom:0;
-}
-
-.profile-lesson-day{
-  font-size:15px;
-  font-weight:650;
-}
-
-.profile-lesson-time{
-  color:var(--text-light);
-  font-size:13px;
-  margin-top:3px;
-}
-
-.delete-student{
-  width:100%;
-
-  background:var(--red-soft);
-  color:var(--red);
-
-  border-radius:17px;
-
-  padding:14px;
-
-  font-size:14px;
-  font-weight:700;
-}
-
-
-/* =========================================================
-   SETTINGS
-========================================================= */
-
-.settings-header{
-  padding-bottom:16px;
-}
-
-.settings-card{
-  background:var(--surface);
-  border-radius:28px;
-  box-shadow:var(--shadow-small);
-  overflow:hidden;
-  margin-bottom:15px;
-}
-
-.settings-card-title{
-  padding:20px 20px 9px;
-
-  color:var(--text-light);
-
-  font-size:12px;
-  font-weight:700;
-
-  text-transform:uppercase;
-  letter-spacing:.8px;
-}
-
-.settings-row{
-  width:100%;
-
-  background:transparent;
-
-  padding:18px 20px;
-
-  display:flex;
-  align-items:center;
-  gap:14px;
-
-  text-align:left;
-
-  border-bottom:1px solid var(--line);
-}
-
-.settings-row:last-child{
-  border-bottom:0;
-}
-
-.settings-icon{
-  width:43px;
-  height:43px;
-
-  border-radius:14px;
-
-  display:flex;
-  align-items:center;
-  justify-content:center;
-
-  font-size:19px;
-
-  flex:none;
-}
-
-.settings-icon.purple{
-  background:var(--purple-soft);
-  color:var(--purple);
-}
-
-.settings-icon.blue{
-  background:var(--blue-soft);
-  color:var(--blue);
-}
-
-.settings-icon.red{
-  background:var(--red-soft);
-  color:var(--red);
-}
-
-.settings-row-body{
-  flex:1;
-  min-width:0;
-}
-
-.settings-row-title{
-  font-size:16px;
-  font-weight:700;
-}
-
-.settings-row-description{
-  color:var(--text-light);
-  font-size:12px;
-  line-height:1.4;
-  margin-top:3px;
-}
-
-.settings-chevron{
-  color:#b2b3ba;
-  font-size:23px;
-}
-
-.settings-note{
-  background:var(--purple-soft);
-  color:var(--text-soft);
-
-  border-radius:22px;
-
-  padding:18px;
-
-  font-size:13px;
-  line-height:1.55;
-
-  margin-bottom:20px;
-}
-
-.settings-version{
-  text-align:center;
-  color:var(--text-light);
-  font-size:12px;
-  padding:10px 0 25px;
-}
-
-
-/* =========================================================
-   MODAL
-========================================================= */
-
-.modal{
-  position:fixed;
-  inset:0;
-
-  background:rgba(20,20,30,.34);
-
-  backdrop-filter:blur(5px);
-  -webkit-backdrop-filter:blur(5px);
-
-  display:none;
-  align-items:flex-end;
-  justify-content:center;
-
-  z-index:100;
-}
-
-.modal.show{
-  display:flex;
-}
-
-.sheet{
-  width:100%;
-  max-width:650px;
-
-  background:rgba(255,255,255,.98);
-
-  border-radius:32px 32px 0 0;
-
-  padding:
-    11px
-    24px
-    calc(25px + env(safe-area-inset-bottom));
-
-  max-height:92vh;
-  overflow-y:auto;
-
-  box-shadow:
-    0 -15px 45px rgba(20,20,40,.12);
-}
-
-.handle{
-  width:40px;
-  height:5px;
-
-  background:#dcdce1;
-
-  border-radius:5px;
-
-  margin:0 auto 22px;
-}
-
-.sheet-title{
-  font-size:27px;
-  font-weight:760;
-  letter-spacing:-.7px;
-
-  margin-bottom:20px;
-}
-
-.form{
-  display:grid;
-  gap:15px;
-}
-
-.form-group{
-  display:grid;
-  gap:7px;
-}
-
-.form-label{
-  color:var(--text-soft);
-  font-size:13px;
-  font-weight:650;
-}
-
-.form input,
-.form select,
-.form textarea{
-  width:100%;
-
-  border:1px solid #e4e4e9;
-
-  border-radius:17px;
-
-  padding:14px 15px;
-
-  background:#f9f9fb;
-
-  color:var(--text);
-
-  font-size:15px;
-}
-
-.form textarea{
-  min-height:95px;
-  resize:none;
-}
-
-.form input:focus,
-.form select:focus,
-.form textarea:focus{
-  border-color:#b4adf2;
-  background:white;
-}
-
-.form-actions{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:10px;
-
-  margin-top:3px;
-}
-
-.cancel-button{
-  background:#f2f2f5;
-  color:var(--text-soft);
-
-  border-radius:17px;
-
-  padding:14px;
-
-  font-weight:650;
-}
-
-.save-button{
-  background:var(--purple);
-  color:white;
-
-  border-radius:17px;
-
-  padding:14px;
-
-  font-weight:700;
-
-  box-shadow:
-    0 8px 20px rgba(101,89,220,.2);
-}
-
 
-/* =========================================================
+/* =========================
    BOTTOM NAV
-========================================================= */
+========================= */
 
 .bottom-nav{
-  position:fixed;
-
-  left:0;
-  right:0;
-  bottom:0;
-
-  height:
-    calc(76px + env(safe-area-inset-bottom));
-
-  padding-bottom:env(safe-area-inset-bottom);
-
-  background:
-    rgba(255,255,255,.93);
-
-  border-top:1px solid rgba(225,225,230,.8);
-
-  backdrop-filter:blur(18px);
-  -webkit-backdrop-filter:blur(18px);
-
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-
-  z-index:50;
+    position:sticky;
+    bottom:12px;
+    z-index:20;
+    background:rgba(255,255,255,.92);
+    backdrop-filter:blur(18px);
+    -webkit-backdrop-filter:blur(18px);
+    border:1px solid rgba(0,0,0,.05);
+    border-radius:22px;
+    box-shadow:0 10px 30px rgba(0,0,0,.10);
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    padding:6px;
+    margin-top:28px;
 }
 
-.nav-button{
-  background:transparent;
+.nav-btn{
+    background:transparent;
+    border-radius:17px;
+    padding:10px 5px 9px;
+    color:#999aa1;
+    transition:.15s ease;
+}
 
-  color:#9a9ba3;
-
-  display:flex;
-  flex-direction:column;
-
-  align-items:center;
-  justify-content:center;
-
-  gap:5px;
-
-  font-size:11px;
-  font-weight:650;
+.nav-btn.active{
+    background:#202126;
+    color:white;
 }
 
 .nav-icon{
-  font-size:22px;
-  line-height:1;
+    font-size:17px;
+    display:block;
+    margin-bottom:3px;
 }
 
-.nav-button.active{
-  color:var(--purple);
+.nav-label{
+    font-size:10px;
+    font-weight:650;
 }
 
-.nav-dot{
-  width:4px;
-  height:4px;
+/* =========================
+   SCHEDULE
+========================= */
 
-  border-radius:50%;
-
-  background:currentColor;
-
-  opacity:0;
+.page-title{
+    font-size:28px;
+    font-weight:800;
+    letter-spacing:-1px;
+    margin-bottom:18px;
 }
 
-.nav-button.active .nav-dot{
-  opacity:1;
+.week{
+    display:flex;
+    gap:8px;
+    overflow-x:auto;
+    padding-bottom:4px;
+    scrollbar-width:none;
 }
 
+.week::-webkit-scrollbar{
+    display:none;
+}
 
-/* =========================================================
-   RESPONSIVE
-========================================================= */
+.day-btn{
+    min-width:54px;
+    padding:10px 8px;
+    border-radius:17px;
+    background:white;
+    box-shadow:0 5px 16px rgba(0,0,0,.045);
+    color:#777981;
+    transition:.15s ease;
+}
 
-@media(min-width:700px){
+.day-btn.active{
+    background:#202126;
+    color:white;
+}
 
-  .content,
-  .home-header,
-  .page-header{
-    max-width:760px;
-    margin:auto;
-  }
+.day-name{
+    font-size:10px;
+    text-transform:uppercase;
+    letter-spacing:.5px;
+}
 
-  .bottom-nav{
-    max-width:760px;
-    left:50%;
-    right:auto;
-    transform:translateX(-50%);
+.day-number{
+    font-size:17px;
+    font-weight:750;
+    margin-top:3px;
+}
+
+.schedule-date{
+    margin:20px 2px 12px;
+    font-size:14px;
+    color:#85868e;
+}
+
+.add-main{
     width:100%;
-    border-left:1px solid var(--line);
-    border-right:1px solid var(--line);
-  }
-
+    height:52px;
+    border-radius:18px;
+    background:#202126;
+    color:white;
+    font-weight:700;
+    margin-bottom:16px;
+    box-shadow:0 9px 20px rgba(0,0,0,.12);
+    transition:.15s ease;
 }
 
+.add-main:active{
+    transform:scale(.98);
+}
 
-/* =========================================================
-   REDUCED MOTION
-========================================================= */
+/* =========================
+   STUDENTS
+========================= */
 
-@media(prefers-reduced-motion:reduce){
+.student-card{
+    background:white;
+    border-radius:20px;
+    padding:16px;
+    display:flex;
+    align-items:center;
+    gap:13px;
+    margin-bottom:10px;
+    box-shadow:0 5px 18px rgba(0,0,0,.045);
+    transition:.15s ease;
+}
 
-  *,
-  *::before,
-  *::after{
-    scroll-behavior:auto !important;
-    transition:none !important;
-  }
+.student-card:active{
+    transform:scale(.985);
+}
 
+.avatar{
+    width:45px;
+    height:45px;
+    border-radius:15px;
+    background:#ececf0;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:15px;
+    font-weight:800;
+    color:#44454c;
+    flex-shrink:0;
+}
+
+.student-info{
+    flex:1;
+    min-width:0;
+}
+
+.student-name{
+    font-weight:750;
+    font-size:15px;
+}
+
+.student-level{
+    font-size:12px;
+    color:#96979e;
+    margin-top:3px;
+}
+
+.chevron{
+    color:#b0b1b7;
+    font-size:18px;
+}
+
+.add-student{
+    width:100%;
+    height:52px;
+    border-radius:18px;
+    background:#202126;
+    color:white;
+    font-weight:700;
+    margin-bottom:15px;
+}
+
+/* =========================
+   PROFILE
+========================= */
+
+.back-btn{
+    background:transparent;
+    padding:5px 0;
+    color:#777981;
+    font-size:13px;
+    margin-bottom:17px;
+}
+
+.profile-header{
+    background:white;
+    border-radius:23px;
+    padding:22px;
+    text-align:center;
+    box-shadow:0 5px 18px rgba(0,0,0,.045);
+}
+
+.profile-avatar{
+    width:70px;
+    height:70px;
+    margin:0 auto 12px;
+    border-radius:23px;
+    background:#202126;
+    color:white;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:22px;
+    font-weight:800;
+}
+
+.profile-name{
+    font-size:22px;
+    font-weight:800;
+}
+
+.profile-level{
+    font-size:13px;
+    color:#92939a;
+    margin-top:4px;
+}
+
+.profile-section{
+    background:white;
+    border-radius:20px;
+    padding:18px;
+    margin-top:12px;
+    box-shadow:0 5px 18px rgba(0,0,0,.045);
+}
+
+.profile-section-title{
+    font-size:13px;
+    font-weight:750;
+    margin-bottom:8px;
+}
+
+.profile-notes{
+    font-size:13px;
+    color:#777981;
+    line-height:1.5;
+}
+
+.danger-btn{
+    width:100%;
+    height:48px;
+    border-radius:16px;
+    background:#fff0f0;
+    color:#c94a4a;
+    font-weight:700;
+    margin-top:12px;
+}
+
+/* =========================
+   SETTINGS
+========================= */
+
+.settings-hero{
+    background:linear-gradient(145deg,#202126,#363840);
+    color:white;
+    border-radius:24px;
+    padding:20px;
+    display:flex;
+    gap:14px;
+    align-items:center;
+    margin-bottom:16px;
+    box-shadow:0 14px 30px rgba(0,0,0,.14);
+}
+
+.settings-hero-icon{
+    width:48px;
+    height:48px;
+    border-radius:16px;
+    background:rgba(255,255,255,.1);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:22px;
+    flex-shrink:0;
+}
+
+.settings-hero-title{
+    font-size:16px;
+    font-weight:750;
+}
+
+.settings-hero-text{
+    font-size:11px;
+    color:rgba(255,255,255,.65);
+    margin-top:4px;
+    line-height:1.4;
+}
+
+.settings-group{
+    background:white;
+    border-radius:20px;
+    overflow:hidden;
+    box-shadow:0 5px 18px rgba(0,0,0,.045);
+}
+
+.settings-row{
+    display:flex;
+    align-items:center;
+    gap:13px;
+    padding:16px;
+    min-height:70px;
+}
+
+.settings-row + .settings-row{
+    border-top:1px solid #eeeeF1;
+}
+
+.settings-icon{
+    width:39px;
+    height:39px;
+    border-radius:13px;
+    background:#f1f1f4;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:18px;
+    flex-shrink:0;
+}
+
+.settings-info{
+    flex:1;
+}
+
+.settings-title{
+    font-size:14px;
+    font-weight:700;
+}
+
+.settings-description{
+    font-size:11px;
+    color:#999aa1;
+    margin-top:3px;
+    line-height:1.4;
+}
+
+.settings-action{
+    padding:9px 12px;
+    border-radius:12px;
+    background:#202126;
+    color:white;
+    font-size:11px;
+    font-weight:700;
+}
+
+.settings-action:active{
+    transform:scale(.95);
+}
+
+.settings-danger{
+    color:#c94a4a;
+}
+
+.settings-danger .settings-icon{
+    background:#fff0f0;
+}
+
+/* =========================
+   MODAL
+========================= */
+
+.modal-backdrop{
+    position:fixed;
+    inset:0;
+    z-index:100;
+    background:rgba(0,0,0,.38);
+    backdrop-filter:blur(6px);
+    -webkit-backdrop-filter:blur(6px);
+    display:none;
+    align-items:flex-end;
+    justify-content:center;
+}
+
+.modal-backdrop.show{
+    display:flex;
+}
+
+.modal{
+    width:100%;
+    max-width:520px;
+    background:#f7f7f9;
+    border-radius:27px 27px 0 0;
+    padding:18px 16px calc(20px + env(safe-area-inset-bottom));
+    box-shadow:0 -10px 40px rgba(0,0,0,.18);
+    animation:slideUp .22s ease;
+}
+
+@keyframes slideUp{
+    from{
+        transform:translateY(30px);
+        opacity:0;
+    }
+    to{
+        transform:translateY(0);
+        opacity:1;
+    }
+}
+
+.modal-handle{
+    width:38px;
+    height:4px;
+    border-radius:20px;
+    background:#d0d0d4;
+    margin:0 auto 18px;
+}
+
+.modal-title{
+    font-size:21px;
+    font-weight:800;
+    margin-bottom:18px;
+}
+
+.field{
+    margin-bottom:12px;
+}
+
+.field label{
+    display:block;
+    font-size:11px;
+    color:#85868d;
+    margin:0 0 6px 3px;
+}
+
+.field input,
+.field select,
+.field textarea{
+    width:100%;
+    border:none;
+    outline:none;
+    background:white;
+    border-radius:15px;
+    padding:13px 14px;
+    font-size:14px;
+    box-shadow:0 3px 10px rgba(0,0,0,.035);
+}
+
+.field textarea{
+    min-height:90px;
+    resize:none;
+}
+
+.modal-actions{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:10px;
+    margin-top:18px;
+}
+
+.modal-btn{
+    height:49px;
+    border-radius:16px;
+    font-weight:700;
+}
+
+.cancel-btn{
+    background:#e9e9ed;
+    color:#55565d;
+}
+
+.save-btn{
+    background:#202126;
+    color:white;
+}
+
+/* =========================
+   SMALL SCREENS
+========================= */
+
+@media(max-width:360px){
+
+    .app{
+        padding-left:13px;
+        padding-right:13px;
+    }
+
+    .greeting-title{
+        font-size:27px;
+    }
+
+    .page-title{
+        font-size:26px;
+    }
+
+    .lesson-card{
+        padding:14px;
+    }
+
+    .day-btn{
+        min-width:50px;
+    }
 }
 
 </style>
 </head>
 
-
 <body>
 
 <div class="app">
 
+    <!-- TOP BAR -->
 
-<!-- =======================================================
-     HOME
-======================================================= -->
+    <div class="topbar">
 
-<main
-  id="homePage"
-  class="page active"
->
+        <div class="brand">
+            <div class="brand-icon">✓</div>
 
-  <header class="home-header">
-
-    <div
-      id="todayDate"
-      class="home-date">
-    </div>
-
-    <div class="home-header-row">
-
-      <div
-        id="greeting"
-        class="greeting">
-      </div>
-
-      <button
-        class="profile-button"
-        onclick="showPage('settingsPage')"
-        aria-label="Settings">
-
-        ⚙
-
-      </button>
-
-    </div>
-
-  </header>
-
-
-  <div class="content">
-
-
-    <!-- NEXT LESSON -->
-
-    <div
-      id="nextLessonCard"
-      class="next-card">
-
-      <div class="next-label">
-        Next lesson
-      </div>
-
-      <div class="next-main">
-
-        <div>
-
-          <div
-            id="nextStudent"
-            class="next-student">
-          </div>
-
-          <div
-            id="nextInfo"
-            class="next-info">
-          </div>
-
+            <div>
+                <div class="brand-text">Teacher Planner</div>
+                <div class="brand-sub">Simple. Private. Yours.</div>
+            </div>
         </div>
 
-        <div
-          id="nextTime"
-          class="next-time">
-        </div>
-
-      </div>
+        <button class="icon-btn" onclick="openSettings()">⚙️</button>
 
     </div>
 
 
-    <!-- STATS -->
+    <!-- =========================
+         HOME
+    ========================== -->
 
-    <div class="stats">
+    <section id="homePage" class="page active">
 
-      <div class="stat-card purple">
+        <div class="greeting">
 
-        <div class="stat-icon">
-          ◷
+            <div class="greeting-small" id="todayText"></div>
+
+            <div class="greeting-title">
+                <span id="greetingText"></span>
+            </div>
+
         </div>
 
-        <div
-          id="todayCount"
-          class="stat-number">
-          0
-        </div>
 
-        <div class="stat-label">
-          Today's lessons
-        </div>
-
-      </div>
-
-
-      <div class="stat-card blue">
-
-        <div class="stat-icon">
-          ♙
-        </div>
-
-        <div
-          id="studentCount"
-          class="stat-number">
-          0
-        </div>
-
-        <div class="stat-label">
-          Students
-        </div>
-
-      </div>
-
-    </div>
-
-
-    <!-- TODAY -->
-
-    <section class="section">
-
-      <div class="section-heading">
-
-        <div class="section-title">
-          Today
-        </div>
-
-        <button
-          class="section-link"
-          onclick="showPage('schedulePage')">
-
-          View all
-
-        </button>
-
-      </div>
-
-
-      <div
-        id="todaySchedule"
-        class="schedule-card">
-      </div>
+        <div id="homeContent"></div>
 
     </section>
 
-  </div>
 
-</main>
+    <!-- =========================
+         SCHEDULE
+    ========================== -->
 
+    <section id="schedulePage" class="page">
 
+        <div class="page-title">Schedule</div>
 
-<!-- =======================================================
-     SCHEDULE
-======================================================= -->
+        <div class="week" id="weekDays"></div>
 
-<main
-  id="schedulePage"
-  class="page"
->
+        <div class="schedule-date" id="scheduleDate"></div>
 
-  <header class="page-header schedule-header">
+        <button class="add-main" onclick="openLessonModal()">
+            ＋ Add lesson
+        </button>
 
-    <div class="header-row">
+        <div id="scheduleLessons"></div>
 
-      <div>
+    </section>
 
-        <div class="small-label">
-          Weekly planner
-        </div>
 
-        <div class="page-title">
-          Schedule
-        </div>
+    <!-- =========================
+         STUDENTS
+    ========================== -->
 
-      </div>
+    <section id="studentsPage" class="page">
 
+        <div class="page-title">Students</div>
 
-      <button
-        class="add-button"
-        onclick="openLessonModal()">
+        <button class="add-student" onclick="openStudentModal()">
+            ＋ Add student
+        </button>
 
-        +
+        <div id="studentsList"></div>
 
-      </button>
+    </section>
 
-    </div>
 
-  </header>
+    <!-- =========================
+         PROFILE
+    ========================== -->
 
+    <section id="profilePage" class="page">
 
-  <div class="content">
+        <button class="back-btn" onclick="showPage('students')">
+            ← Back to students
+        </button>
 
-    <div class="week-card">
+        <div id="profileContent"></div>
 
-      <div
-        id="dayTabs"
-        class="week-days">
-      </div>
+    </section>
 
 
-      <div class="day-content">
+    <!-- =========================
+         SETTINGS
+    ========================== -->
 
-        <div
-          id="selectedDate"
-          class="selected-date">
-        </div>
+    <section id="settingsPage" class="page">
 
-        <div
-          id="daySchedule">
-        </div>
+        <div class="page-title">Settings</div>
 
-      </div>
+        <div class="settings-hero">
 
-    </div>
+            <div class="settings-hero-icon">
+                🔒
+            </div>
 
-  </div>
+            <div>
+                <div class="settings-hero-title">
+                    Your planner, your space
+                </div>
 
-</main>
-
-
-
-<!-- =======================================================
-     STUDENTS
-======================================================= -->
-
-<main
-  id="studentsPage"
-  class="page"
->
-
-  <header class="page-header students-header">
-
-    <div class="header-row">
-
-      <div>
-
-        <div class="small-label">
-          Your students
-        </div>
-
-        <div class="page-title">
-          Students
-        </div>
-
-        <div
-          id="studentCountLabel"
-          class="student-count-label">
-        </div>
-
-      </div>
-
-
-      <button
-        class="student-add"
-        onclick="openStudentModal()">
-
-        +
-
-      </button>
-
-    </div>
-
-  </header>
-
-
-  <div class="content">
-
-    <div
-      id="studentList"
-      class="students-list">
-    </div>
-
-  </div>
-
-</main>
-
-
-
-<!-- =======================================================
-     STUDENT DETAIL
-======================================================= -->
-
-<main
-  id="studentDetailPage"
-  class="page"
->
-
-  <header class="page-header profile-top">
-
-    <button
-      class="back-button"
-      onclick="showPage('studentsPage')">
-
-      ‹ &nbsp;Students
-
-    </button>
-
-
-    <div id="studentDetail"></div>
-
-  </header>
-
-</main>
-
-
-
-<!-- =======================================================
-     SETTINGS
-======================================================= -->
-
-<main
-  id="settingsPage"
-  class="page"
->
-
-  <header class="page-header settings-header">
-
-    <div class="header-row">
-
-      <div>
-
-        <div class="small-label">
-          Personal space
-        </div>
-
-        <div class="page-title">
-          Settings
-        </div>
-
-      </div>
-
-    </div>
-
-  </header>
-
-
-  <div class="content">
-
-
-    <!-- DATA -->
-
-    <div class="settings-card">
-
-      <div class="settings-card-title">
-        Data & Backup
-      </div>
-
-
-      <button
-        class="settings-row"
-        onclick="backupData()"
-      >
-
-        <div class="settings-icon purple">
-          💾
-        </div>
-
-        <div class="settings-row-body">
-
-          <div class="settings-row-title">
-            Backup data
-          </div>
-
-          <div class="settings-row-description">
-            Save your students and lessons as a private backup file.
-          </div>
+                <div class="settings-hero-text">
+                    Your students, lessons and notes stay on this device.
+                </div>
+            </div>
 
         </div>
 
-        <div class="settings-chevron">
-          ›
+
+        <div class="settings-group">
+
+            <div class="settings-row">
+
+                <div class="settings-icon">
+                    💾
+                </div>
+
+                <div class="settings-info">
+
+                    <div class="settings-title">
+                        Backup data
+                    </div>
+
+                    <div class="settings-description">
+                        Save your planner as a private JSON file.
+                    </div>
+
+                </div>
+
+                <button class="settings-action" onclick="backupData()">
+                    Backup
+                </button>
+
+            </div>
+
+
+            <div class="settings-row">
+
+                <div class="settings-icon">
+                    📥
+                </div>
+
+                <div class="settings-info">
+
+                    <div class="settings-title">
+                        Restore data
+                    </div>
+
+                    <div class="settings-description">
+                        Restore a previously saved backup.
+                    </div>
+
+                </div>
+
+                <button class="settings-action" onclick="document.getElementById('restoreInput').click()">
+                    Restore
+                </button>
+
+            </div>
+
+
+            <div class="settings-row settings-danger">
+
+                <div class="settings-icon">
+                    🗑
+                </div>
+
+                <div class="settings-info">
+
+                    <div class="settings-title">
+                        Clear all data
+                    </div>
+
+                    <div class="settings-description">
+                        Permanently remove all students and lessons from this device.
+                    </div>
+
+                </div>
+
+                <button class="settings-action"
+                        style="background:#fff0f0;color:#c94a4a"
+                        onclick="clearAllData()">
+                    Clear
+                </button>
+
+            </div>
+
         </div>
 
-      </button>
+
+        <input
+            id="restoreInput"
+            type="file"
+            accept=".json,application/json"
+            style="display:none"
+            onchange="restoreData(event)"
+        >
+
+    </section>
 
 
-      <button
-        class="settings-row"
-        onclick="openRestore()"
-      >
+    <!-- =========================
+         BOTTOM NAV
+    ========================== -->
 
-        <div class="settings-icon blue">
-          📥
-        </div>
+    <nav class="bottom-nav">
 
-        <div class="settings-row-body">
+        <button id="navHome"
+                class="nav-btn active"
+                onclick="showPage('home')">
 
-          <div class="settings-row-title">
-            Restore data
-          </div>
+            <span class="nav-icon">⌂</span>
+            <span class="nav-label">Home</span>
 
-          <div class="settings-row-description">
-            Restore your planner from a previous backup file.
-          </div>
-
-        </div>
-
-        <div class="settings-chevron">
-          ›
-        </div>
-
-      </button>
+        </button>
 
 
-      <button
-        class="settings-row"
-        onclick="clearAllData()"
-      >
+        <button id="navSchedule"
+                class="nav-btn"
+                onclick="showPage('schedule')">
 
-        <div class="settings-icon red">
-          🗑
-        </div>
+            <span class="nav-icon">◷</span>
+            <span class="nav-label">Schedule</span>
 
-        <div class="settings-row-body">
-
-          <div class="settings-row-title">
-            Clear all data
-          </div>
-
-          <div class="settings-row-description">
-            Permanently remove all students and lessons from this device.
-          </div>
-
-        </div>
-
-        <div class="settings-chevron">
-          ›
-        </div>
-
-      </button>
-
-    </div>
+        </button>
 
 
-    <!-- PRIVACY -->
+        <button id="navStudents"
+                class="nav-btn"
+                onclick="showPage('students')">
 
-    <div class="settings-note">
+            <span class="nav-icon">♙</span>
+            <span class="nav-label">Students</span>
 
-      🔒 <strong>Your data stays on this device.</strong><br><br>
+        </button>
 
-      Teacher Planner stores your students, lessons and notes locally
-      in this browser. Backup files are created on your device and are
-      not automatically uploaded anywhere.
-
-    </div>
-
-
-    <div class="settings-version">
-      Teacher Planner · Personal Edition
-    </div>
-
-  </div>
-
-</main>
-
-
-
-<!-- =======================================================
-     BOTTOM NAV
-======================================================= -->
-
-<nav class="bottom-nav">
-
-  <button
-    id="navHome"
-    class="nav-button active"
-    onclick="showPage('homePage')">
-
-    <span class="nav-icon">
-      ⌂
-    </span>
-
-    <span>
-      Home
-    </span>
-
-    <span class="nav-dot"></span>
-
-  </button>
-
-
-  <button
-    id="navSchedule"
-    class="nav-button"
-    onclick="showPage('schedulePage')">
-
-    <span class="nav-icon">
-      ▦
-    </span>
-
-    <span>
-      Schedule
-    </span>
-
-    <span class="nav-dot"></span>
-
-  </button>
-
-
-  <button
-    id="navStudents"
-    class="nav-button"
-    onclick="showPage('studentsPage')">
-
-    <span class="nav-icon">
-      ♙
-    </span>
-
-    <span>
-      Students
-    </span>
-
-    <span class="nav-dot"></span>
-
-  </button>
-
-</nav>
+    </nav>
 
 </div>
 
 
-
-<!-- =======================================================
-     HIDDEN RESTORE INPUT
-======================================================= -->
-
-<input
-  id="restoreInput"
-  type="file"
-  accept=".json,application/json"
-  style="display:none"
-  onchange="restoreData(event)"
->
-
-
-
-<!-- =======================================================
+<!-- =========================
      LESSON MODAL
-======================================================= -->
+========================== -->
 
-<div
-  id="lessonModal"
-  class="modal">
+<div id="lessonModal" class="modal-backdrop" onclick="backdropClose(event,'lessonModal')">
 
-  <div class="sheet">
+    <div class="modal">
 
-    <div class="handle"></div>
+        <div class="modal-handle"></div>
 
-    <div class="sheet-title">
-      New lesson
+        <div class="modal-title">
+            Add lesson
+        </div>
+
+
+        <div class="field">
+
+            <label>Student</label>
+
+            <select id="lessonStudent"></select>
+
+        </div>
+
+
+        <div class="field">
+
+            <label>Date</label>
+
+            <input id="lessonDate" type="date">
+
+        </div>
+
+
+        <div class="field">
+
+            <label>Time</label>
+
+            <input id="lessonTime" type="time">
+
+        </div>
+
+
+        <div class="field">
+
+            <label>Duration</label>
+
+            <select id="lessonDuration">
+
+                <option value="30">30 minutes</option>
+                <option value="45">45 minutes</option>
+                <option value="60" selected>60 minutes</option>
+                <option value="90">90 minutes</option>
+                <option value="120">120 minutes</option>
+
+            </select>
+
+        </div>
+
+
+        <div class="modal-actions">
+
+            <button class="modal-btn cancel-btn"
+                    onclick="closeModal('lessonModal')">
+                Cancel
+            </button>
+
+            <button class="modal-btn save-btn"
+                    onclick="saveLesson()">
+                Save lesson
+            </button>
+
+        </div>
+
     </div>
-
-
-    <form
-      class="form"
-      onsubmit="saveLesson(event)">
-
-
-      <div class="form-group">
-
-        <label class="form-label">
-          Student
-        </label>
-
-        <select
-          id="lessonStudent"
-          required>
-        </select>
-
-      </div>
-
-
-      <div class="form-group">
-
-        <label class="form-label">
-          Day
-        </label>
-
-        <select
-          id="lessonDay"
-          required>
-        </select>
-
-      </div>
-
-
-      <div class="form-group">
-
-        <label class="form-label">
-          Time
-        </label>
-
-        <input
-          id="lessonTime"
-          type="time"
-          required>
-
-      </div>
-
-
-      <div class="form-group">
-
-        <label class="form-label">
-          Duration
-        </label>
-
-        <select id="lessonDuration">
-
-          <option value="45">
-            45 minutes
-          </option>
-
-          <option
-            value="60"
-            selected>
-            60 minutes
-          </option>
-
-          <option value="90">
-            90 minutes
-          </option>
-
-          <option value="120">
-            120 minutes
-          </option>
-
-        </select>
-
-      </div>
-
-
-      <div class="form-actions">
-
-        <button
-          type="button"
-          class="cancel-button"
-          onclick="closeModal('lessonModal')">
-
-          Cancel
-
-        </button>
-
-
-        <button
-          type="submit"
-          class="save-button">
-
-          Add lesson
-
-        </button>
-
-      </div>
-
-    </form>
-
-  </div>
 
 </div>
 
 
-
-<!-- =======================================================
+<!-- =========================
      STUDENT MODAL
-======================================================= -->
+========================== -->
 
-<div
-  id="studentModal"
-  class="modal">
+<div id="studentModal" class="modal-backdrop" onclick="backdropClose(event,'studentModal')">
 
-  <div class="sheet">
+    <div class="modal">
 
-    <div class="handle"></div>
+        <div class="modal-handle"></div>
 
-    <div class="sheet-title">
-      New student
+        <div class="modal-title">
+            Add student
+        </div>
+
+
+        <div class="field">
+
+            <label>Name</label>
+
+            <input
+                id="studentName"
+                type="text"
+                placeholder="Student name"
+                autocomplete="off"
+            >
+
+        </div>
+
+
+        <div class="field">
+
+            <label>Level</label>
+
+            <select id="studentLevel">
+
+                <option value="A1">A1</option>
+                <option value="A2">A2</option>
+                <option value="B1" selected>B1</option>
+                <option value="B2">B2</option>
+                <option value="C1">C1</option>
+                <option value="C2">C2</option>
+
+            </select>
+
+        </div>
+
+
+        <div class="field">
+
+            <label>Notes</label>
+
+            <textarea
+                id="studentNotes"
+                placeholder="Optional notes..."
+            ></textarea>
+
+        </div>
+
+
+        <div class="modal-actions">
+
+            <button class="modal-btn cancel-btn"
+                    onclick="closeModal('studentModal')">
+                Cancel
+            </button>
+
+            <button class="modal-btn save-btn"
+                    onclick="saveStudent()">
+                Add student
+            </button>
+
+        </div>
+
     </div>
 
-
-    <form
-      class="form"
-      onsubmit="saveStudent(event)">
-
-
-      <div class="form-group">
-
-        <label class="form-label">
-          Name
-        </label>
-
-        <input
-          id="studentName"
-          placeholder="Student name"
-          required>
-
-      </div>
-
-
-      <div class="form-group">
-
-        <label class="form-label">
-          English level
-        </label>
-
-        <select id="studentLevel">
-
-          <option>A1</option>
-          <option>A2</option>
-          <option>B1</option>
-          <option>B2</option>
-          <option>C1</option>
-          <option>C2</option>
-
-        </select>
-
-      </div>
-
-
-      <div class="form-group">
-
-        <label class="form-label">
-          Notes
-        </label>
-
-        <textarea
-          id="studentNotes"
-          placeholder="Add a note about this student...">
-        </textarea>
-
-      </div>
-
-
-      <div class="form-actions">
-
-        <button
-          type="button"
-          class="cancel-button"
-          onclick="closeModal('studentModal')">
-
-          Cancel
-
-        </button>
-
-
-        <button
-          type="submit"
-          class="save-button">
-
-          Add student
-
-        </button>
-
-      </div>
-
-    </form>
-
-  </div>
-
 </div>
-
 
 
 <script>
@@ -2108,225 +1297,245 @@ textarea{
    DATA
 ========================================================= */
 
-const KEY =
-  "teacherPlanner_v4";
+const KEY = "teacherPlanner_v4";
 
+const DEMO_CLEAN_FLAG = "teacherPlanner_demo_cleaned_v1";
+
+
+/*
+    Yeni istifadəçi üçün artıq demo məlumat yoxdur.
+*/
 
 const defaultData = {
-
-  students:[
-
-    {
-      id:1,
-      name:"Aysel",
-      level:"B1",
-      notes:"Focus on speaking and vocabulary."
-    },
-
-    {
-      id:2,
-      name:"Murad",
-      level:"A2",
-      notes:"Needs extra practice with grammar."
-    },
-
-    {
-      id:3,
-      name:"Leyla",
-      level:"C1",
-      notes:"Advanced conversation and writing."
-    }
-
-  ],
-
-
-  lessons:[
-
-    {
-      id:1,
-      studentId:1,
-      day:1,
-      time:"10:00",
-      duration:60
-    },
-
-    {
-      id:2,
-      studentId:2,
-      day:3,
-      time:"15:00",
-      duration:60
-    },
-
-    {
-      id:3,
-      studentId:3,
-      day:5,
-      time:"18:30",
-      duration:90
-    }
-
-  ]
-
+    students: [],
+    lessons: []
 };
 
 
-let data =
-  JSON.parse(
-    localStorage.getItem(KEY) || "null"
-  ) || defaultData;
+/* =========================================================
+   ONE-TIME DEMO CLEANUP
+=========================================================
+
+   Əgər cihazda əvvəlki Aysel/Murad/Leyla demo məlumatları
+   tam şəkildə qalıbsa, onları yalnız bir dəfə təmizləyirik.
+
+   Əgər istifadəçi həmin məlumatları dəyişibsə və ya öz
+   məlumatlarını əlavə edibsə, heç nəyə toxunmuruq.
+========================================================= */
+
+function isExactOldDemo(data){
+
+    if(!data) return false;
+
+    if(!Array.isArray(data.students)) return false;
+    if(!Array.isArray(data.lessons)) return false;
+
+    if(data.students.length !== 3) return false;
+    if(data.lessons.length !== 3) return false;
+
+    const students = data.students;
+
+    const hasAysel = students.some(s =>
+        Number(s.id) === 1 &&
+        s.name === "Aysel" &&
+        s.level === "B1"
+    );
+
+    const hasMurad = students.some(s =>
+        Number(s.id) === 2 &&
+        s.name === "Murad" &&
+        s.level === "A2"
+    );
+
+    const hasLeyla = students.some(s =>
+        Number(s.id) === 3 &&
+        s.name === "Leyla" &&
+        s.level === "C1"
+    );
+
+    if(!hasAysel || !hasMurad || !hasLeyla){
+        return false;
+    }
+
+    const lessons = data.lessons;
+
+    const demoLessonStudents = lessons
+        .map(l => Number(l.studentId))
+        .sort((a,b) => a-b);
+
+    const expected = [1,2,3];
+
+    if(JSON.stringify(demoLessonStudents) !== JSON.stringify(expected)){
+        return false;
+    }
+
+    return true;
+}
 
 
-let selectedDay =
-  new Date().getDay();
+function cleanOldDemoOnce(){
+
+    if(localStorage.getItem(DEMO_CLEAN_FLAG)){
+        return;
+    }
+
+    try{
+
+        const raw = localStorage.getItem(KEY);
+
+        if(raw){
+
+            const stored = JSON.parse(raw);
+
+            if(isExactOldDemo(stored)){
+
+                localStorage.setItem(
+                    KEY,
+                    JSON.stringify(defaultData)
+                );
+
+            }
+
+        }
+
+    }catch(e){
+
+        console.log("Demo cleanup skipped.", e);
+
+    }
+
+    localStorage.setItem(DEMO_CLEAN_FLAG,"1");
+}
+
+
+cleanOldDemoOnce();
 
 
 /* =========================================================
-   DAYS
+   LOAD DATA
 ========================================================= */
 
-const days = [
+let data;
 
-  {
-    value:1,
-    name:"Monday",
-    short:"MON"
-  },
+try{
 
-  {
-    value:2,
-    name:"Tuesday",
-    short:"TUE"
-  },
+    data = JSON.parse(
+        localStorage.getItem(KEY) || "null"
+    );
 
-  {
-    value:3,
-    name:"Wednesday",
-    short:"WED"
-  },
+}catch(e){
 
-  {
-    value:4,
-    name:"Thursday",
-    short:"THU"
-  },
+    data = null;
 
-  {
-    value:5,
-    name:"Friday",
-    short:"FRI"
-  },
+}
 
-  {
-    value:6,
-    name:"Saturday",
-    short:"SAT"
-  },
 
-  {
-    value:0,
-    name:"Sunday",
-    short:"SUN"
-  }
+if(
+    !data ||
+    !Array.isArray(data.students) ||
+    !Array.isArray(data.lessons)
+){
 
+    data = JSON.parse(
+        JSON.stringify(defaultData)
+    );
+
+    saveData();
+
+}
+
+
+/* =========================================================
+   STATE
+========================================================= */
+
+let currentPage = "home";
+
+let selectedDate = new Date();
+
+let selectedStudentId = null;
+
+
+/* =========================================================
+   SAVE
+========================================================= */
+
+function saveData(){
+
+    localStorage.setItem(
+        KEY,
+        JSON.stringify(data)
+    );
+
+}
+
+
+/* =========================================================
+   DATE HELPERS
+========================================================= */
+
+const dayNames = [
+    "Sun",
+    "Mon",
+    "Tue",
+    "Wed",
+    "Thu",
+    "Fri",
+    "Sat"
 ];
 
 
-/* =========================================================
-   HELPERS
-========================================================= */
-
-function persist(){
-
-  localStorage.setItem(
-    KEY,
-    JSON.stringify(data)
-  );
-
-}
+const fullDayNames = [
+    "Sunday",
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday"
+];
 
 
-function getStudent(id){
+function dateKey(date){
 
-  return data.students.find(
-    s =>
-      Number(s.id) ===
-      Number(id)
-  );
+    const y = date.getFullYear();
 
-}
+    const m = String(
+        date.getMonth()+1
+    ).padStart(2,"0");
 
+    const d = String(
+        date.getDate()
+    ).padStart(2,"0");
 
-function escapeHtml(value){
-
-  return String(
-    value ?? ""
-  ).replace(
-    /[&<>"']/g,
-    function(match){
-
-      return {
-
-        "&":"&amp;",
-        "<":"&lt;",
-        ">":"&gt;",
-        '"':"&quot;",
-        "'":"&#039;"
-
-      }[match];
-
-    }
-  );
+    return `${y}-${m}-${d}`;
 
 }
 
 
-function dayName(day){
+function formatDate(date){
 
-  const item =
-    days.find(
-      d =>
-        d.value ===
-        Number(day)
+    return date.toLocaleDateString(
+        undefined,
+        {
+            weekday:"long",
+            month:"long",
+            day:"numeric"
+        }
     );
 
-  return item
-    ? item.name
-    : "";
-
 }
 
 
-function formatTime(time){
+function formatShortDate(date){
 
-  if(!time){
-    return "";
-  }
-
-  const parts =
-    time.split(":");
-
-  let hour =
-    Number(parts[0]);
-
-  const minute =
-    parts[1];
-
-  const suffix =
-    hour >= 12
-      ? "PM"
-      : "AM";
-
-  hour =
-    hour % 12 || 12;
-
-  return (
-    hour +
-    ":" +
-    minute +
-    " " +
-    suffix
-  );
+    return date.toLocaleDateString(
+        undefined,
+        {
+            month:"short",
+            day:"numeric"
+        }
+    );
 
 }
 
@@ -2335,201 +1544,136 @@ function formatTime(time){
    GREETING
 ========================================================= */
 
-function greetingText(){
+function renderGreeting(){
 
-  const hour =
-    new Date().getHours();
+    const hour = new Date().getHours();
 
+    let greeting;
 
-  if(
-    hour >= 5 &&
-    hour < 12
-  ){
+    if(hour >= 5 && hour < 12){
 
-    return `
-      Good morning,<br>
-      Sunshine ☀️
-    `;
+        greeting = "Good morning, Sunshine ☀️";
 
-  }
+    }else if(hour >= 12 && hour < 18){
 
+        greeting = "Good afternoon, Sunshine 🌤️";
 
-  if(
-    hour >= 12 &&
-    hour < 18
-  ){
+    }else{
 
-    return `
-      Good afternoon,<br>
-      Sunshine 🌤️
-    `;
+        greeting = "Good evening, Sunshine 🌙";
 
-  }
+    }
 
 
-  return `
-    Good evening,<br>
-    Sunshine 🌙
-  `;
+    document.getElementById(
+        "greetingText"
+    ).textContent = greeting;
+
+
+    document.getElementById(
+        "todayText"
+    ).textContent = new Date().toLocaleDateString(
+        undefined,
+        {
+            weekday:"long",
+            month:"long",
+            day:"numeric"
+        }
+    );
 
 }
 
 
 /* =========================================================
-   DATE
+   PAGE NAVIGATION
 ========================================================= */
 
-function formatToday(){
+function showPage(page){
 
-  return new Intl.DateTimeFormat(
-    "en-US",
-    {
-      weekday:"long",
-      month:"long",
-      day:"numeric"
+    currentPage = page;
+
+    document.querySelectorAll(".page").forEach(
+        el => el.classList.remove("active")
+    );
+
+
+    const pageEl = document.getElementById(
+        page + "Page"
+    );
+
+    if(pageEl){
+        pageEl.classList.add("active");
     }
-  ).format(
-    new Date()
-  );
-
-}
 
 
-function formatSelectedDate(day){
-
-  const today =
-    new Date();
-
-
-  const current =
-    today.getDay();
+    document.querySelectorAll(".nav-btn").forEach(
+        el => el.classList.remove("active")
+    );
 
 
-  let difference =
-    Number(day) - current;
+    if(page === "home"){
 
+        document.getElementById(
+            "navHome"
+        ).classList.add("active");
 
-  const date =
-    new Date(today);
-
-
-  date.setDate(
-    today.getDate() +
-    difference
-  );
-
-
-  return new Intl.DateTimeFormat(
-    "en-US",
-    {
-      weekday:"long",
-      month:"long",
-      day:"numeric"
     }
-  ).format(date);
+
+
+    if(page === "schedule"){
+
+        document.getElementById(
+            "navSchedule"
+        ).classList.add("active");
+
+    }
+
+
+    if(page === "students"){
+
+        document.getElementById(
+            "navStudents"
+        ).classList.add("active");
+
+    }
+
+
+    renderAll();
+
+    window.scrollTo({
+        top:0,
+        behavior:"smooth"
+    });
 
 }
 
 
 /* =========================================================
-   NEXT LESSON
+   SETTINGS
 ========================================================= */
 
-function getNextLesson(){
+function openSettings(){
 
-  const now =
-    new Date();
+    document.querySelectorAll(".page").forEach(
+        el => el.classList.remove("active")
+    );
 
-
-  const today =
-    now.getDay();
-
-
-  const currentMinutes =
-    now.getHours() * 60 +
-    now.getMinutes();
+    document.getElementById(
+        "settingsPage"
+    ).classList.add("active");
 
 
-  const candidates = [];
+    document.querySelectorAll(".nav-btn").forEach(
+        el => el.classList.remove("active")
+    );
 
 
-  data.lessons.forEach(
-    lesson => {
+    currentPage = "settings";
 
-      const lessonMinutes =
-        Number(
-          lesson.time.split(":")[0]
-        ) * 60 +
-
-        Number(
-          lesson.time.split(":")[1]
-        );
-
-
-      let distance =
-        Number(lesson.day) -
-        today;
-
-
-      if(distance < 0){
-
-        distance += 7;
-
-      }
-
-
-      if(
-        distance === 0 &&
-        lessonMinutes <=
-        currentMinutes
-      ){
-
-        distance = 7;
-
-      }
-
-
-      candidates.push({
-
-        lesson:lesson,
-
-        distance:distance,
-
-        minutes:lessonMinutes
-
-      });
-
-    }
-  );
-
-
-  candidates.sort(
-    (a,b) => {
-
-      if(
-        a.distance !==
-        b.distance
-      ){
-
-        return (
-          a.distance -
-          b.distance
-        );
-
-      }
-
-      return (
-        a.minutes -
-        b.minutes
-      );
-
-    }
-  );
-
-
-  return candidates.length
-    ? candidates[0].lesson
-    : null;
+    window.scrollTo({
+        top:0,
+        behavior:"smooth"
+    });
 
 }
 
@@ -2540,282 +1684,302 @@ function getNextLesson(){
 
 function renderHome(){
 
-  document.getElementById(
-    "greeting"
-  ).innerHTML =
-    greetingText();
-
-
-  document.getElementById(
-    "todayDate"
-  ).textContent =
-    formatToday();
-
-
-  document.getElementById(
-    "studentCount"
-  ).textContent =
-    data.students.length;
-
-
-  document.getElementById(
-    "studentCountLabel"
-  ).textContent =
-    data.students.length +
-    (
-      data.students.length === 1
-        ? " student"
-        : " students"
+    const container = document.getElementById(
+        "homeContent"
     );
 
+    const today = new Date();
 
-  const today =
-    new Date().getDay();
+    const todayKey = dateKey(today);
 
+    const todayLessons = data.lessons
+        .filter(l => l.date === todayKey)
+        .sort((a,b) => a.time.localeCompare(b.time));
 
-  const lessons =
-    data.lessons
 
-      .filter(
-        l =>
-          Number(l.day) ===
-          today
-      )
+    let html = "";
 
-      .sort(
-        (a,b) =>
-          a.time.localeCompare(
-            b.time
-          )
-      );
 
+    /*
+       Empty state
+    */
 
-  document.getElementById(
-    "todayCount"
-  ).textContent =
-    lessons.length;
+    if(
+        data.students.length === 0 &&
+        data.lessons.length === 0
+    ){
 
+        html += `
 
-  renderNextLesson();
+            <div class="welcome-card">
 
-  renderTodayLessons();
+                <div class="welcome-icon">
+                    ✨
+                </div>
 
-}
+                <div class="welcome-title">
+                    Your planner is ready
+                </div>
 
-
-/* =========================================================
-   NEXT LESSON UI
-========================================================= */
-
-function renderNextLesson(){
-
-  const lesson =
-    getNextLesson();
-
-
-  const card =
-    document.getElementById(
-      "nextLessonCard"
-    );
-
-
-  if(!lesson){
-
-    card.style.display =
-      "none";
-
-    return;
-
-  }
-
-
-  card.style.display =
-    "block";
-
-
-  const student =
-    getStudent(
-      lesson.studentId
-    );
-
-
-  document.getElementById(
-    "nextStudent"
-  ).textContent =
-    student
-      ? student.name
-      : "Lesson";
-
-
-  document.getElementById(
-    "nextInfo"
-  ).textContent =
-
-    dayName(
-      lesson.day
-    ) +
-    " · " +
-    lesson.duration +
-    " min" +
-    (
-      student
-        ? " · " + student.level
-        : ""
-    );
-
-
-  document.getElementById(
-    "nextTime"
-  ).innerHTML =
-
-    formatTime(
-      lesson.time
-    ) +
-
-    ' <span class="next-arrow">›</span>';
-
-}
-
-
-/* =========================================================
-   TODAY LESSONS
-========================================================= */
-
-function renderTodayLessons(){
-
-  const today =
-    new Date().getDay();
-
-
-  const lessons =
-    data.lessons
-
-      .filter(
-        l =>
-          Number(l.day) ===
-          today
-      )
-
-      .sort(
-        (a,b) =>
-          a.time.localeCompare(
-            b.time
-          )
-      );
-
-
-  const box =
-    document.getElementById(
-      "todaySchedule"
-    );
-
-
-  if(!lessons.length){
-
-    box.innerHTML = `
-
-      <div class="empty-state">
-
-        <div class="empty-icon">
-          🌿
-        </div>
-
-        <div class="empty-title">
-          No lessons today
-        </div>
-
-        <div class="empty-text">
-          Enjoy your free time
-        </div>
-
-      </div>
-
-    `;
-
-    return;
-
-  }
-
-
-  box.innerHTML =
-
-    lessons.map(
-      lesson => {
-
-        const student =
-          getStudent(
-            lesson.studentId
-          );
-
-
-        return `
-
-          <div class="lesson">
-
-            <div class="lesson-time">
-
-              ${formatTime(
-                lesson.time
-              )}
+                <div class="welcome-text">
+                    Add your first student and start
+                    organizing your lessons in one simple place.
+                </div>
 
             </div>
-
-
-            <div class="lesson-line"></div>
-
-
-            <div class="lesson-info">
-
-              <div class="lesson-student">
-
-                ${escapeHtml(
-                  student
-                    ? student.name
-                    : "Student"
-                )}
-
-              </div>
-
-
-              <div class="lesson-details">
-
-                ${lesson.duration}
-                min
-
-                ${
-                  student
-                    ? " · " +
-                      escapeHtml(
-                        student.level
-                      )
-                    : ""
-                }
-
-              </div>
-
-            </div>
-
-
-            ${
-              student
-                ?
-                `
-                  <div class="level-pill">
-                    ${escapeHtml(
-                      student.level
-                    )}
-                  </div>
-                `
-                :
-                ""
-            }
-
-          </div>
 
         `;
 
-      }
-    ).join("");
+    }
+
+
+    /*
+       Next lesson
+    */
+
+    const futureLessons = data.lessons
+        .map(l => {
+
+            const student = data.students.find(
+                s => Number(s.id) === Number(l.studentId)
+            );
+
+            return {
+                ...l,
+                student
+            };
+
+        })
+        .filter(l => l.student);
+
+
+    const now = new Date();
+
+    const nextLesson = futureLessons
+        .filter(l => {
+
+            const dt = new Date(
+                l.date + "T" + l.time
+            );
+
+            return dt >= now;
+
+        })
+        .sort((a,b) => {
+
+            return (
+                new Date(a.date+"T"+a.time) -
+                new Date(b.date+"T"+b.time)
+            );
+
+        })[0];
+
+
+    if(nextLesson){
+
+        const nextDate = new Date(
+            nextLesson.date + "T" + nextLesson.time
+        );
+
+
+        html += `
+
+            <div class="next-card">
+
+                <div class="next-label">
+                    Next lesson
+                </div>
+
+                <div class="next-name">
+                    ${escapeHtml(nextLesson.student.name)}
+                </div>
+
+                <div class="next-meta">
+                    ${nextDate.toLocaleDateString(
+                        undefined,
+                        {
+                            weekday:"long",
+                            month:"long",
+                            day:"numeric"
+                        }
+                    )}
+                    ·
+                    ${escapeHtml(nextLesson.student.level)}
+                </div>
+
+                <div class="next-time">
+                    ${formatTime(nextLesson.time)}
+                </div>
+
+            </div>
+
+        `;
+
+    }
+
+
+    /*
+       Today's lessons
+    */
+
+    html += `
+
+        <div class="section-head">
+
+            <div class="section-title">
+                Today's lessons
+            </div>
+
+            <div class="section-action">
+                ${todayLessons.length} lesson${todayLessons.length === 1 ? "" : "s"}
+            </div>
+
+        </div>
+
+    `;
+
+
+    if(todayLessons.length === 0){
+
+        html += `
+
+            <div class="empty-card">
+
+                <div class="empty-icon">
+                    ☀️
+                </div>
+
+                <div class="empty-title">
+                    Nothing scheduled today
+                </div>
+
+                <div class="empty-text">
+                    Enjoy the quiet day or add a new lesson
+                    from Schedule.
+                </div>
+
+            </div>
+
+        `;
+
+    }else{
+
+        todayLessons.forEach(
+            lesson => {
+
+                const student = data.students.find(
+                    s => Number(s.id) === Number(lesson.studentId)
+                );
+
+                if(!student) return;
+
+
+                html += lessonCardHtml(
+                    lesson,
+                    student
+                );
+
+            }
+        );
+
+    }
+
+
+    /*
+       Stats
+    */
+
+    html += `
+
+        <div class="section-head">
+
+            <div class="section-title">
+                Overview
+            </div>
+
+        </div>
+
+        <div class="stats">
+
+            <div class="stat-card">
+
+                <div class="stat-number">
+                    ${data.students.length}
+                </div>
+
+                <div class="stat-label">
+                    Students
+                </div>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <div class="stat-number">
+                    ${data.lessons.length}
+                </div>
+
+                <div class="stat-label">
+                    Total lessons
+                </div>
+
+            </div>
+
+        </div>
+
+    `;
+
+
+    container.innerHTML = html;
+
+}
+
+
+/* =========================================================
+   LESSON CARD
+========================================================= */
+
+function lessonCardHtml(
+    lesson,
+    student
+){
+
+    return `
+
+        <div class="lesson-card">
+
+            <div class="lesson-time">
+                ${formatTime(lesson.time)}
+            </div>
+
+            <div class="lesson-line"></div>
+
+            <div class="lesson-info">
+
+                <div class="lesson-name">
+                    ${escapeHtml(student.name)}
+                </div>
+
+                <div class="lesson-level">
+                    ${escapeHtml(student.level)}
+                    ·
+                    ${lesson.duration || 60} min
+                </div>
+
+            </div>
+
+            <button
+                class="lesson-delete"
+                onclick="deleteLesson(${Number(lesson.id)})"
+                aria-label="Delete lesson"
+            >
+                ×
+            </button>
+
+        </div>
+
+    `;
 
 }
 
@@ -2824,251 +1988,153 @@ function renderTodayLessons(){
    SCHEDULE
 ========================================================= */
 
-function renderDayTabs(){
-
-  const box =
-    document.getElementById(
-      "dayTabs"
-    );
-
-
-  const today =
-    new Date().getDay();
-
-
-  box.innerHTML =
-
-    days.map(
-      day => `
-
-        <button
-          class="
-            day-button
-            ${
-              selectedDay ===
-              day.value
-                ? "active"
-                : ""
-            }
-            ${
-              today ===
-              day.value
-                ? "today"
-                : ""
-            }
-          "
-          onclick="
-            selectDay(${day.value})
-          "
-        >
-
-          <span class="day-name">
-            ${day.short}
-          </span>
-
-          <span class="day-number">
-            ${getDayNumber(day.value)}
-          </span>
-
-        </button>
-
-      `
-    ).join("");
-
-}
-
-
-function getDayNumber(day){
-
-  const today =
-    new Date();
-
-
-  const current =
-    today.getDay();
-
-
-  let difference =
-    Number(day) - current;
-
-
-  const date =
-    new Date(today);
-
-
-  date.setDate(
-    today.getDate() +
-    difference
-  );
-
-
-  return date.getDate();
-
-}
-
-
 function renderSchedule(){
 
-  renderDayTabs();
+    renderWeek();
 
-
-  document.getElementById(
-    "selectedDate"
-  ).textContent =
-    formatSelectedDate(
-      selectedDay
-    );
-
-
-  const lessons =
-    data.lessons
-
-      .filter(
-        lesson =>
-          Number(lesson.day) ===
-          Number(selectedDay)
-      )
-
-      .sort(
-        (a,b) =>
-          a.time.localeCompare(
-            b.time
-          )
-      );
-
-
-  const box =
     document.getElementById(
-      "daySchedule"
+        "scheduleDate"
+    ).textContent = formatDate(selectedDate);
+
+
+    const selectedKey = dateKey(selectedDate);
+
+    const lessons = data.lessons
+        .filter(l => l.date === selectedKey)
+        .sort((a,b) => a.time.localeCompare(b.time));
+
+
+    const container = document.getElementById(
+        "scheduleLessons"
     );
 
 
-  if(!lessons.length){
+    if(lessons.length === 0){
 
-    box.innerHTML = `
+        container.innerHTML = `
 
-      <div class="empty-state">
+            <div class="empty-card">
 
-        <div class="empty-icon">
-          ☁️
-        </div>
+                <div class="empty-icon">
+                    📅
+                </div>
 
-        <div class="empty-title">
-          No lessons
-        </div>
+                <div class="empty-title">
+                    No lessons
+                </div>
 
-        <div class="empty-text">
-          Your day is clear
-        </div>
-
-      </div>
-
-    `;
-
-    return;
-
-  }
-
-
-  box.innerHTML =
-
-    lessons.map(
-      lesson => {
-
-        const student =
-          getStudent(
-            lesson.studentId
-          );
-
-
-        return `
-
-          <div class="schedule-item">
-
-            <div class="schedule-item-time">
-
-              ${formatTime(
-                lesson.time
-              )}
+                <div class="empty-text">
+                    Nothing is scheduled for this day.
+                </div>
 
             </div>
-
-
-            <div class="lesson-line"></div>
-
-
-            <div class="schedule-item-body">
-
-              <div class="schedule-item-name">
-
-                ${escapeHtml(
-                  student
-                    ? student.name
-                    : "Student"
-                )}
-
-              </div>
-
-
-              <div class="schedule-item-meta">
-
-                ${
-                  student
-                    ? escapeHtml(
-                        student.level
-                      ) +
-                      " · "
-                    : ""
-                }
-
-                ${lesson.duration}
-                minutes
-
-              </div>
-
-            </div>
-
-
-            ${
-              student
-                ?
-                `
-                  <div class="level-pill">
-                    ${escapeHtml(
-                      student.level
-                    )}
-                  </div>
-                `
-                :
-                ""
-            }
-
-
-            <button
-              class="delete-small"
-              onclick="
-                deleteLesson(${lesson.id})
-              "
-            >
-              ×
-            </button>
-
-          </div>
 
         `;
 
-      }
+        return;
+
+    }
+
+
+    container.innerHTML = lessons.map(
+        lesson => {
+
+            const student = data.students.find(
+                s => Number(s.id) === Number(lesson.studentId)
+            );
+
+            if(!student) return "";
+
+            return lessonCardHtml(
+                lesson,
+                student
+            );
+
+        }
     ).join("");
 
 }
 
 
-function selectDay(day){
+/* =========================================================
+   WEEK
+========================================================= */
 
-  selectedDay =
-    Number(day);
+function renderWeek(){
 
-  renderSchedule();
+    const container = document.getElementById(
+        "weekDays"
+    );
+
+    const base = new Date(selectedDate);
+
+    const day = base.getDay();
+
+    const mondayOffset =
+        day === 0 ? -6 : 1 - day;
+
+
+    const monday = new Date(base);
+
+    monday.setDate(
+        base.getDate() + mondayOffset
+    );
+
+
+    let html = "";
+
+
+    for(let i=0;i<7;i++){
+
+        const d = new Date(monday);
+
+        d.setDate(
+            monday.getDate() + i
+        );
+
+
+        const active =
+            dateKey(d) === dateKey(selectedDate);
+
+
+        html += `
+
+            <button
+                class="day-btn ${active ? "active" : ""}"
+                onclick="selectDate('${dateKey(d)}')"
+            >
+
+                <div class="day-name">
+                    ${dayNames[d.getDay()]}
+                </div>
+
+                <div class="day-number">
+                    ${d.getDate()}
+                </div>
+
+            </button>
+
+        `;
+
+    }
+
+
+    container.innerHTML = html;
+
+}
+
+
+/* =========================================================
+   SELECT DATE
+========================================================= */
+
+function selectDate(key){
+
+    selectedDate = new Date(
+        key + "T12:00:00"
+    );
+
+    renderSchedule();
 
 }
 
@@ -3079,148 +2145,79 @@ function selectDay(day){
 
 function renderStudents(){
 
-  const box =
-    document.getElementById(
-      "studentList"
+    const container = document.getElementById(
+        "studentsList"
     );
 
 
-  document.getElementById(
-    "studentCountLabel"
-  ).textContent =
-    data.students.length +
-    (
-      data.students.length === 1
-        ? " student"
-        : " students"
-    );
+    if(data.students.length === 0){
 
+        container.innerHTML = `
 
-  if(!data.students.length){
+            <div class="empty-card">
 
-    box.innerHTML = `
+                <div class="empty-icon">
+                    👩‍🎓
+                </div>
 
-      <div class="schedule-card">
+                <div class="empty-title">
+                    No students yet
+                </div>
 
-        <div class="empty-state">
-
-          <div class="empty-icon">
-            👩‍🎓
-          </div>
-
-          <div class="empty-title">
-            No students yet
-          </div>
-
-          <div class="empty-text">
-            Add your first student
-          </div>
-
-        </div>
-
-      </div>
-
-    `;
-
-    return;
-
-  }
-
-
-  box.innerHTML =
-
-    data.students.map(
-      student => {
-
-        const initials =
-          student.name
-            .trim()
-            .split(/\s+/)
-            .map(
-              word =>
-                word[0]
-            )
-            .join("")
-            .slice(0,2)
-            .toUpperCase();
-
-
-        const lessons =
-          data.lessons.filter(
-            lesson =>
-              Number(
-                lesson.studentId
-              ) ===
-              Number(
-                student.id
-              )
-          );
-
-
-        return `
-
-          <button
-            class="student-card"
-            onclick="
-              openStudent(${student.id})
-            "
-          >
-
-            <div class="student-avatar">
-
-              ${escapeHtml(
-                initials
-              )}
+                <div class="empty-text">
+                    Add your first student to start
+                    building your teaching planner.
+                </div>
 
             </div>
-
-
-            <div class="student-body">
-
-              <div class="student-name">
-
-                ${escapeHtml(
-                  student.name
-                )}
-
-              </div>
-
-
-              <div class="student-meta">
-
-                ${escapeHtml(
-                  student.level
-                )}
-
-                ·
-
-                ${
-                  lessons.length
-                }
-
-                ${
-                  lessons.length === 1
-                    ? "lesson"
-                    : "lessons"
-                }
-
-              </div>
-
-            </div>
-
-
-            <div class="student-chevron">
-
-              ›
-
-            </div>
-
-          </button>
 
         `;
 
-      }
-    ).join("");
+        return;
+
+    }
+
+
+    container.innerHTML = data.students
+        .map(student => {
+
+            const initials =
+                getInitials(student.name);
+
+
+            return `
+
+                <div
+                    class="student-card"
+                    onclick="openStudent(${Number(student.id)})"
+                >
+
+                    <div class="avatar">
+                        ${escapeHtml(initials)}
+                    </div>
+
+                    <div class="student-info">
+
+                        <div class="student-name">
+                            ${escapeHtml(student.name)}
+                        </div>
+
+                        <div class="student-level">
+                            ${escapeHtml(student.level)}
+                        </div>
+
+                    </div>
+
+                    <div class="chevron">
+                        ›
+                    </div>
+
+                </div>
+
+            `;
+
+        })
+        .join("");
 
 }
 
@@ -3231,455 +2228,196 @@ function renderStudents(){
 
 function openStudent(id){
 
-  const student =
-    getStudent(id);
+    selectedStudentId = Number(id);
 
-
-  if(!student){
-    return;
-  }
-
-
-  const initials =
-    student.name
-      .trim()
-      .split(/\s+/)
-      .map(
-        word =>
-          word[0]
-      )
-      .join("")
-      .slice(0,2)
-      .toUpperCase();
-
-
-  const lessons =
-    data.lessons
-
-      .filter(
-        lesson =>
-          Number(
-            lesson.studentId
-          ) ===
-          Number(id)
-      )
-
-      .sort(
-        (a,b) =>
-          a.day - b.day ||
-          a.time.localeCompare(
-            b.time
-          )
-      );
-
-
-  const box =
-    document.getElementById(
-      "studentDetail"
+    document.querySelectorAll(".page").forEach(
+        el => el.classList.remove("active")
     );
 
 
-  box.innerHTML = `
+    document.getElementById(
+        "profilePage"
+    ).classList.add("active");
 
-    <div class="profile-main">
 
-      <div class="profile-big-avatar">
+    document.querySelectorAll(".nav-btn").forEach(
+        el => el.classList.remove("active")
+    );
 
-        ${escapeHtml(
-          initials
-        )}
 
-      </div>
+    currentPage = "profile";
 
+    renderProfile();
 
-      <div>
+    window.scrollTo({
+        top:0,
+        behavior:"smooth"
+    });
 
-        <div class="profile-name">
+}
 
-          ${escapeHtml(
-            student.name
-          )}
 
-        </div>
+function renderProfile(){
 
+    const student = data.students.find(
+        s => Number(s.id) === Number(selectedStudentId)
+    );
 
-        <div class="profile-sub">
 
-          English ·
-          ${escapeHtml(
-            student.level
-          )}
+    if(!student){
 
-        </div>
+        showPage("students");
 
-      </div>
+        return;
 
-    </div>
+    }
 
 
-    <div
-      class="profile-card"
-      style="margin-top:20px"
-    >
+    const lessons = data.lessons
+        .filter(
+            l => Number(l.studentId) === Number(student.id)
+        )
+        .sort((a,b) => {
 
-      <div class="profile-card-title">
-        Overview
-      </div>
+            return (
+                new Date(a.date+"T"+a.time) -
+                new Date(b.date+"T"+b.time)
+            );
 
+        });
 
-      <div class="profile-grid">
 
-        <div class="profile-info">
+    const initials = getInitials(
+        student.name
+    );
 
-          <div class="profile-info-label">
-            Level
-          </div>
 
-          <div class="profile-info-value">
+    let lessonHtml = "";
 
-            ${escapeHtml(
-              student.level
-            )}
 
-          </div>
+    if(lessons.length === 0){
 
-        </div>
+        lessonHtml = `
 
-
-        <div class="profile-info">
-
-          <div class="profile-info-label">
-            Lessons
-          </div>
-
-          <div class="profile-info-value">
-
-            ${lessons.length}
-
-          </div>
-
-        </div>
-
-      </div>
-
-    </div>
-
-
-    <div class="profile-card">
-
-      <div class="profile-card-title">
-        Notes
-      </div>
-
-
-      <div class="note-text">
-
-        ${
-          escapeHtml(
-            student.notes ||
-            "No notes added yet."
-          )
-        }
-
-      </div>
-
-    </div>
-
-
-    <div class="profile-card">
-
-      <div class="profile-card-title">
-        Schedule
-      </div>
-
-
-      ${
-        lessons.length
-
-          ?
-
-          lessons.map(
-            lesson => `
-
-              <div class="profile-lesson">
-
-                <div>
-
-                  <div class="profile-lesson-day">
-
-                    ${dayName(
-                      lesson.day
-                    )}
-
-                  </div>
-
-                  <div class="profile-lesson-time">
-
-                    ${formatTime(
-                      lesson.time
-                    )}
-
-                    ·
-
-                    ${lesson.duration}
-                    min
-
-                  </div>
-
-                </div>
-
-
-                <div class="level-pill">
-
-                  ${escapeHtml(
-                    student.level
-                  )}
-
-                </div>
-
-              </div>
-
-            `
-          ).join("")
-
-          :
-
-          `
-            <div class="empty-state">
-              <div class="empty-text">
-                No lessons scheduled
-              </div>
+            <div class="empty-text">
+                No lessons scheduled.
             </div>
-          `
-      }
 
-    </div>
+        `;
 
+    }else{
 
-    <button
-      class="delete-student"
-      onclick="
-        deleteStudent(${student.id})
-      "
-    >
+        lessonHtml = lessons
+            .map(lesson => {
 
-      Delete student
-
-    </button>
-
-  `;
+                const d = new Date(
+                    lesson.date + "T" + lesson.time
+                );
 
 
-  showPage(
-    "studentDetailPage"
-  );
+                return `
 
-}
+                    <div class="lesson-card">
+
+                        <div class="lesson-time">
+                            ${formatTime(lesson.time)}
+                        </div>
+
+                        <div class="lesson-line"></div>
+
+                        <div class="lesson-info">
+
+                            <div class="lesson-name">
+                                ${d.toLocaleDateString(
+                                    undefined,
+                                    {
+                                        weekday:"short",
+                                        month:"short",
+                                        day:"numeric"
+                                    }
+                                )}
+                            </div>
+
+                            <div class="lesson-level">
+                                ${lesson.duration || 60} min
+                            </div>
+
+                        </div>
+
+                        <button
+                            class="lesson-delete"
+                            onclick="deleteLesson(${Number(lesson.id)}); renderProfile();"
+                        >
+                            ×
+                        </button>
+
+                    </div>
+
+                `;
+
+            })
+            .join("");
+
+    }
 
 
-/* =========================================================
-   ADD LESSON
-========================================================= */
-
-function openLessonModal(){
-
-  const studentSelect =
     document.getElementById(
-      "lessonStudent"
-    );
+        "profileContent"
+    ).innerHTML = `
+
+        <div class="profile-header">
+
+            <div class="profile-avatar">
+                ${escapeHtml(initials)}
+            </div>
+
+            <div class="profile-name">
+                ${escapeHtml(student.name)}
+            </div>
+
+            <div class="profile-level">
+                ${escapeHtml(student.level)}
+            </div>
+
+        </div>
 
 
-  if(!data.students.length){
+        <div class="profile-section">
 
-    alert(
-      "Please add a student first."
-    );
+            <div class="profile-section-title">
+                Notes
+            </div>
 
-    showPage(
-      "studentsPage"
-    );
+            <div class="profile-notes">
+                ${
+                    student.notes
+                    ? escapeHtml(student.notes)
+                    : "No notes yet."
+                }
+            </div>
 
-    return;
-
-  }
+        </div>
 
 
-  studentSelect.innerHTML =
+        <div class="profile-section">
 
-    data.students.map(
-      student => `
+            <div class="profile-section-title">
+                Lessons
+            </div>
 
-        <option
-          value="${student.id}"
+            ${lessonHtml}
+
+        </div>
+
+
+        <button
+            class="danger-btn"
+            onclick="deleteStudent(${Number(student.id)})"
         >
+            Delete student
+        </button>
 
-          ${escapeHtml(
-            student.name
-          )}
-
-          ·
-
-          ${escapeHtml(
-            student.level
-          )}
-
-        </option>
-
-      `
-    ).join("");
-
-
-  document.getElementById(
-    "lessonDay"
-  ).innerHTML =
-
-    days.map(
-      day => `
-
-        <option
-          value="${day.value}"
-          ${
-            Number(
-              day.value
-            ) ===
-            Number(
-              selectedDay
-            )
-              ? "selected"
-              : ""
-          }
-        >
-
-          ${day.name}
-
-        </option>
-
-      `
-    ).join("");
-
-
-  document.getElementById(
-    "lessonTime"
-  ).value =
-    "10:00";
-
-
-  document.getElementById(
-    "lessonDuration"
-  ).value =
-    "60";
-
-
-  document.getElementById(
-    "lessonModal"
-  ).classList.add(
-    "show"
-  );
-
-}
-
-
-/* =========================================================
-   SAVE LESSON
-========================================================= */
-
-function saveLesson(event){
-
-  event.preventDefault();
-
-
-  const lesson = {
-
-    id:
-      Date.now(),
-
-    studentId:
-      Number(
-        document.getElementById(
-          "lessonStudent"
-        ).value
-      ),
-
-    day:
-      Number(
-        document.getElementById(
-          "lessonDay"
-        ).value
-      ),
-
-    time:
-      document.getElementById(
-        "lessonTime"
-      ).value,
-
-    duration:
-      Number(
-        document.getElementById(
-          "lessonDuration"
-        ).value
-      )
-
-  };
-
-
-  data.lessons.push(
-    lesson
-  );
-
-
-  persist();
-
-
-  selectedDay =
-    lesson.day;
-
-
-  closeModal(
-    "lessonModal"
-  );
-
-
-  renderAll();
-
-
-  showPage(
-    "schedulePage"
-  );
-
-}
-
-
-/* =========================================================
-   DELETE LESSON
-========================================================= */
-
-function deleteLesson(id){
-
-  if(
-    !confirm(
-      "Delete this lesson?"
-    )
-  ){
-
-    return;
-
-  }
-
-
-  data.lessons =
-    data.lessons.filter(
-      lesson =>
-        Number(
-          lesson.id
-        ) !==
-        Number(id)
-    );
-
-
-  persist();
-
-
-  renderAll();
+    `;
 
 }
 
@@ -3690,87 +2428,86 @@ function deleteLesson(id){
 
 function openStudentModal(){
 
-  document.getElementById(
-    "studentName"
-  ).value =
-    "";
+    document.getElementById(
+        "studentName"
+    ).value = "";
+
+    document.getElementById(
+        "studentLevel"
+    ).value = "B1";
+
+    document.getElementById(
+        "studentNotes"
+    ).value = "";
 
 
-  document.getElementById(
-    "studentLevel"
-  ).value =
-    "A1";
+    document.getElementById(
+        "studentModal"
+    ).classList.add("show");
 
 
-  document.getElementById(
-    "studentNotes"
-  ).value =
-    "";
+    setTimeout(() => {
 
+        document.getElementById(
+            "studentName"
+        ).focus();
 
-  document.getElementById(
-    "studentModal"
-  ).classList.add(
-    "show"
-  );
+    },150);
 
 }
 
 
-function saveStudent(event){
+function saveStudent(){
 
-  event.preventDefault();
-
-
-  const name =
-    document.getElementById(
-      "studentName"
-    )
-    .value
-    .trim();
+    const name =
+        document.getElementById(
+            "studentName"
+        ).value.trim();
 
 
-  if(!name){
-    return;
-  }
+    const level =
+        document.getElementById(
+            "studentLevel"
+        ).value;
 
 
-  data.students.push({
-
-    id:
-      Date.now(),
-
-    name:
-      name,
-
-    level:
-      document.getElementById(
-        "studentLevel"
-      ).value,
-
-    notes:
-      document.getElementById(
-        "studentNotes"
-      ).value
-      .trim()
-
-  });
+    const notes =
+        document.getElementById(
+            "studentNotes"
+        ).value.trim();
 
 
-  persist();
+    if(!name){
+
+        alert("Please enter the student's name.");
+
+        return;
+
+    }
 
 
-  closeModal(
-    "studentModal"
-  );
+    const newId =
+        Date.now();
 
 
-  renderAll();
+    data.students.push({
+
+        id:newId,
+
+        name:name,
+
+        level:level,
+
+        notes:notes
+
+    });
 
 
-  showPage(
-    "studentsPage"
-  );
+    saveData();
+
+    closeModal("studentModal");
+
+    renderAll();
 
 }
 
@@ -3781,46 +2518,194 @@ function saveStudent(event){
 
 function deleteStudent(id){
 
-  if(
-    !confirm(
-      "Delete this student and all of their lessons?"
-    )
-  ){
-
-    return;
-
-  }
-
-
-  data.students =
-    data.students.filter(
-      student =>
-        Number(
-          student.id
-        ) !==
-        Number(id)
+    const student = data.students.find(
+        s => Number(s.id) === Number(id)
     );
 
 
-  data.lessons =
-    data.lessons.filter(
-      lesson =>
-        Number(
-          lesson.studentId
-        ) !==
-        Number(id)
+    if(!student) return;
+
+
+    const confirmed = confirm(
+        `Delete ${student.name}?`
     );
 
 
-  persist();
+    if(!confirmed) return;
 
 
-  renderAll();
+    data.students = data.students.filter(
+        s => Number(s.id) !== Number(id)
+    );
 
 
-  showPage(
-    "studentsPage"
-  );
+    data.lessons = data.lessons.filter(
+        l => Number(l.studentId) !== Number(id)
+    );
+
+
+    saveData();
+
+    showPage("students");
+
+}
+
+
+/* =========================================================
+   LESSON MODAL
+========================================================= */
+
+function openLessonModal(){
+
+    if(data.students.length === 0){
+
+        alert(
+            "Add a student first."
+        );
+
+        showPage("students");
+
+        return;
+
+    }
+
+
+    const select =
+        document.getElementById(
+            "lessonStudent"
+        );
+
+
+    select.innerHTML = data.students
+        .map(student => `
+
+            <option value="${Number(student.id)}">
+                ${escapeHtml(student.name)}
+                ·
+                ${escapeHtml(student.level)}
+            </option>
+
+        `)
+        .join("");
+
+
+    document.getElementById(
+        "lessonDate"
+    ).value = dateKey(selectedDate);
+
+
+    document.getElementById(
+        "lessonTime"
+    ).value = "10:00";
+
+
+    document.getElementById(
+        "lessonDuration"
+    ).value = "60";
+
+
+    document.getElementById(
+        "lessonModal"
+    ).classList.add("show");
+
+}
+
+
+function saveLesson(){
+
+    const studentId =
+        Number(
+            document.getElementById(
+                "lessonStudent"
+            ).value
+        );
+
+
+    const date =
+        document.getElementById(
+            "lessonDate"
+        ).value;
+
+
+    const time =
+        document.getElementById(
+            "lessonTime"
+        ).value;
+
+
+    const duration =
+        Number(
+            document.getElementById(
+                "lessonDuration"
+            ).value
+        );
+
+
+    if(
+        !studentId ||
+        !date ||
+        !time
+    ){
+
+        alert("Please fill in all fields.");
+
+        return;
+
+    }
+
+
+    data.lessons.push({
+
+        id:Date.now(),
+
+        studentId:studentId,
+
+        date:date,
+
+        time:time,
+
+        duration:duration
+
+    });
+
+
+    saveData();
+
+
+    selectedDate = new Date(
+        date + "T12:00:00"
+    );
+
+
+    closeModal("lessonModal");
+
+    renderAll();
+
+}
+
+
+/* =========================================================
+   DELETE LESSON
+========================================================= */
+
+function deleteLesson(id){
+
+    const confirmed = confirm(
+        "Delete this lesson?"
+    );
+
+
+    if(!confirmed) return;
+
+
+    data.lessons = data.lessons.filter(
+        l => Number(l.id) !== Number(id)
+    );
+
+
+    saveData();
+
+    renderAll();
 
 }
 
@@ -3831,115 +2716,73 @@ function deleteStudent(id){
 
 function backupData(){
 
-  try{
-
     const backup = {
 
-      app:
-        "Teacher Planner",
+        app:"Teacher Planner",
 
-      version:
-        4,
+        version:4,
 
-      createdAt:
-        new Date().toISOString(),
+        createdAt:new Date().toISOString(),
 
-      data:{
+        data:{
 
-        students:
-          data.students,
+            students:data.students,
 
-        lessons:
-          data.lessons
+            lessons:data.lessons
 
-      }
+        }
 
     };
 
 
-    const json =
-      JSON.stringify(
-        backup,
-        null,
-        2
-      );
-
-
-    const blob =
-      new Blob(
-        [json],
+    const blob = new Blob(
+        [
+            JSON.stringify(
+                backup,
+                null,
+                2
+            )
+        ],
         {
-          type:
-            "application/json"
+            type:"application/json"
         }
-      );
+    );
 
 
     const url =
-      URL.createObjectURL(
-        blob
-      );
+        URL.createObjectURL(blob);
 
 
-    const link =
-      document.createElement(
-        "a"
-      );
+    const a =
+        document.createElement("a");
 
 
-    const date =
-      new Date()
-        .toISOString()
-        .slice(0,10);
+    const today =
+        new Date().toISOString().slice(0,10);
 
 
-    link.href =
-      url;
+    a.href = url;
+
+    a.download =
+        `teacher-planner-backup-${today}.json`;
 
 
-    link.download =
-      "teacher-planner-backup-" +
-      date +
-      ".json";
+    document.body.appendChild(a);
 
+    a.click();
 
-    document.body.appendChild(
-      link
-    );
-
-
-    link.click();
-
-
-    link.remove();
+    a.remove();
 
 
     setTimeout(
-      function(){
-
-        URL.revokeObjectURL(
-          url
-        );
-
-      },
-      1000
+        () => URL.revokeObjectURL(url),
+        1000
     );
 
 
     alert(
-      "Backup created successfully."
+        "Backup created successfully."
     );
-
-  }
-  catch(error){
-
-    alert(
-      "Could not create the backup."
-    );
-
-    console.error(error);
-
-  }
 
 }
 
@@ -3948,274 +2791,150 @@ function backupData(){
    RESTORE
 ========================================================= */
 
-function openRestore(){
-
-  const input =
-    document.getElementById(
-      "restoreInput"
-    );
-
-
-  input.value =
-    "";
-
-
-  input.click();
-
-}
-
-
 function restoreData(event){
 
-  const file =
-    event.target.files &&
-    event.target.files[0];
+    const file =
+        event.target.files[0];
 
 
-  if(!file){
-    return;
-  }
+    if(!file){
+
+        return;
+
+    }
 
 
-  const reader =
-    new FileReader();
+    const reader =
+        new FileReader();
 
 
-  reader.onload =
-    function(){
+    reader.onload = function(){
 
-      try{
+        try{
 
-        const backup =
-          JSON.parse(
-            reader.result
-          );
+            const backup =
+                JSON.parse(
+                    reader.result
+                );
 
 
-        if(
-          !backup ||
-          !backup.data ||
-          !Array.isArray(
-            backup.data.students
-          ) ||
-          !Array.isArray(
-            backup.data.lessons
-          )
-        ){
+            if(
+                !backup ||
+                !backup.data ||
+                !Array.isArray(
+                    backup.data.students
+                ) ||
+                !Array.isArray(
+                    backup.data.lessons
+                )
+            ){
 
-          throw new Error(
-            "Invalid backup"
-          );
+                alert(
+                    "This file is not a valid Teacher Planner backup."
+                );
+
+                return;
+
+            }
+
+
+            const confirmed = confirm(
+                "Restore this backup? Current data on this device will be replaced."
+            );
+
+
+            if(!confirmed){
+
+                return;
+
+            }
+
+
+            data = {
+
+                students:
+                    backup.data.students,
+
+                lessons:
+                    backup.data.lessons
+
+            };
+
+
+            saveData();
+
+            alert(
+                "Backup restored successfully."
+            );
+
+
+            renderAll();
+
+
+        }catch(error){
+
+            alert(
+                "Could not read this backup file."
+            );
 
         }
-
-
-        const confirmed =
-          confirm(
-            "Restore this backup? Your current students and lessons on this device will be replaced."
-          );
-
-
-        if(!confirmed){
-          return;
-        }
-
-
-        data = {
-
-          students:
-            backup.data.students,
-
-          lessons:
-            backup.data.lessons
-
-        };
-
-
-        persist();
-
-
-        renderAll();
-
-
-        showPage(
-          "homePage"
-        );
-
-
-        alert(
-          "Backup restored successfully."
-        );
-
-      }
-      catch(error){
-
-        alert(
-          "This file is not a valid Teacher Planner backup."
-        );
-
-        console.error(error);
-
-      }
 
     };
 
 
-  reader.onerror =
-    function(){
-
-      alert(
-        "Could not read the backup file."
-      );
-
-    };
+    reader.readAsText(file);
 
 
-  reader.readAsText(
-    file
-  );
+    /*
+       Same file can be selected again later.
+    */
+
+    event.target.value = "";
 
 }
 
 
 /* =========================================================
-   CLEAR ALL DATA
+   CLEAR DATA
 ========================================================= */
 
 function clearAllData(){
 
-  const first =
-    confirm(
-      "Delete all students, lessons and notes from this device?"
+    const first =
+        confirm(
+            "Delete all students and lessons from this device?"
+        );
+
+
+    if(!first) return;
+
+
+    const second =
+        confirm(
+            "This cannot be undone unless you have a backup. Continue?"
+        );
+
+
+    if(!second) return;
+
+
+    data = {
+
+        students:[],
+
+        lessons:[]
+
+    };
+
+
+    saveData();
+
+    alert(
+        "All planner data has been cleared."
     );
 
 
-  if(!first){
-    return;
-  }
-
-
-  const second =
-    confirm(
-      "This cannot be undone unless you have a backup. Continue?"
-    );
-
-
-  if(!second){
-    return;
-  }
-
-
-  data = {
-
-    students:[],
-
-    lessons:[]
-
-  };
-
-
-  persist();
-
-
-  renderAll();
-
-
-  showPage(
-    "homePage"
-  );
-
-
-  alert(
-    "All planner data has been cleared."
-  );
-
-}
-
-
-/* =========================================================
-   PAGE NAVIGATION
-========================================================= */
-
-function showPage(id){
-
-  document
-    .querySelectorAll(".page")
-    .forEach(
-      page =>
-        page.classList.remove(
-          "active"
-        )
-    );
-
-
-  document
-    .getElementById(id)
-    .classList.add(
-      "active"
-    );
-
-
-  document
-    .querySelectorAll(".nav-button")
-    .forEach(
-      button =>
-        button.classList.remove(
-          "active"
-        )
-    );
-
-
-  if(
-    id === "homePage"
-  ){
-
-    document
-      .getElementById(
-        "navHome"
-      )
-      .classList.add(
-        "active"
-      );
-
-  }
-
-
-  if(
-    id === "schedulePage"
-  ){
-
-    document
-      .getElementById(
-        "navSchedule"
-      )
-      .classList.add(
-        "active"
-      );
-
-  }
-
-
-  if(
-    id === "studentsPage" ||
-    id === "studentDetailPage"
-  ){
-
-    document
-      .getElementById(
-        "navStudents"
-      )
-      .classList.add(
-        "active"
-      );
-
-  }
-
-
-  window.scrollTo({
-    top:0,
-    behavior:"smooth"
-  });
+    showPage("home");
 
 }
 
@@ -4226,74 +2945,135 @@ function showPage(id){
 
 function closeModal(id){
 
-  document
-    .getElementById(id)
-    .classList.remove(
-      "show"
-    );
+    document.getElementById(
+        id
+    ).classList.remove("show");
 
 }
 
 
-document
-  .querySelectorAll(".modal")
-  .forEach(
-    modal => {
+function backdropClose(
+    event,
+    id
+){
 
-      modal.addEventListener(
-        "click",
-        function(event){
+    if(
+        event.target.id === id
+    ){
 
-          if(
-            event.target ===
-            modal
-          ){
-
-            modal.classList.remove(
-              "show"
-            );
-
-          }
-
-        }
-      );
+        closeModal(id);
 
     }
-  );
+
+}
 
 
 /* =========================================================
-   INITIAL RENDER
+   RENDER ALL
 ========================================================= */
 
 function renderAll(){
 
-  renderHome();
+    renderGreeting();
 
-  renderSchedule();
+    renderHome();
 
-  renderStudents();
+    renderSchedule();
+
+    renderStudents();
+
+
+    if(currentPage === "profile"){
+
+        renderProfile();
+
+    }
 
 }
 
+
+/* =========================================================
+   HELPERS
+========================================================= */
+
+function getInitials(name){
+
+    return name
+        .split(" ")
+        .filter(Boolean)
+        .slice(0,2)
+        .map(
+            word => word[0]
+        )
+        .join("")
+        .toUpperCase();
+
+}
+
+
+function formatTime(time){
+
+    if(!time) return "";
+
+    const [hour,minute] =
+        time.split(":").map(Number);
+
+
+    const suffix =
+        hour >= 12 ? "PM" : "AM";
+
+
+    const h =
+        hour % 12 || 12;
+
+
+    return `${h}:${String(minute).padStart(2,"0")} ${suffix}`;
+
+}
+
+
+function escapeHtml(value){
+
+    return String(value ?? "")
+        .replace(/&/g,"&amp;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;")
+        .replace(/"/g,"&quot;")
+        .replace(/'/g,"&#039;");
+
+}
+
+
+/* =========================================================
+   INITIALIZE
+========================================================= */
 
 renderAll();
 
 
 /* =========================================================
-   LIVE GREETING / NEXT LESSON
+   SERVICE WORKER
 ========================================================= */
 
-setInterval(
-  function(){
+if(
+    "serviceWorker" in navigator
+){
 
-    renderHome();
+    window.addEventListener(
+        "load",
+        () => {
 
-  },
-  60000
-);
+            /*
+               Service worker gələcəkdə əlavə edilə bilər.
+               Hazırda app localStorage ilə işləyir.
+            */
+
+        }
+    );
+
+}
 
 </script>
 
 </body>
-</html> 
+  </html> 
