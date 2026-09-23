@@ -2,41 +2,104 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 
-<meta name="theme-color" content="#f6f7fb">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="default">
-<meta name="apple-mobile-web-app-title" content="Teacher Planner">
+<meta
+  name="viewport"
+  content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+>
+
+<meta name="theme-color" content="#f7f7fb">
+<meta
+  name="apple-mobile-web-app-capable"
+  content="yes"
+>
+<meta
+  name="apple-mobile-web-app-status-bar-style"
+  content="default"
+>
+<meta
+  name="apple-mobile-web-app-title"
+  content="Teacher Planner"
+>
 
 <link rel="manifest" href="manifest.json">
 
 <title>Teacher Planner</title>
 
 <style>
+
+/* =========================================================
+   ROOT
+========================================================= */
+
 :root{
-  --bg:#f6f7fb;
-  --card:#ffffff;
-  --text:#17181c;
-  --muted:#7c7f89;
+  --bg:#f7f7fb;
+  --surface:#ffffff;
+  --surface-soft:#f1f0ff;
+
+  --text:#17171c;
+  --text-soft:#686a75;
+  --text-light:#9a9ca5;
+
+  --purple:#6659dc;
+  --purple-dark:#5548c9;
+  --purple-soft:#eeecff;
+
+  --blue:#5d9eea;
+  --blue-soft:#eaf4ff;
+
+  --green:#54aa7c;
+  --green-soft:#eaf8f0;
+
+  --orange:#e39a51;
+  --orange-soft:#fff4e7;
+
+  --red:#df6872;
+  --red-soft:#fff0f2;
+
   --line:#ececf1;
-  --purple:#6557d9;
-  --purple-soft:#efedff;
-  --blue-soft:#edf7ff;
-  --danger:#e95d67;
-  --shadow:0 8px 28px rgba(30,30,60,.07);
+
+  --radius-xl:32px;
+  --radius-lg:25px;
+  --radius-md:18px;
+
+  --shadow:
+    0 12px 35px rgba(27,27,50,.065);
+
+  --shadow-small:
+    0 5px 18px rgba(27,27,50,.055);
 }
+
+
+/* =========================================================
+   RESET
+========================================================= */
 
 *{
   box-sizing:border-box;
+}
+
+html{
+  scroll-behavior:smooth;
 }
 
 body{
   margin:0;
   background:var(--bg);
   color:var(--text);
-  font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text",Inter,Segoe UI,sans-serif;
+
+  font-family:
+    -apple-system,
+    BlinkMacSystemFont,
+    "SF Pro Display",
+    "SF Pro Text",
+    Inter,
+    Helvetica,
+    Arial,
+    sans-serif;
+
   -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
 }
 
 button,
@@ -47,301 +110,862 @@ textarea{
 }
 
 button{
+  border:0;
   cursor:pointer;
+  -webkit-tap-highlight-color:transparent;
 }
+
+button:active{
+  transform:scale(.97);
+}
+
+input,
+select,
+textarea{
+  outline:none;
+}
+
+::-webkit-scrollbar{
+  display:none;
+}
+
+
+/* =========================================================
+   APP
+========================================================= */
 
 .app{
   min-height:100vh;
-  padding-bottom:92px;
+  padding-bottom:105px;
 }
 
-/* TOP */
-
-.top{
-  padding:44px 30px 18px;
+.page{
+  display:none;
+  min-height:100vh;
 }
 
-.date{
-  color:#858893;
-  font-size:16px;
+.page.active{
+  display:block;
+}
+
+
+/* =========================================================
+   GLOBAL HEADER
+========================================================= */
+
+.page-header{
+  padding:
+    calc(26px + env(safe-area-inset-top))
+    24px
+    18px;
+}
+
+.small-label{
+  color:var(--text-light);
+  font-size:14px;
+  font-weight:600;
+  letter-spacing:.1px;
+  margin-bottom:7px;
+}
+
+.page-title{
+  font-size:38px;
+  line-height:1.05;
+  letter-spacing:-1.5px;
+  font-weight:760;
+}
+
+.header-row{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:15px;
+}
+
+
+/* =========================================================
+   HOME HEADER
+========================================================= */
+
+.home-header{
+  padding:
+    calc(31px + env(safe-area-inset-top))
+    24px
+    15px;
+}
+
+.home-date{
+  color:var(--text-light);
+  font-size:15px;
+  font-weight:500;
   margin-bottom:10px;
 }
 
-.header{
+.home-header-row{
   display:flex;
-  align-items:flex-start;
+  align-items:center;
   justify-content:space-between;
-  gap:16px;
+  gap:15px;
 }
 
 .greeting{
-  font-size:38px;
-  line-height:1.08;
-  font-weight:750;
-  letter-spacing:-1.4px;
-  max-width:390px;
+  font-size:37px;
+  line-height:1.07;
+  font-weight:760;
+  letter-spacing:-1.6px;
 }
 
-.avatar{
-  width:78px;
-  height:78px;
-  border-radius:26px;
-  border:0;
-  background:#191a1e;
-  color:#fff;
-  font-size:27px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
+.profile-button{
+  width:57px;
+  height:57px;
+  border-radius:20px;
+
+  background:
+    linear-gradient(
+      145deg,
+      #202024,
+      #111114
+    );
+
+  color:white;
+
+  font-size:20px;
+  font-weight:700;
+
+  box-shadow:
+    0 8px 20px rgba(0,0,0,.12);
+
   flex:none;
-  box-shadow:0 8px 20px rgba(0,0,0,.09);
 }
+
+
+/* =========================================================
+   CONTENT
+========================================================= */
 
 .content{
-  padding:0 30px;
+  padding:0 24px;
+  max-width:760px;
+  margin:auto;
 }
 
-/* STATS */
+
+/* =========================================================
+   NEXT LESSON
+========================================================= */
+
+.next-card{
+  position:relative;
+  overflow:hidden;
+
+  background:
+    linear-gradient(
+      135deg,
+      #7165e5 0%,
+      #5b50ce 100%
+    );
+
+  color:white;
+
+  border-radius:32px;
+
+  padding:25px;
+
+  margin:12px 0 18px;
+
+  box-shadow:
+    0 15px 35px rgba(91,80,206,.22);
+}
+
+.next-card::after{
+  content:"";
+  position:absolute;
+
+  width:180px;
+  height:180px;
+
+  border-radius:50%;
+
+  background:
+    rgba(255,255,255,.075);
+
+  right:-65px;
+  top:-75px;
+}
+
+.next-card::before{
+  content:"";
+  position:absolute;
+
+  width:120px;
+  height:120px;
+
+  border-radius:50%;
+
+  background:
+    rgba(255,255,255,.05);
+
+  right:55px;
+  bottom:-75px;
+}
+
+.next-label{
+  font-size:13px;
+  font-weight:650;
+  opacity:.75;
+  text-transform:uppercase;
+  letter-spacing:.8px;
+}
+
+.next-main{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:15px;
+
+  margin-top:18px;
+  position:relative;
+  z-index:2;
+}
+
+.next-student{
+  font-size:27px;
+  font-weight:740;
+  letter-spacing:-.7px;
+}
+
+.next-info{
+  margin-top:5px;
+  font-size:14px;
+  opacity:.78;
+}
+
+.next-time{
+  font-size:27px;
+  font-weight:720;
+  white-space:nowrap;
+}
+
+.next-arrow{
+  display:inline-block;
+  margin-left:3px;
+  opacity:.65;
+}
+
+
+/* =========================================================
+   STATS
+========================================================= */
 
 .stats{
   display:grid;
   grid-template-columns:1fr 1fr;
-  gap:16px;
-  margin:18px 0 24px;
+  gap:13px;
+  margin-bottom:18px;
 }
 
-.stat{
-  min-height:128px;
-  border-radius:28px;
-  padding:28px;
+.stat-card{
+  min-height:116px;
+  border-radius:26px;
+  padding:22px;
+
+  position:relative;
+  overflow:hidden;
 }
 
-.stat.lessons{
+.stat-card.purple{
   background:var(--purple-soft);
 }
 
-.stat.students{
+.stat-card.blue{
   background:var(--blue-soft);
 }
 
+.stat-icon{
+  width:35px;
+  height:35px;
+
+  border-radius:12px;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  font-size:17px;
+  margin-bottom:15px;
+}
+
+.purple .stat-icon{
+  background:#dedaff;
+  color:var(--purple);
+}
+
+.blue .stat-icon{
+  background:#d9edff;
+  color:var(--blue);
+}
+
 .stat-number{
-  font-size:42px;
-  font-weight:700;
+  font-size:29px;
+  font-weight:750;
   line-height:1;
+  letter-spacing:-.7px;
 }
 
 .stat-label{
-  margin-top:22px;
-  color:#737681;
-  font-size:16px;
+  margin-top:5px;
+  color:var(--text-soft);
+  font-size:13px;
+  font-weight:550;
 }
 
-/* CARD */
 
-.card{
-  background:var(--card);
-  border:1px solid rgba(0,0,0,.035);
-  border-radius:30px;
-  box-shadow:var(--shadow);
-  padding:28px;
-  margin-bottom:18px;
+/* =========================================================
+   SECTION
+========================================================= */
+
+.section{
+  margin-top:27px;
 }
 
-.card-title{
-  font-size:25px;
-  font-weight:720;
+.section-heading{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  margin-bottom:13px;
+}
+
+.section-title{
+  font-size:22px;
+  font-weight:730;
   letter-spacing:-.5px;
 }
 
-.card-sub{
-  color:var(--muted);
-  margin-top:5px;
-  font-size:16px;
+.section-link{
+  color:var(--purple);
+  font-size:14px;
+  font-weight:650;
+  background:transparent;
+  padding:5px;
 }
 
-.empty{
-  min-height:165px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  color:#8a8d96;
-  font-size:17px;
-  text-align:center;
+
+/* =========================================================
+   SCHEDULE CARD
+========================================================= */
+
+.schedule-card{
+  background:var(--surface);
+  border-radius:28px;
+  box-shadow:var(--shadow-small);
+  padding:7px 20px;
 }
 
-/* LESSON */
-
-.lesson-row{
+.lesson{
   display:flex;
   align-items:center;
-  justify-content:space-between;
-  gap:12px;
-  padding:16px 0;
+  gap:15px;
+
+  min-height:79px;
+
   border-bottom:1px solid var(--line);
 }
 
-.lesson-row:last-child{
+.lesson:last-child{
   border-bottom:0;
 }
 
-.lesson-main{
+.lesson-time{
+  width:48px;
+  flex:none;
+
+  color:var(--text-soft);
+  font-size:13px;
+  font-weight:650;
+}
+
+.lesson-line{
+  width:3px;
+  height:38px;
+  border-radius:3px;
+  background:var(--purple);
+}
+
+.lesson-info{
+  min-width:0;
+  flex:1;
+}
+
+.lesson-student{
+  font-size:16px;
+  font-weight:680;
+
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+
+.lesson-details{
+  color:var(--text-light);
+  font-size:13px;
+  margin-top:4px;
+}
+
+.level-pill{
+  padding:7px 10px;
+  border-radius:11px;
+
+  color:var(--purple);
+  background:var(--purple-soft);
+
+  font-size:12px;
+  font-weight:700;
+}
+
+.empty-state{
+  min-height:150px;
+
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+
+  color:var(--text-light);
+  text-align:center;
+
+  gap:7px;
+}
+
+.empty-icon{
+  font-size:28px;
+  opacity:.6;
+}
+
+.empty-title{
+  color:var(--text-soft);
+  font-weight:650;
+  font-size:15px;
+}
+
+.empty-text{
+  font-size:13px;
+}
+
+
+/* =========================================================
+   SCHEDULE PAGE
+========================================================= */
+
+.schedule-header{
+  padding-bottom:10px;
+}
+
+.add-button{
+  width:45px;
+  height:45px;
+
+  border-radius:15px;
+
+  background:var(--purple);
+  color:white;
+
+  font-size:25px;
+  line-height:1;
+
+  box-shadow:
+    0 7px 18px rgba(101,89,220,.22);
+}
+
+.week-card{
+  background:var(--surface);
+  border-radius:29px;
+  box-shadow:var(--shadow-small);
+
+  padding:15px 10px 10px;
+}
+
+.week-days{
+  display:flex;
+  gap:5px;
+
+  overflow-x:auto;
+
+  padding-bottom:14px;
+}
+
+.day-button{
+  min-width:61px;
+
+  background:transparent;
+
+  border-radius:18px;
+
+  padding:11px 7px;
+
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+
+  gap:6px;
+
+  color:var(--text-light);
+}
+
+.day-button .day-name{
+  font-size:11px;
+  font-weight:650;
+  text-transform:uppercase;
+}
+
+.day-button .day-number{
+  width:35px;
+  height:35px;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  border-radius:12px;
+
+  font-size:16px;
+  font-weight:700;
+}
+
+.day-button.active{
+  background:var(--purple-soft);
+  color:var(--purple);
+}
+
+.day-button.active .day-number{
+  background:var(--purple);
+  color:white;
+}
+
+.day-button.today:not(.active) .day-number{
+  background:#f0eff4;
+  color:var(--text);
+}
+
+.day-content{
+  padding:5px 10px 15px;
+}
+
+.selected-date{
+  font-size:15px;
+  color:var(--text-soft);
+  font-weight:600;
+  margin:7px 0 12px;
+}
+
+.schedule-item{
+  display:flex;
+  align-items:center;
+  gap:14px;
+
+  padding:14px 2px;
+
+  border-bottom:1px solid var(--line);
+}
+
+.schedule-item:last-child{
+  border-bottom:0;
+}
+
+.schedule-item-time{
+  width:48px;
+  flex:none;
+
+  color:var(--text-soft);
+  font-size:13px;
+  font-weight:700;
+}
+
+.schedule-item-body{
+  flex:1;
   min-width:0;
 }
 
-.lesson-name{
-  font-weight:650;
-  font-size:17px;
+.schedule-item-name{
+  font-size:16px;
+  font-weight:680;
 }
 
-.lesson-meta{
-  color:var(--muted);
+.schedule-item-meta{
+  color:var(--text-light);
+  font-size:12px;
+  margin-top:4px;
+}
+
+.delete-small{
+  background:var(--red-soft);
+  color:var(--red);
+
+  border-radius:10px;
+
+  padding:8px 9px;
+
+  font-size:11px;
+  font-weight:700;
+}
+
+
+/* =========================================================
+   STUDENTS PAGE
+========================================================= */
+
+.students-header{
+  padding-bottom:15px;
+}
+
+.student-count-label{
+  color:var(--text-light);
+  font-size:14px;
+  margin-top:7px;
+}
+
+.student-add{
+  width:45px;
+  height:45px;
+
+  border-radius:15px;
+
+  background:var(--purple);
+  color:white;
+
+  font-size:25px;
+
+  box-shadow:
+    0 7px 18px rgba(101,89,220,.22);
+}
+
+.students-list{
+  display:grid;
+  gap:12px;
+}
+
+.student-card{
+  background:var(--surface);
+  border-radius:25px;
+
+  padding:17px;
+
+  display:flex;
+  align-items:center;
+  gap:14px;
+
+  box-shadow:var(--shadow-small);
+
+  transition:.15s;
+}
+
+.student-card:active{
+  transform:scale(.985);
+}
+
+.student-avatar{
+  width:53px;
+  height:53px;
+
+  border-radius:18px;
+
+  background:var(--purple-soft);
+  color:var(--purple);
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  font-size:17px;
+  font-weight:750;
+
+  flex:none;
+}
+
+.student-body{
+  min-width:0;
+  flex:1;
+}
+
+.student-name{
+  font-size:17px;
+  font-weight:700;
+
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+
+.student-meta{
+  color:var(--text-light);
+  font-size:13px;
+  margin-top:4px;
+}
+
+.student-chevron{
+  color:#b2b3ba;
+  font-size:24px;
+}
+
+
+/* =========================================================
+   STUDENT PROFILE
+========================================================= */
+
+.profile-top{
+  padding-bottom:20px;
+}
+
+.back-button{
+  background:transparent;
+  color:var(--purple);
+
+  padding:4px 0;
+
+  font-size:15px;
+  font-weight:650;
+
+  margin-bottom:17px;
+}
+
+.profile-main{
+  display:flex;
+  align-items:center;
+  gap:16px;
+}
+
+.profile-big-avatar{
+  width:70px;
+  height:70px;
+
+  border-radius:23px;
+
+  background:var(--purple-soft);
+  color:var(--purple);
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  font-size:23px;
+  font-weight:750;
+}
+
+.profile-name{
+  font-size:27px;
+  font-weight:750;
+  letter-spacing:-.7px;
+}
+
+.profile-sub{
+  color:var(--text-light);
   font-size:14px;
   margin-top:5px;
 }
 
-.badge{
-  background:var(--purple-soft);
-  color:var(--purple);
-  border-radius:12px;
-  padding:7px 10px;
-  font-size:13px;
-  font-weight:650;
-  white-space:nowrap;
+.profile-card{
+  background:var(--surface);
+  border-radius:27px;
+
+  padding:22px;
+
+  box-shadow:var(--shadow-small);
+
+  margin-bottom:13px;
 }
 
-/* BUTTONS */
-
-.section-head{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:12px;
-  margin-bottom:18px;
+.profile-card-title{
+  font-size:19px;
+  font-weight:720;
+  margin-bottom:16px;
 }
 
-.primary{
-  border:0;
-  background:var(--purple);
-  color:white;
-  padding:12px 16px;
-  border-radius:15px;
-  font-weight:650;
-  box-shadow:0 6px 16px rgba(101,87,217,.2);
-}
-
-.secondary{
-  border:1px solid var(--line);
-  background:white;
-  color:var(--text);
-  padding:11px 14px;
-  border-radius:14px;
-  font-weight:600;
-}
-
-.danger{
-  border:0;
-  background:#fff0f1;
-  color:var(--danger);
-  padding:9px 11px;
-  border-radius:12px;
-  font-weight:600;
-}
-
-/* DAYS */
-
-.tabs{
-  display:flex;
-  gap:8px;
-  overflow-x:auto;
-  padding:2px 0 14px;
-  scrollbar-width:none;
-}
-
-.tabs::-webkit-scrollbar{
-  display:none;
-}
-
-.day-tab{
-  flex:0 0 auto;
-  border:1px solid var(--line);
-  background:#fff;
-  color:#777a84;
-  border-radius:15px;
-  padding:11px 15px;
-  font-weight:650;
-}
-
-.day-tab.active{
-  background:var(--purple);
-  color:#fff;
-  border-color:var(--purple);
-}
-
-/* STUDENTS */
-
-.student-grid{
+.profile-grid{
   display:grid;
-  gap:14px;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
 }
 
-.student{
-  padding:19px;
-  border:1px solid var(--line);
-  border-radius:22px;
-  background:#fff;
+.profile-info{
+  background:#f8f8fa;
+  border-radius:17px;
+  padding:15px;
+}
+
+.profile-info-label{
+  color:var(--text-light);
+  font-size:12px;
+}
+
+.profile-info-value{
+  font-size:17px;
+  font-weight:700;
+  margin-top:5px;
+}
+
+.note-text{
+  color:var(--text-soft);
+  font-size:14px;
+  line-height:1.55;
+}
+
+.profile-lesson{
   display:flex;
   align-items:center;
   justify-content:space-between;
-  gap:12px;
+
+  padding:13px 0;
+
+  border-bottom:1px solid var(--line);
 }
 
-.student-left{
-  display:flex;
-  align-items:center;
-  gap:14px;
-  min-width:0;
+.profile-lesson:last-child{
+  border-bottom:0;
 }
 
-.student-avatar{
-  width:48px;
-  height:48px;
-  border-radius:16px;
-  background:var(--purple-soft);
-  color:var(--purple);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-weight:750;
-  font-size:17px;
-  flex:none;
+.profile-lesson-day{
+  font-size:15px;
+  font-weight:650;
 }
 
-.student-name{
-  font-weight:700;
-  font-size:17px;
+.profile-lesson-time{
+  color:var(--text-light);
+  font-size:13px;
+  margin-top:3px;
 }
 
-.student-note{
+.delete-student{
+  width:100%;
+
+  background:var(--red-soft);
+  color:var(--red);
+
+  border-radius:17px;
+
+  padding:14px;
+
   font-size:14px;
-  color:var(--muted);
-  margin-top:4px;
-  white-space:nowrap;
-  overflow:hidden;
-  text-overflow:ellipsis;
-  max-width:210px;
+  font-weight:700;
 }
 
-/* MODAL */
+
+/* =========================================================
+   MODAL
+========================================================= */
 
 .modal{
   position:fixed;
   inset:0;
-  background:rgba(15,15,25,.38);
+
+  background:rgba(20,20,30,.34);
+
+  backdrop-filter:blur(5px);
+  -webkit-backdrop-filter:blur(5px);
+
   display:none;
   align-items:flex-end;
   justify-content:center;
-  z-index:20;
-  padding:0;
+
+  z-index:100;
 }
 
 .modal.show{
@@ -350,241 +974,333 @@ button{
 
 .sheet{
   width:100%;
-  max-width:620px;
-  background:#fff;
-  border-radius:30px 30px 0 0;
-  padding:22px 24px calc(24px + env(safe-area-inset-bottom));
+  max-width:650px;
+
+  background:rgba(255,255,255,.98);
+
+  border-radius:32px 32px 0 0;
+
+  padding:
+    11px
+    24px
+    calc(25px + env(safe-area-inset-bottom));
+
   max-height:92vh;
-  overflow:auto;
+  overflow-y:auto;
+
+  box-shadow:
+    0 -15px 45px rgba(20,20,40,.12);
 }
 
 .handle{
-  width:42px;
+  width:40px;
   height:5px;
+
+  background:#dcdce1;
+
   border-radius:5px;
-  background:#ddd;
-  margin:0 auto 20px;
+
+  margin:0 auto 22px;
 }
 
 .sheet-title{
-  font-size:25px;
-  font-weight:750;
-  margin-bottom:18px;
+  font-size:27px;
+  font-weight:760;
+  letter-spacing:-.7px;
+
+  margin-bottom:20px;
 }
 
 .form{
   display:grid;
-  gap:13px;
+  gap:15px;
 }
 
-label{
+.form-group{
+  display:grid;
+  gap:7px;
+}
+
+.form-label{
+  color:var(--text-soft);
   font-size:13px;
   font-weight:650;
-  color:#676a74;
 }
 
-input,
-select,
-textarea{
+.form input,
+.form select,
+.form textarea{
   width:100%;
-  border:1px solid #dedee5;
-  border-radius:15px;
-  padding:13px 14px;
-  background:#fafafd;
+
+  border:1px solid #e4e4e9;
+
+  border-radius:17px;
+
+  padding:14px 15px;
+
+  background:#f9f9fb;
+
   color:var(--text);
-  outline:none;
+
+  font-size:15px;
 }
 
-textarea{
-  min-height:92px;
-  resize:vertical;
+.form textarea{
+  min-height:95px;
+  resize:none;
 }
 
-input:focus,
-select:focus,
-textarea:focus{
-  border-color:#aaa1f0;
-  background:#fff;
+.form input:focus,
+.form select:focus,
+.form textarea:focus{
+  border-color:#b4adf2;
+  background:white;
 }
 
-.actions{
+.form-actions{
   display:grid;
   grid-template-columns:1fr 1fr;
   gap:10px;
-  margin-top:8px;
+
+  margin-top:3px;
 }
 
-/* NAVIGATION */
+.cancel-button{
+  background:#f2f2f5;
+  color:var(--text-soft);
 
-.bottom{
+  border-radius:17px;
+
+  padding:14px;
+
+  font-weight:650;
+}
+
+.save-button{
+  background:var(--purple);
+  color:white;
+
+  border-radius:17px;
+
+  padding:14px;
+
+  font-weight:700;
+
+  box-shadow:
+    0 8px 20px rgba(101,89,220,.2);
+}
+
+
+/* =========================================================
+   BOTTOM NAV
+========================================================= */
+
+.bottom-nav{
   position:fixed;
+
   left:0;
   right:0;
   bottom:0;
-  height:80px;
+
+  height:
+    calc(76px + env(safe-area-inset-bottom));
+
   padding-bottom:env(safe-area-inset-bottom);
-  background:rgba(255,255,255,.96);
-  border-top:1px solid #e9e9ee;
+
+  background:
+    rgba(255,255,255,.93);
+
+  border-top:1px solid rgba(225,225,230,.8);
+
+  backdrop-filter:blur(18px);
+  -webkit-backdrop-filter:blur(18px);
+
   display:grid;
   grid-template-columns:repeat(3,1fr);
-  z-index:10;
+
+  z-index:50;
 }
 
-.nav{
-  border:0;
+.nav-button{
   background:transparent;
-  color:#858891;
+
+  color:#9a9ba3;
+
   display:flex;
   flex-direction:column;
+
   align-items:center;
   justify-content:center;
+
   gap:5px;
-  font-size:13px;
-  font-weight:600;
+
+  font-size:11px;
+  font-weight:650;
 }
 
 .nav-icon{
-  font-size:24px;
+  font-size:22px;
   line-height:1;
 }
 
-.nav.active{
+.nav-button.active{
   color:var(--purple);
 }
 
-/* PAGES */
+.nav-dot{
+  width:4px;
+  height:4px;
 
-.page{
-  display:none;
+  border-radius:50%;
+
+  background:currentColor;
+
+  opacity:0;
 }
 
-.page.active{
-  display:block;
+.nav-button.active .nav-dot{
+  opacity:1;
 }
 
-/* BACK */
 
-.back{
-  border:0;
-  background:transparent;
-  padding:0;
-  color:var(--purple);
-  font-weight:650;
-  font-size:15px;
-  margin-bottom:14px;
-}
-
-/* PROFILE */
-
-.profile-head{
-  display:flex;
-  gap:16px;
-  align-items:center;
-  margin-bottom:22px;
-}
-
-.profile-avatar{
-  width:66px;
-  height:66px;
-  border-radius:22px;
-  background:var(--purple-soft);
-  color:var(--purple);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size:23px;
-  font-weight:750;
-}
-
-.profile-name{
-  font-size:26px;
-  font-weight:750;
-}
-
-.profile-level{
-  color:var(--muted);
-  margin-top:4px;
-}
-
-.info-grid{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:12px;
-}
-
-.info{
-  background:#f8f8fb;
-  border-radius:18px;
-  padding:16px;
-}
-
-.info-label{
-  color:var(--muted);
-  font-size:13px;
-}
-
-.info-value{
-  font-weight:700;
-  margin-top:5px;
-}
-
-/* DESKTOP */
+/* =========================================================
+   RESPONSIVE
+========================================================= */
 
 @media(min-width:700px){
 
-  .top,
-  .content{
-    max-width:720px;
+  .content,
+  .home-header,
+  .page-header{
+    max-width:760px;
     margin:auto;
   }
 
-  .bottom{
-    max-width:720px;
+  .bottom-nav{
+    max-width:760px;
     left:50%;
     right:auto;
     transform:translateX(-50%);
     width:100%;
+    border-left:1px solid var(--line);
+    border-right:1px solid var(--line);
   }
+
 }
+
+
+/* =========================================================
+   REDUCED MOTION
+========================================================= */
+
+@media(prefers-reduced-motion:reduce){
+
+  *,
+  *::before,
+  *::after{
+    scroll-behavior:auto !important;
+    transition:none !important;
+  }
+
+}
+
 </style>
 </head>
+
 
 <body>
 
 <div class="app">
 
-<!-- HOME -->
 
-<main id="homePage" class="page active">
+<!-- =======================================================
+     HOME
+======================================================= -->
 
-  <div class="top">
+<main
+  id="homePage"
+  class="page active"
+>
 
-    <div class="date" id="todayDate"></div>
+  <header class="home-header">
 
-    <div class="header">
+    <div
+      id="todayDate"
+      class="home-date">
+    </div>
 
-      <div class="greeting" id="greeting"></div>
+    <div class="home-header-row">
+
+      <div
+        id="greeting"
+        class="greeting">
+      </div>
 
       <button
-        class="avatar"
-        onclick="showPage('studentsPage')"
-        aria-label="Students">
+        class="profile-button"
+        onclick="showPage('studentsPage')">
+
         T
+
       </button>
 
     </div>
 
-  </div>
+  </header>
+
 
   <div class="content">
 
-    <div class="stats">
 
-      <div class="stat lessons">
+    <!-- NEXT LESSON -->
+
+    <div
+      id="nextLessonCard"
+      class="next-card">
+
+      <div class="next-label">
+        Next lesson
+      </div>
+
+      <div class="next-main">
+
+        <div>
+
+          <div
+            id="nextStudent"
+            class="next-student">
+          </div>
+
+          <div
+            id="nextInfo"
+            class="next-info">
+          </div>
+
+        </div>
 
         <div
-          class="stat-number"
-          id="todayCount">
+          id="nextTime"
+          class="next-time">
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <!-- STATS -->
+
+    <div class="stats">
+
+      <div class="stat-card purple">
+
+        <div class="stat-icon">
+          ◷
+        </div>
+
+        <div
+          id="todayCount"
+          class="stat-number">
           0
         </div>
 
@@ -594,11 +1310,16 @@ textarea:focus{
 
       </div>
 
-      <div class="stat students">
+
+      <div class="stat-card blue">
+
+        <div class="stat-icon">
+          ♙
+        </div>
 
         <div
-          class="stat-number"
-          id="studentCount">
+          id="studentCount"
+          class="stat-number">
           0
         </div>
 
@@ -610,63 +1331,102 @@ textarea:focus{
 
     </div>
 
-    <div class="card">
 
-      <div class="card-title">
-        Today's schedule
+    <!-- TODAY -->
+
+    <section class="section">
+
+      <div class="section-heading">
+
+        <div class="section-title">
+          Today
+        </div>
+
+        <button
+          class="section-link"
+          onclick="showPage('schedulePage')">
+
+          View all
+
+        </button>
+
       </div>
 
-      <div class="card-sub">
-        Your lessons for today
+
+      <div
+        id="todaySchedule"
+        class="schedule-card">
       </div>
 
-      <div id="todaySchedule"></div>
-
-    </div>
+    </section>
 
   </div>
 
 </main>
 
 
-<!-- SCHEDULE -->
 
-<main id="schedulePage" class="page">
+<!-- =======================================================
+     SCHEDULE
+======================================================= -->
 
-  <div class="top">
+<main
+  id="schedulePage"
+  class="page"
+>
 
-    <div class="date">
-      Weekly planner
-    </div>
+  <header class="page-header schedule-header">
 
-    <div class="header">
+    <div class="header-row">
 
-      <div
-        class="greeting"
-        style="font-size:34px">
-        Schedule
+      <div>
+
+        <div class="small-label">
+          Weekly planner
+        </div>
+
+        <div class="page-title">
+          Schedule
+        </div>
+
       </div>
 
+
       <button
-        class="primary"
+        class="add-button"
         onclick="openLessonModal()">
-        + Add
+
+        +
+
       </button>
 
     </div>
 
-  </div>
+  </header>
+
 
   <div class="content">
 
-    <div class="card">
+    <div class="week-card">
 
       <div
-        class="tabs"
-        id="dayTabs">
+        id="dayTabs"
+        class="week-days">
       </div>
 
-      <div id="daySchedule"></div>
+
+      <div class="day-content">
+
+        <div
+          id="selectedDate"
+          class="selected-date">
+        </div>
+
+        <div
+          id="daySchedule">
+        </div>
+
+      </div>
 
     </div>
 
@@ -675,43 +1435,56 @@ textarea:focus{
 </main>
 
 
-<!-- STUDENTS -->
 
-<main id="studentsPage" class="page">
+<!-- =======================================================
+     STUDENTS
+======================================================= -->
 
-  <div class="top">
+<main
+  id="studentsPage"
+  class="page"
+>
 
-    <div class="date">
-      Your students
-    </div>
+  <header class="page-header students-header">
 
-    <div class="header">
+    <div class="header-row">
 
-      <div
-        class="greeting"
-        style="font-size:34px">
-        Students
+      <div>
+
+        <div class="small-label">
+          Your students
+        </div>
+
+        <div class="page-title">
+          Students
+        </div>
+
+        <div
+          id="studentCountLabel"
+          class="student-count-label">
+        </div>
+
       </div>
+
 
       <button
-        class="primary"
+        class="student-add"
         onclick="openStudentModal()">
-        + Add
+
+        +
+
       </button>
 
     </div>
 
-  </div>
+  </header>
+
 
   <div class="content">
 
-    <div class="card">
-
-      <div
-        id="studentList"
-        class="student-grid">
-      </div>
-
+    <div
+      id="studentList"
+      class="students-list">
     </div>
 
   </div>
@@ -719,58 +1492,91 @@ textarea:focus{
 </main>
 
 
-<!-- STUDENT DETAIL -->
 
-<main id="studentDetailPage" class="page">
+<!-- =======================================================
+     STUDENT DETAIL
+======================================================= -->
 
-  <div class="top">
+<main
+  id="studentDetailPage"
+  class="page"
+>
+
+  <header class="page-header profile-top">
 
     <button
-      class="back"
+      class="back-button"
       onclick="showPage('studentsPage')">
-      ← Back to students
+
+      ‹ &nbsp;Students
+
     </button>
+
 
     <div id="studentDetail"></div>
 
-  </div>
+  </header>
 
 </main>
 
 
-<!-- BOTTOM NAV -->
 
-<nav class="bottom">
+<!-- =======================================================
+     BOTTOM NAV
+======================================================= -->
+
+<nav class="bottom-nav">
 
   <button
-    class="nav active"
     id="navHome"
+    class="nav-button active"
     onclick="showPage('homePage')">
 
-    <span class="nav-icon">⌂</span>
-    <span>Home</span>
+    <span class="nav-icon">
+      ⌂
+    </span>
+
+    <span>
+      Home
+    </span>
+
+    <span class="nav-dot"></span>
 
   </button>
 
 
   <button
-    class="nav"
     id="navSchedule"
+    class="nav-button"
     onclick="showPage('schedulePage')">
 
-    <span class="nav-icon">▦</span>
-    <span>Schedule</span>
+    <span class="nav-icon">
+      ▦
+    </span>
+
+    <span>
+      Schedule
+    </span>
+
+    <span class="nav-dot"></span>
 
   </button>
 
 
   <button
-    class="nav"
     id="navStudents"
+    class="nav-button"
     onclick="showPage('studentsPage')">
 
-    <span class="nav-icon">♙</span>
-    <span>Students</span>
+    <span class="nav-icon">
+      ♙
+    </span>
+
+    <span>
+      Students
+    </span>
+
+    <span class="nav-dot"></span>
 
   </button>
 
@@ -779,27 +1585,32 @@ textarea:focus{
 </div>
 
 
-<!-- ADD LESSON MODAL -->
+
+<!-- =======================================================
+     LESSON MODAL
+======================================================= -->
 
 <div
-  class="modal"
-  id="lessonModal">
+  id="lessonModal"
+  class="modal">
 
   <div class="sheet">
 
     <div class="handle"></div>
 
     <div class="sheet-title">
-      Add lesson
+      New lesson
     </div>
+
 
     <form
       class="form"
       onsubmit="saveLesson(event)">
 
-      <div>
 
-        <label>
+      <div class="form-group">
+
+        <label class="form-label">
           Student
         </label>
 
@@ -811,9 +1622,9 @@ textarea:focus{
       </div>
 
 
-      <div>
+      <div class="form-group">
 
-        <label>
+        <label class="form-label">
           Day
         </label>
 
@@ -825,9 +1636,9 @@ textarea:focus{
       </div>
 
 
-      <div>
+      <div class="form-group">
 
-        <label>
+        <label class="form-label">
           Time
         </label>
 
@@ -839,9 +1650,9 @@ textarea:focus{
       </div>
 
 
-      <div>
+      <div class="form-group">
 
-        <label>
+        <label class="form-label">
           Duration
         </label>
 
@@ -870,19 +1681,24 @@ textarea:focus{
       </div>
 
 
-      <div class="actions">
+      <div class="form-actions">
 
         <button
           type="button"
-          class="secondary"
+          class="cancel-button"
           onclick="closeModal('lessonModal')">
+
           Cancel
+
         </button>
+
 
         <button
           type="submit"
-          class="primary">
-          Save lesson
+          class="save-button">
+
+          Add lesson
+
         </button>
 
       </div>
@@ -894,42 +1710,47 @@ textarea:focus{
 </div>
 
 
-<!-- ADD STUDENT MODAL -->
+
+<!-- =======================================================
+     STUDENT MODAL
+======================================================= -->
 
 <div
-  class="modal"
-  id="studentModal">
+  id="studentModal"
+  class="modal">
 
   <div class="sheet">
 
     <div class="handle"></div>
 
     <div class="sheet-title">
-      Add student
+      New student
     </div>
+
 
     <form
       class="form"
       onsubmit="saveStudent(event)">
 
-      <div>
 
-        <label>
+      <div class="form-group">
+
+        <label class="form-label">
           Name
         </label>
 
         <input
           id="studentName"
-          required
-          placeholder="Student name">
+          placeholder="Student name"
+          required>
 
       </div>
 
 
-      <div>
+      <div class="form-group">
 
-        <label>
-          Level
+        <label class="form-label">
+          English level
         </label>
 
         <select id="studentLevel">
@@ -946,33 +1767,38 @@ textarea:focus{
       </div>
 
 
-      <div>
+      <div class="form-group">
 
-        <label>
+        <label class="form-label">
           Notes
         </label>
 
         <textarea
           id="studentNotes"
-          placeholder="Notes about the student">
+          placeholder="Add a note about this student...">
         </textarea>
 
       </div>
 
 
-      <div class="actions">
+      <div class="form-actions">
 
         <button
           type="button"
-          class="secondary"
+          class="cancel-button"
           onclick="closeModal('studentModal')">
+
           Cancel
+
         </button>
+
 
         <button
           type="submit"
-          class="primary">
-          Save student
+          class="save-button">
+
+          Add student
+
         </button>
 
       </div>
@@ -984,14 +1810,20 @@ textarea:focus{
 </div>
 
 
+
 <script>
 
-const KEY = "teacherPlanner_v3";
+/* =========================================================
+   DATA
+========================================================= */
+
+const KEY =
+  "teacherPlanner_v4";
 
 
 const defaultData = {
 
-  students: [
+  students:[
 
     {
       id:1,
@@ -1017,7 +1849,7 @@ const defaultData = {
   ],
 
 
-  lessons: [
+  lessons:[
 
     {
       id:1,
@@ -1058,55 +1890,60 @@ let selectedDay =
   new Date().getDay();
 
 
-let currentStudentId = null;
-
+/* =========================================================
+   DAYS
+========================================================= */
 
 const days = [
 
   {
     value:1,
     name:"Monday",
-    short:"Mon"
+    short:"MON"
   },
 
   {
     value:2,
     name:"Tuesday",
-    short:"Tue"
+    short:"TUE"
   },
 
   {
     value:3,
     name:"Wednesday",
-    short:"Wed"
+    short:"WED"
   },
 
   {
     value:4,
     name:"Thursday",
-    short:"Thu"
+    short:"THU"
   },
 
   {
     value:5,
     name:"Friday",
-    short:"Fri"
+    short:"FRI"
   },
 
   {
     value:6,
     name:"Saturday",
-    short:"Sat"
+    short:"SAT"
   },
 
   {
     value:0,
     name:"Sunday",
-    short:"Sun"
+    short:"SUN"
   }
 
 ];
 
+
+/* =========================================================
+   HELPERS
+========================================================= */
 
 function persist(){
 
@@ -1121,44 +1958,34 @@ function persist(){
 function getStudent(id){
 
   return data.students.find(
-    s => Number(s.id) === Number(id)
+    s =>
+      Number(s.id) ===
+      Number(id)
   );
 
 }
 
 
-function greetingText(){
+function escapeHtml(value){
 
-  const h =
-    new Date().getHours();
+  return String(
+    value ?? ""
+  ).replace(
+    /[&<>"']/g,
+    function(match){
 
-  if(h >= 5 && h < 12){
+      return {
 
-    return "Good morning,<br>Sunshine ☀️";
+        "&":"&amp;",
+        "<":"&lt;",
+        ">":"&gt;",
+        '"':"&quot;",
+        "'":"&#039;"
 
-  }
+      }[match];
 
-  if(h >= 12 && h < 18){
-
-    return "Good afternoon,<br>Sunshine 🌤️";
-
-  }
-
-  return "Good evening,<br>Sunshine 🌙";
-
-}
-
-
-function formatDate(){
-
-  return new Intl.DateTimeFormat(
-    "en-US",
-    {
-      weekday:"long",
-      month:"long",
-      day:"numeric"
     }
-  ).format(new Date());
+  );
 
 }
 
@@ -1167,15 +1994,258 @@ function dayName(day){
 
   const item =
     days.find(
-      d => d.value === Number(day)
+      d =>
+        d.value ===
+        Number(day)
     );
 
-  return item ? item.name : "";
+  return item
+    ? item.name
+    : "";
 
 }
 
 
-/* HOME */
+function formatTime(time){
+
+  if(!time){
+    return "";
+  }
+
+  const parts =
+    time.split(":");
+
+  let hour =
+    Number(parts[0]);
+
+  const minute =
+    parts[1];
+
+  const suffix =
+    hour >= 12
+      ? "PM"
+      : "AM";
+
+  hour =
+    hour % 12 || 12;
+
+  return (
+    hour +
+    ":" +
+    minute +
+    " " +
+    suffix
+  );
+
+}
+
+
+/* =========================================================
+   GREETING
+========================================================= */
+
+function greetingText(){
+
+  const hour =
+    new Date().getHours();
+
+
+  if(
+    hour >= 5 &&
+    hour < 12
+  ){
+
+    return `
+      Good morning,<br>
+      Sunshine ☀️
+    `;
+
+  }
+
+
+  if(
+    hour >= 12 &&
+    hour < 18
+  ){
+
+    return `
+      Good afternoon,<br>
+      Sunshine 🌤️
+    `;
+
+  }
+
+
+  return `
+    Good evening,<br>
+    Sunshine 🌙
+  `;
+
+}
+
+
+/* =========================================================
+   DATE
+========================================================= */
+
+function formatToday(){
+
+  return new Intl.DateTimeFormat(
+    "en-US",
+    {
+      weekday:"long",
+      month:"long",
+      day:"numeric"
+    }
+  ).format(
+    new Date()
+  );
+
+}
+
+
+function formatSelectedDate(day){
+
+  const today =
+    new Date();
+
+
+  const current =
+    today.getDay();
+
+
+  let difference =
+    Number(day) - current;
+
+
+  const date =
+    new Date(today);
+
+
+  date.setDate(
+    today.getDate() +
+    difference
+  );
+
+
+  return new Intl.DateTimeFormat(
+    "en-US",
+    {
+      weekday:"long",
+      month:"long",
+      day:"numeric"
+    }
+  ).format(date);
+
+}
+
+
+/* =========================================================
+   NEXT LESSON
+========================================================= */
+
+function getNextLesson(){
+
+  const now =
+    new Date();
+
+
+  const today =
+    now.getDay();
+
+
+  const currentMinutes =
+    now.getHours() * 60 +
+    now.getMinutes();
+
+
+  const candidates = [];
+
+
+  data.lessons.forEach(
+    lesson => {
+
+      const lessonMinutes =
+        Number(
+          lesson.time.split(":")[0]
+        ) * 60 +
+
+        Number(
+          lesson.time.split(":")[1]
+        );
+
+
+      let distance =
+        Number(lesson.day) -
+        today;
+
+
+      if(distance < 0){
+
+        distance += 7;
+
+      }
+
+
+      if(
+        distance === 0 &&
+        lessonMinutes <=
+        currentMinutes
+      ){
+
+        distance = 7;
+
+      }
+
+
+      candidates.push({
+
+        lesson:lesson,
+
+        distance:distance,
+
+        minutes:lessonMinutes
+
+      });
+
+    }
+  );
+
+
+  candidates.sort(
+    (a,b) => {
+
+      if(
+        a.distance !==
+        b.distance
+      ){
+
+        return (
+          a.distance -
+          b.distance
+        );
+
+      }
+
+      return (
+        a.minutes -
+        b.minutes
+      );
+
+    }
+  );
+
+
+  return candidates.length
+    ? candidates[0].lesson
+    : null;
+
+}
+
+
+/* =========================================================
+   HOME
+========================================================= */
 
 function renderHome(){
 
@@ -1188,13 +2258,24 @@ function renderHome(){
   document.getElementById(
     "todayDate"
   ).textContent =
-    formatDate();
+    formatToday();
 
 
   document.getElementById(
     "studentCount"
   ).textContent =
     data.students.length;
+
+
+  document.getElementById(
+    "studentCountLabel"
+  ).textContent =
+    data.students.length +
+    (
+      data.students.length === 1
+        ? " student"
+        : " students"
+    );
 
 
   const today =
@@ -1205,12 +2286,16 @@ function renderHome(){
     data.lessons
 
       .filter(
-        l => Number(l.day) === today
+        l =>
+          Number(l.day) ===
+          today
       )
 
       .sort(
         (a,b) =>
-          a.time.localeCompare(b.time)
+          a.time.localeCompare(
+            b.time
+          )
       );
 
 
@@ -1218,6 +2303,114 @@ function renderHome(){
     "todayCount"
   ).textContent =
     lessons.length;
+
+
+  renderNextLesson();
+
+  renderTodayLessons();
+
+}
+
+
+/* =========================================================
+   NEXT LESSON UI
+========================================================= */
+
+function renderNextLesson(){
+
+  const lesson =
+    getNextLesson();
+
+
+  const card =
+    document.getElementById(
+      "nextLessonCard"
+    );
+
+
+  if(!lesson){
+
+    card.style.display =
+      "none";
+
+    return;
+
+  }
+
+
+  card.style.display =
+    "block";
+
+
+  const student =
+    getStudent(
+      lesson.studentId
+    );
+
+
+  document.getElementById(
+    "nextStudent"
+  ).textContent =
+    student
+      ? student.name
+      : "Lesson";
+
+
+  document.getElementById(
+    "nextInfo"
+  ).textContent =
+
+    dayName(
+      lesson.day
+    ) +
+    " · " +
+    lesson.duration +
+    " min" +
+    (
+      student
+        ? " · " + student.level
+        : ""
+    );
+
+
+  document.getElementById(
+    "nextTime"
+  ).innerHTML =
+
+    formatTime(
+      lesson.time
+    ) +
+
+    ' <span class="next-arrow">›</span>';
+
+}
+
+
+/* =========================================================
+   TODAY LESSONS
+========================================================= */
+
+function renderTodayLessons(){
+
+  const today =
+    new Date().getDay();
+
+
+  const lessons =
+    data.lessons
+
+      .filter(
+        l =>
+          Number(l.day) ===
+          today
+      )
+
+      .sort(
+        (a,b) =>
+          a.time.localeCompare(
+            b.time
+          )
+      );
 
 
   const box =
@@ -1228,8 +2421,25 @@ function renderHome(){
 
   if(!lessons.length){
 
-    box.innerHTML =
-      '<div class="empty">No lessons today 🌿</div>';
+    box.innerHTML = `
+
+      <div class="empty-state">
+
+        <div class="empty-icon">
+          🌿
+        </div>
+
+        <div class="empty-title">
+          No lessons today
+        </div>
+
+        <div class="empty-text">
+          Enjoy your free time
+        </div>
+
+      </div>
+
+    `;
 
     return;
 
@@ -1237,70 +2447,171 @@ function renderHome(){
 
 
   box.innerHTML =
-    lessons.map(l => {
 
-      const s =
-        getStudent(l.studentId);
+    lessons.map(
+      lesson => {
+
+        const student =
+          getStudent(
+            lesson.studentId
+          );
 
 
-      return `
+        return `
 
-        <div class="lesson-row">
+          <div class="lesson">
 
-          <div class="lesson-main">
+            <div class="lesson-time">
 
-            <div class="lesson-name">
-              ${escapeHtml(
-                s?.name || "Student"
+              ${formatTime(
+                lesson.time
               )}
+
             </div>
 
-            <div class="lesson-meta">
-              ${escapeHtml(l.time)}
-              ·
-              ${l.duration} min
+
+            <div class="lesson-line"></div>
+
+
+            <div class="lesson-info">
+
+              <div class="lesson-student">
+
+                ${escapeHtml(
+                  student
+                    ? student.name
+                    : "Student"
+                )}
+
+              </div>
+
+
+              <div class="lesson-details">
+
+                ${lesson.duration}
+                min
+
+                ${
+                  student
+                    ? " · " +
+                      escapeHtml(
+                        student.level
+                      )
+                    : ""
+                }
+
+              </div>
+
             </div>
+
+
+            ${
+              student
+                ?
+                `
+                  <div class="level-pill">
+                    ${escapeHtml(
+                      student.level
+                    )}
+                  </div>
+                `
+                :
+                ""
+            }
 
           </div>
 
-          <div class="badge">
-            ${escapeHtml(
-              s?.level || ""
-            )}
-          </div>
+        `;
 
-        </div>
-
-      `;
-
-    }).join("");
+      }
+    ).join("");
 
 }
 
 
-/* SCHEDULE */
+/* =========================================================
+   SCHEDULE
+========================================================= */
 
 function renderDayTabs(){
 
-  document.getElementById(
-    "dayTabs"
-  ).innerHTML =
+  const box =
+    document.getElementById(
+      "dayTabs"
+    );
 
-    days.map(d => `
 
-      <button
-        class="day-tab ${
-          selectedDay === d.value
-            ? "active"
-            : ""
-        }"
-        onclick="selectDay(${d.value})">
+  const today =
+    new Date().getDay();
 
-        ${d.short}
 
-      </button>
+  box.innerHTML =
 
-    `).join("");
+    days.map(
+      day => `
+
+        <button
+          class="
+            day-button
+            ${
+              selectedDay ===
+              day.value
+                ? "active"
+                : ""
+            }
+            ${
+              today ===
+              day.value
+                ? "today"
+                : ""
+            }
+          "
+          onclick="
+            selectDay(${day.value})
+          "
+        >
+
+          <span class="day-name">
+            ${day.short}
+          </span>
+
+          <span class="day-number">
+            ${getDayNumber(day.value)}
+          </span>
+
+        </button>
+
+      `
+    ).join("");
+
+}
+
+
+function getDayNumber(day){
+
+  const today =
+    new Date();
+
+
+  const current =
+    today.getDay();
+
+
+  let difference =
+    Number(day) - current;
+
+
+  const date =
+    new Date(today);
+
+
+  date.setDate(
+    today.getDate() +
+    difference
+  );
+
+
+  return date.getDate();
 
 }
 
@@ -1310,18 +2621,28 @@ function renderSchedule(){
   renderDayTabs();
 
 
+  document.getElementById(
+    "selectedDate"
+  ).textContent =
+    formatSelectedDate(
+      selectedDay
+    );
+
+
   const lessons =
     data.lessons
 
       .filter(
-        l =>
-          Number(l.day) ===
+        lesson =>
+          Number(lesson.day) ===
           Number(selectedDay)
       )
 
       .sort(
         (a,b) =>
-          a.time.localeCompare(b.time)
+          a.time.localeCompare(
+            b.time
+          )
       );
 
 
@@ -1335,11 +2656,19 @@ function renderSchedule(){
 
     box.innerHTML = `
 
-      <div class="empty">
+      <div class="empty-state">
 
-        No lessons on
-        ${dayName(selectedDay)}
-        🌿
+        <div class="empty-icon">
+          ☁️
+        </div>
+
+        <div class="empty-title">
+          No lessons
+        </div>
+
+        <div class="empty-text">
+          Your day is clear
+        </div>
 
       </div>
 
@@ -1351,70 +2680,111 @@ function renderSchedule(){
 
 
   box.innerHTML =
-    lessons.map(l => {
 
-      const s =
-        getStudent(l.studentId);
+    lessons.map(
+      lesson => {
+
+        const student =
+          getStudent(
+            lesson.studentId
+          );
 
 
-      return `
+        return `
 
-        <div class="lesson-row">
+          <div class="schedule-item">
 
-          <div class="lesson-main">
+            <div class="schedule-item-time">
 
-            <div class="lesson-name">
-              ${escapeHtml(
-                s?.name || "Student"
+              ${formatTime(
+                lesson.time
               )}
-            </div>
-
-            <div class="lesson-meta">
-
-              ${escapeHtml(l.time)}
-              ·
-              ${l.duration} minutes
-              ·
-              ${dayName(l.day)}
 
             </div>
 
-          </div>
+
+            <div class="lesson-line"></div>
 
 
-          <div
-            style="
-              display:flex;
-              align-items:center;
-              gap:8px;
-            ">
+            <div class="schedule-item-body">
 
-            <div class="badge">
-              ${escapeHtml(
-                s?.level || ""
-              )}
+              <div class="schedule-item-name">
+
+                ${escapeHtml(
+                  student
+                    ? student.name
+                    : "Student"
+                )}
+
+              </div>
+
+
+              <div class="schedule-item-meta">
+
+                ${
+                  student
+                    ? escapeHtml(
+                        student.level
+                      ) +
+                      " · "
+                    : ""
+                }
+
+                ${lesson.duration}
+                minutes
+
+              </div>
+
             </div>
+
+
+            ${
+              student
+                ?
+                `
+                  <div class="level-pill">
+                    ${escapeHtml(
+                      student.level
+                    )}
+                  </div>
+                `
+                :
+                ""
+            }
+
 
             <button
-              class="danger"
-              onclick="deleteLesson(${l.id})">
-
-              Delete
-
+              class="delete-small"
+              onclick="
+                deleteLesson(${lesson.id})
+              "
+            >
+              ×
             </button>
 
           </div>
 
-        </div>
+        `;
 
-      `;
-
-    }).join("");
+      }
+    ).join("");
 
 }
 
 
-/* STUDENTS */
+function selectDay(day){
+
+  selectedDay =
+    Number(day);
+
+  renderSchedule();
+
+}
+
+
+/* =========================================================
+   STUDENTS
+========================================================= */
 
 function renderStudents(){
 
@@ -1424,10 +2794,42 @@ function renderStudents(){
     );
 
 
+  document.getElementById(
+    "studentCountLabel"
+  ).textContent =
+    data.students.length +
+    (
+      data.students.length === 1
+        ? " student"
+        : " students"
+    );
+
+
   if(!data.students.length){
 
-    box.innerHTML =
-      '<div class="empty">No students yet.</div>';
+    box.innerHTML = `
+
+      <div class="schedule-card">
+
+        <div class="empty-state">
+
+          <div class="empty-icon">
+            👩‍🎓
+          </div>
+
+          <div class="empty-title">
+            No students yet
+          </div>
+
+          <div class="empty-text">
+            Add your first student
+          </div>
+
+        </div>
+
+      </div>
+
+    `;
 
     return;
 
@@ -1435,119 +2837,166 @@ function renderStudents(){
 
 
   box.innerHTML =
-    data.students.map(s => {
 
-      const initials =
-        s.name
-          .trim()
-          .split(/\s+/)
-          .map(x => x[0])
-          .join("")
-          .slice(0,2)
-          .toUpperCase();
+    data.students.map(
+      student => {
+
+        const initials =
+          student.name
+            .trim()
+            .split(/\s+/)
+            .map(
+              word =>
+                word[0]
+            )
+            .join("")
+            .slice(0,2)
+            .toUpperCase();
 
 
-      return `
+        const lessons =
+          data.lessons.filter(
+            lesson =>
+              Number(
+                lesson.studentId
+              ) ===
+              Number(
+                student.id
+              )
+          );
 
-        <div
-          class="student"
-          onclick="openStudent(${s.id})">
 
-          <div class="student-left">
+        return `
+
+          <button
+            class="student-card"
+            onclick="
+              openStudent(${student.id})
+            "
+          >
 
             <div class="student-avatar">
 
-              ${escapeHtml(initials)}
+              ${escapeHtml(
+                initials
+              )}
 
             </div>
 
 
-            <div>
+            <div class="student-body">
 
               <div class="student-name">
 
-                ${escapeHtml(s.name)}
-
-              </div>
-
-
-              <div class="student-note">
-
                 ${escapeHtml(
-                  s.notes || "No notes"
+                  student.name
                 )}
 
               </div>
 
+
+              <div class="student-meta">
+
+                ${escapeHtml(
+                  student.level
+                )}
+
+                ·
+
+                ${
+                  lessons.length
+                }
+
+                ${
+                  lessons.length === 1
+                    ? "lesson"
+                    : "lessons"
+                }
+
+              </div>
+
             </div>
 
-          </div>
 
+            <div class="student-chevron">
 
-          <div class="badge">
+              ›
 
-            ${escapeHtml(s.level)}
+            </div>
 
-          </div>
+          </button>
 
-        </div>
+        `;
 
-      `;
-
-    }).join("");
+      }
+    ).join("");
 
 }
 
 
-/* STUDENT DETAIL */
+/* =========================================================
+   STUDENT PROFILE
+========================================================= */
 
 function openStudent(id){
 
-  currentStudentId = id;
-
-
-  const s =
+  const student =
     getStudent(id);
 
 
-  if(!s) return;
+  if(!student){
+    return;
+  }
+
+
+  const initials =
+    student.name
+      .trim()
+      .split(/\s+/)
+      .map(
+        word =>
+          word[0]
+      )
+      .join("")
+      .slice(0,2)
+      .toUpperCase();
 
 
   const lessons =
     data.lessons
 
       .filter(
-        l =>
-          Number(l.studentId) ===
+        lesson =>
+          Number(
+            lesson.studentId
+          ) ===
           Number(id)
       )
 
       .sort(
         (a,b) =>
           a.day - b.day ||
-          a.time.localeCompare(b.time)
+          a.time.localeCompare(
+            b.time
+          )
       );
 
 
-  const initials =
-    s.name
-      .trim()
-      .split(/\s+/)
-      .map(x => x[0])
-      .join("")
-      .slice(0,2)
-      .toUpperCase();
+  const box =
+    document.getElementById(
+      "studentDetail"
+    );
 
 
-  document.getElementById(
-    "studentDetail"
-  ).innerHTML = `
+  box.innerHTML = `
 
-    <div class="profile-head">
+    <div class="profile-main">
 
-      <div class="profile-avatar">
+      <div class="profile-big-avatar">
 
-        ${escapeHtml(initials)}
+        ${escapeHtml(
+          initials
+        )}
 
       </div>
 
@@ -1556,15 +3005,19 @@ function openStudent(id){
 
         <div class="profile-name">
 
-          ${escapeHtml(s.name)}
+          ${escapeHtml(
+            student.name
+          )}
 
         </div>
 
 
-        <div class="profile-level">
+        <div class="profile-sub">
 
           English ·
-          ${escapeHtml(s.level)}
+          ${escapeHtml(
+            student.level
+          )}
 
         </div>
 
@@ -1573,38 +3026,45 @@ function openStudent(id){
     </div>
 
 
-    <div class="card">
+    <div
+      class="profile-card"
+      style="margin-top:20px"
+    >
 
-      <div class="card-title">
+      <div class="profile-card-title">
         Overview
       </div>
 
 
-      <div
-        class="info-grid"
-        style="margin-top:16px">
+      <div class="profile-grid">
 
-        <div class="info">
+        <div class="profile-info">
 
-          <div class="info-label">
+          <div class="profile-info-label">
             Level
           </div>
 
-          <div class="info-value">
-            ${escapeHtml(s.level)}
+          <div class="profile-info-value">
+
+            ${escapeHtml(
+              student.level
+            )}
+
           </div>
 
         </div>
 
 
-        <div class="info">
+        <div class="profile-info">
 
-          <div class="info-label">
+          <div class="profile-info-label">
             Lessons
           </div>
 
-          <div class="info-value">
+          <div class="profile-info-value">
+
             ${lessons.length}
+
           </div>
 
         </div>
@@ -1614,32 +3074,30 @@ function openStudent(id){
     </div>
 
 
-    <div class="card">
+    <div class="profile-card">
 
-      <div class="card-title">
+      <div class="profile-card-title">
         Notes
       </div>
 
 
-      <div
-        class="card-sub"
-        style="
-          margin-top:12px;
-          line-height:1.5;
-        ">
+      <div class="note-text">
 
-        ${escapeHtml(
-          s.notes || "No notes yet."
-        )}
+        ${
+          escapeHtml(
+            student.notes ||
+            "No notes added yet."
+          )
+        }
 
       </div>
 
     </div>
 
 
-    <div class="card">
+    <div class="profile-card">
 
-      <div class="card-title">
+      <div class="profile-card-title">
         Schedule
       </div>
 
@@ -1647,50 +3105,72 @@ function openStudent(id){
       ${
         lessons.length
 
-        ?
+          ?
 
-        lessons.map(l => `
+          lessons.map(
+            lesson => `
 
-          <div class="lesson-row">
+              <div class="profile-lesson">
 
-            <div class="lesson-main">
+                <div>
 
-              <div class="lesson-name">
+                  <div class="profile-lesson-day">
 
-                ${dayName(l.day)}
+                    ${dayName(
+                      lesson.day
+                    )}
+
+                  </div>
+
+                  <div class="profile-lesson-time">
+
+                    ${formatTime(
+                      lesson.time
+                    )}
+
+                    ·
+
+                    ${lesson.duration}
+                    min
+
+                  </div>
+
+                </div>
+
+
+                <div class="level-pill">
+
+                  ${escapeHtml(
+                    student.level
+                  )}
+
+                </div>
 
               </div>
 
+            `
+          ).join("")
 
-              <div class="lesson-meta">
+          :
 
-                ${escapeHtml(l.time)}
-                ·
-                ${l.duration} minutes
-
+          `
+            <div class="empty-state">
+              <div class="empty-text">
+                No lessons scheduled
               </div>
-
             </div>
-
-          </div>
-
-        `).join("")
-
-        :
-
-        '<div class="empty">No lessons scheduled.</div>'
+          `
       }
 
     </div>
 
 
     <button
-      class="danger"
-      style="
-        width:100%;
-        padding:14px;
+      class="delete-student"
+      onclick="
+        deleteStudent(${student.id})
       "
-      onclick="deleteStudent(${s.id})">
+    >
 
       Delete student
 
@@ -1706,139 +3186,147 @@ function openStudent(id){
 }
 
 
-/* DAY */
-
-function selectDay(day){
-
-  selectedDay = day;
-
-  renderSchedule();
-
-}
-
-
-/* ADD LESSON */
+/* =========================================================
+   ADD LESSON
+========================================================= */
 
 function openLessonModal(){
 
-  const sel =
+  const studentSelect =
     document.getElementById(
       "lessonStudent"
     );
 
 
-  sel.innerHTML =
-    data.students.map(s => `
+  if(!data.students.length){
 
-      <option value="${s.id}">
+    alert(
+      "Please add a student first."
+    );
 
-        ${escapeHtml(s.name)}
-        ·
-        ${escapeHtml(s.level)}
+    showPage(
+      "studentsPage"
+    );
 
-      </option>
+    return;
 
-    `).join("");
+  }
+
+
+  studentSelect.innerHTML =
+
+    data.students.map(
+      student => `
+
+        <option
+          value="${student.id}"
+        >
+
+          ${escapeHtml(
+            student.name
+          )}
+
+          ·
+
+          ${escapeHtml(
+            student.level
+          )}
+
+        </option>
+
+      `
+    ).join("");
 
 
   document.getElementById(
     "lessonDay"
   ).innerHTML =
 
-    days.map(d => `
+    days.map(
+      day => `
 
-      <option
-        value="${d.value}"
-        ${
-          d.value === selectedDay
-            ? "selected"
-            : ""
-        }>
+        <option
+          value="${day.value}"
+          ${
+            Number(
+              day.value
+            ) ===
+            Number(
+              selectedDay
+            )
+              ? "selected"
+              : ""
+          }
+        >
 
-        ${d.name}
+          ${day.name}
 
-      </option>
+        </option>
 
-    `).join("");
+      `
+    ).join("");
+
+
+  document.getElementById(
+    "lessonTime"
+  ).value =
+    "10:00";
+
+
+  document.getElementById(
+    "lessonDuration"
+  ).value =
+    "60";
 
 
   document.getElementById(
     "lessonModal"
-  ).classList.add("show");
+  ).classList.add(
+    "show"
+  );
 
 }
 
 
-/* ADD STUDENT */
+/* =========================================================
+   SAVE LESSON
+========================================================= */
 
-function openStudentModal(){
+function saveLesson(event){
 
-  document.getElementById(
-    "studentName"
-  ).value = "";
-
-
-  document.getElementById(
-    "studentNotes"
-  ).value = "";
-
-
-  document.getElementById(
-    "studentLevel"
-  ).value = "A1";
-
-
-  document.getElementById(
-    "studentModal"
-  ).classList.add("show");
-
-}
-
-
-/* CLOSE MODAL */
-
-function closeModal(id){
-
-  document.getElementById(
-    id
-  ).classList.remove("show");
-
-}
-
-
-/* SAVE LESSON */
-
-function saveLesson(e){
-
-  e.preventDefault();
+  event.preventDefault();
 
 
   const lesson = {
 
-    id:Date.now(),
+    id:
+      Date.now(),
 
-    studentId:Number(
-      document.getElementById(
-        "lessonStudent"
-      ).value
-    ),
+    studentId:
+      Number(
+        document.getElementById(
+          "lessonStudent"
+        ).value
+      ),
 
-    day:Number(
-      document.getElementById(
-        "lessonDay"
-      ).value
-    ),
+    day:
+      Number(
+        document.getElementById(
+          "lessonDay"
+        ).value
+      ),
 
     time:
       document.getElementById(
         "lessonTime"
       ).value,
 
-    duration:Number(
-      document.getElementById(
-        "lessonDuration"
-      ).value
-    )
+    duration:
+      Number(
+        document.getElementById(
+          "lessonDuration"
+        ).value
+      )
 
   };
 
@@ -1870,30 +3358,99 @@ function saveLesson(e){
 }
 
 
-/* SAVE STUDENT */
+/* =========================================================
+   DELETE LESSON
+========================================================= */
 
-function saveStudent(e){
+function deleteLesson(id){
 
-  e.preventDefault();
+  if(
+    !confirm(
+      "Delete this lesson?"
+    )
+  ){
+
+    return;
+
+  }
+
+
+  data.lessons =
+    data.lessons.filter(
+      lesson =>
+        Number(
+          lesson.id
+        ) !==
+        Number(id)
+    );
+
+
+  persist();
+
+
+  renderAll();
+
+}
+
+
+/* =========================================================
+   ADD STUDENT
+========================================================= */
+
+function openStudentModal(){
+
+  document.getElementById(
+    "studentName"
+  ).value =
+    "";
+
+
+  document.getElementById(
+    "studentLevel"
+  ).value =
+    "A1";
+
+
+  document.getElementById(
+    "studentNotes"
+  ).value =
+    "";
+
+
+  document.getElementById(
+    "studentModal"
+  ).classList.add(
+    "show"
+  );
+
+}
+
+
+function saveStudent(event){
+
+  event.preventDefault();
 
 
   const name =
-    document
-      .getElementById(
-        "studentName"
-      )
-      .value
-      .trim();
+    document.getElementById(
+      "studentName"
+    )
+    .value
+    .trim();
 
 
-  if(!name) return;
+  if(!name){
+    return;
+  }
 
 
   data.students.push({
 
-    id:Date.now(),
+    id:
+      Date.now(),
 
-    name:name,
+    name:
+      name,
 
     level:
       document.getElementById(
@@ -1919,59 +3476,47 @@ function saveStudent(e){
 
   renderAll();
 
-}
 
-
-/* DELETE LESSON */
-
-function deleteLesson(id){
-
-  if(
-    !confirm(
-      "Delete this lesson?"
-    )
-  ) return;
-
-
-  data.lessons =
-    data.lessons.filter(
-      l =>
-        Number(l.id) !==
-        Number(id)
-    );
-
-
-  persist();
-
-
-  renderAll();
+  showPage(
+    "studentsPage"
+  );
 
 }
 
 
-/* DELETE STUDENT */
+/* =========================================================
+   DELETE STUDENT
+========================================================= */
 
 function deleteStudent(id){
 
   if(
     !confirm(
-      "Delete this student and their lessons?"
+      "Delete this student and all of their lessons?"
     )
-  ) return;
+  ){
+
+    return;
+
+  }
 
 
   data.students =
     data.students.filter(
-      s =>
-        Number(s.id) !==
+      student =>
+        Number(
+          student.id
+        ) !==
         Number(id)
     );
 
 
   data.lessons =
     data.lessons.filter(
-      l =>
-        Number(l.studentId) !==
+      lesson =>
+        Number(
+          lesson.studentId
+        ) !==
         Number(id)
     );
 
@@ -1989,45 +3534,65 @@ function deleteStudent(id){
 }
 
 
-/* PAGE NAVIGATION */
+/* =========================================================
+   PAGE NAVIGATION
+========================================================= */
 
 function showPage(id){
 
   document
     .querySelectorAll(".page")
     .forEach(
-      p =>
-        p.classList.remove("active")
+      page =>
+        page.classList.remove(
+          "active"
+        )
     );
 
 
   document
     .getElementById(id)
-    .classList.add("active");
-
-
-  document
-    .querySelectorAll(".nav")
-    .forEach(
-      n =>
-        n.classList.remove("active")
+    .classList.add(
+      "active"
     );
 
 
-  if(id === "homePage"){
+  document
+    .querySelectorAll(".nav-button")
+    .forEach(
+      button =>
+        button.classList.remove(
+          "active"
+        )
+    );
+
+
+  if(
+    id === "homePage"
+  ){
 
     document
-      .getElementById("navHome")
-      .classList.add("active");
+      .getElementById(
+        "navHome"
+      )
+      .classList.add(
+        "active"
+      );
 
   }
 
 
-  if(id === "schedulePage"){
+  if(
+    id === "schedulePage"
+  ){
 
     document
-      .getElementById("navSchedule")
-      .classList.add("active");
+      .getElementById(
+        "navSchedule"
+      )
+      .classList.add(
+        "active"
+      );
 
   }
 
@@ -2038,8 +3603,12 @@ function showPage(id){
   ){
 
     document
-      .getElementById("navStudents")
-      .classList.add("active");
+      .getElementById(
+        "navStudents"
+      )
+      .classList.add(
+        "active"
+      );
 
   }
 
@@ -2052,29 +3621,51 @@ function showPage(id){
 }
 
 
-/* SECURITY */
+/* =========================================================
+   MODALS
+========================================================= */
 
-function escapeHtml(value){
+function closeModal(id){
 
-  return String(
-    value ?? ""
-  ).replace(
-    /[&<>"']/g,
-    m => ({
-
-      "&":"&amp;",
-      "<":"&lt;",
-      ">":"&gt;",
-      '"':"&quot;",
-      "'":"&#039;"
-
-    }[m])
-  );
+  document
+    .getElementById(id)
+    .classList.remove(
+      "show"
+    );
 
 }
 
 
-/* RENDER */
+document
+  .querySelectorAll(".modal")
+  .forEach(
+    modal => {
+
+      modal.addEventListener(
+        "click",
+        function(event){
+
+          if(
+            event.target ===
+            modal
+          ){
+
+            modal.classList.remove(
+              "show"
+            );
+
+          }
+
+        }
+      );
+
+    }
+  );
+
+
+/* =========================================================
+   INITIAL RENDER
+========================================================= */
 
 function renderAll(){
 
@@ -2090,40 +3681,18 @@ function renderAll(){
 renderAll();
 
 
-/* UPDATE GREETING */
+/* =========================================================
+   LIVE GREETING / NEXT LESSON
+========================================================= */
 
 setInterval(
-  () => {
+  function(){
+
     renderHome();
+
   },
   60000
 );
-
-
-/* CLOSE MODALS WHEN CLICKING OUTSIDE */
-
-document
-  .querySelectorAll(".modal")
-  .forEach(modal => {
-
-    modal.addEventListener(
-      "click",
-      e => {
-
-        if(
-          e.target === modal
-        ){
-
-          modal.classList.remove(
-            "show"
-          );
-
-        }
-
-      }
-    );
-
-  });
 
 </script>
 
