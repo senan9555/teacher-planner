@@ -1,0 +1,9 @@
+{
+  "name": "Teacher Planner",
+  "short_name": "Planner",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#f6f7fb",
+  "theme_color": "#f6f7fb",
+  "orientation": "portrait"
+}
