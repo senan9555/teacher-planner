@@ -9,14 +9,17 @@
 >
 
 <meta name="theme-color" content="#f7f7fb">
+
 <meta
   name="apple-mobile-web-app-capable"
   content="yes"
 >
+
 <meta
   name="apple-mobile-web-app-status-bar-style"
   content="default"
 >
+
 <meta
   name="apple-mobile-web-app-title"
   content="Teacher Planner"
@@ -949,6 +952,128 @@ textarea{
 
 
 /* =========================================================
+   SETTINGS
+========================================================= */
+
+.settings-header{
+  padding-bottom:16px;
+}
+
+.settings-card{
+  background:var(--surface);
+  border-radius:28px;
+  box-shadow:var(--shadow-small);
+  overflow:hidden;
+  margin-bottom:15px;
+}
+
+.settings-card-title{
+  padding:20px 20px 9px;
+
+  color:var(--text-light);
+
+  font-size:12px;
+  font-weight:700;
+
+  text-transform:uppercase;
+  letter-spacing:.8px;
+}
+
+.settings-row{
+  width:100%;
+
+  background:transparent;
+
+  padding:18px 20px;
+
+  display:flex;
+  align-items:center;
+  gap:14px;
+
+  text-align:left;
+
+  border-bottom:1px solid var(--line);
+}
+
+.settings-row:last-child{
+  border-bottom:0;
+}
+
+.settings-icon{
+  width:43px;
+  height:43px;
+
+  border-radius:14px;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  font-size:19px;
+
+  flex:none;
+}
+
+.settings-icon.purple{
+  background:var(--purple-soft);
+  color:var(--purple);
+}
+
+.settings-icon.blue{
+  background:var(--blue-soft);
+  color:var(--blue);
+}
+
+.settings-icon.red{
+  background:var(--red-soft);
+  color:var(--red);
+}
+
+.settings-row-body{
+  flex:1;
+  min-width:0;
+}
+
+.settings-row-title{
+  font-size:16px;
+  font-weight:700;
+}
+
+.settings-row-description{
+  color:var(--text-light);
+  font-size:12px;
+  line-height:1.4;
+  margin-top:3px;
+}
+
+.settings-chevron{
+  color:#b2b3ba;
+  font-size:23px;
+}
+
+.settings-note{
+  background:var(--purple-soft);
+  color:var(--text-soft);
+
+  border-radius:22px;
+
+  padding:18px;
+
+  font-size:13px;
+  line-height:1.55;
+
+  margin-bottom:20px;
+}
+
+.settings-version{
+  text-align:center;
+  color:var(--text-light);
+  font-size:12px;
+  padding:10px 0 25px;
+}
+
+
+/* =========================================================
    MODAL
 ========================================================= */
 
@@ -1238,9 +1363,10 @@ textarea{
 
       <button
         class="profile-button"
-        onclick="showPage('studentsPage')">
+        onclick="showPage('settingsPage')"
+        aria-label="Settings">
 
-        T
+        ⚙
 
       </button>
 
@@ -1522,6 +1648,157 @@ textarea{
 
 
 <!-- =======================================================
+     SETTINGS
+======================================================= -->
+
+<main
+  id="settingsPage"
+  class="page"
+>
+
+  <header class="page-header settings-header">
+
+    <div class="header-row">
+
+      <div>
+
+        <div class="small-label">
+          Personal space
+        </div>
+
+        <div class="page-title">
+          Settings
+        </div>
+
+      </div>
+
+    </div>
+
+  </header>
+
+
+  <div class="content">
+
+
+    <!-- DATA -->
+
+    <div class="settings-card">
+
+      <div class="settings-card-title">
+        Data & Backup
+      </div>
+
+
+      <button
+        class="settings-row"
+        onclick="backupData()"
+      >
+
+        <div class="settings-icon purple">
+          💾
+        </div>
+
+        <div class="settings-row-body">
+
+          <div class="settings-row-title">
+            Backup data
+          </div>
+
+          <div class="settings-row-description">
+            Save your students and lessons as a private backup file.
+          </div>
+
+        </div>
+
+        <div class="settings-chevron">
+          ›
+        </div>
+
+      </button>
+
+
+      <button
+        class="settings-row"
+        onclick="openRestore()"
+      >
+
+        <div class="settings-icon blue">
+          📥
+        </div>
+
+        <div class="settings-row-body">
+
+          <div class="settings-row-title">
+            Restore data
+          </div>
+
+          <div class="settings-row-description">
+            Restore your planner from a previous backup file.
+          </div>
+
+        </div>
+
+        <div class="settings-chevron">
+          ›
+        </div>
+
+      </button>
+
+
+      <button
+        class="settings-row"
+        onclick="clearAllData()"
+      >
+
+        <div class="settings-icon red">
+          🗑
+        </div>
+
+        <div class="settings-row-body">
+
+          <div class="settings-row-title">
+            Clear all data
+          </div>
+
+          <div class="settings-row-description">
+            Permanently remove all students and lessons from this device.
+          </div>
+
+        </div>
+
+        <div class="settings-chevron">
+          ›
+        </div>
+
+      </button>
+
+    </div>
+
+
+    <!-- PRIVACY -->
+
+    <div class="settings-note">
+
+      🔒 <strong>Your data stays on this device.</strong><br><br>
+
+      Teacher Planner stores your students, lessons and notes locally
+      in this browser. Backup files are created on your device and are
+      not automatically uploaded anywhere.
+
+    </div>
+
+
+    <div class="settings-version">
+      Teacher Planner · Personal Edition
+    </div>
+
+  </div>
+
+</main>
+
+
+
+<!-- =======================================================
      BOTTOM NAV
 ======================================================= -->
 
@@ -1583,6 +1860,20 @@ textarea{
 </nav>
 
 </div>
+
+
+
+<!-- =======================================================
+     HIDDEN RESTORE INPUT
+======================================================= -->
+
+<input
+  id="restoreInput"
+  type="file"
+  accept=".json,application/json"
+  style="display:none"
+  onchange="restoreData(event)"
+>
 
 
 
@@ -3529,6 +3820,314 @@ function deleteStudent(id){
 
   showPage(
     "studentsPage"
+  );
+
+}
+
+
+/* =========================================================
+   BACKUP
+========================================================= */
+
+function backupData(){
+
+  try{
+
+    const backup = {
+
+      app:
+        "Teacher Planner",
+
+      version:
+        4,
+
+      createdAt:
+        new Date().toISOString(),
+
+      data:{
+
+        students:
+          data.students,
+
+        lessons:
+          data.lessons
+
+      }
+
+    };
+
+
+    const json =
+      JSON.stringify(
+        backup,
+        null,
+        2
+      );
+
+
+    const blob =
+      new Blob(
+        [json],
+        {
+          type:
+            "application/json"
+        }
+      );
+
+
+    const url =
+      URL.createObjectURL(
+        blob
+      );
+
+
+    const link =
+      document.createElement(
+        "a"
+      );
+
+
+    const date =
+      new Date()
+        .toISOString()
+        .slice(0,10);
+
+
+    link.href =
+      url;
+
+
+    link.download =
+      "teacher-planner-backup-" +
+      date +
+      ".json";
+
+
+    document.body.appendChild(
+      link
+    );
+
+
+    link.click();
+
+
+    link.remove();
+
+
+    setTimeout(
+      function(){
+
+        URL.revokeObjectURL(
+          url
+        );
+
+      },
+      1000
+    );
+
+
+    alert(
+      "Backup created successfully."
+    );
+
+  }
+  catch(error){
+
+    alert(
+      "Could not create the backup."
+    );
+
+    console.error(error);
+
+  }
+
+}
+
+
+/* =========================================================
+   RESTORE
+========================================================= */
+
+function openRestore(){
+
+  const input =
+    document.getElementById(
+      "restoreInput"
+    );
+
+
+  input.value =
+    "";
+
+
+  input.click();
+
+}
+
+
+function restoreData(event){
+
+  const file =
+    event.target.files &&
+    event.target.files[0];
+
+
+  if(!file){
+    return;
+  }
+
+
+  const reader =
+    new FileReader();
+
+
+  reader.onload =
+    function(){
+
+      try{
+
+        const backup =
+          JSON.parse(
+            reader.result
+          );
+
+
+        if(
+          !backup ||
+          !backup.data ||
+          !Array.isArray(
+            backup.data.students
+          ) ||
+          !Array.isArray(
+            backup.data.lessons
+          )
+        ){
+
+          throw new Error(
+            "Invalid backup"
+          );
+
+        }
+
+
+        const confirmed =
+          confirm(
+            "Restore this backup? Your current students and lessons on this device will be replaced."
+          );
+
+
+        if(!confirmed){
+          return;
+        }
+
+
+        data = {
+
+          students:
+            backup.data.students,
+
+          lessons:
+            backup.data.lessons
+
+        };
+
+
+        persist();
+
+
+        renderAll();
+
+
+        showPage(
+          "homePage"
+        );
+
+
+        alert(
+          "Backup restored successfully."
+        );
+
+      }
+      catch(error){
+
+        alert(
+          "This file is not a valid Teacher Planner backup."
+        );
+
+        console.error(error);
+
+      }
+
+    };
+
+
+  reader.onerror =
+    function(){
+
+      alert(
+        "Could not read the backup file."
+      );
+
+    };
+
+
+  reader.readAsText(
+    file
+  );
+
+}
+
+
+/* =========================================================
+   CLEAR ALL DATA
+========================================================= */
+
+function clearAllData(){
+
+  const first =
+    confirm(
+      "Delete all students, lessons and notes from this device?"
+    );
+
+
+  if(!first){
+    return;
+  }
+
+
+  const second =
+    confirm(
+      "This cannot be undone unless you have a backup. Continue?"
+    );
+
+
+  if(!second){
+    return;
+  }
+
+
+  data = {
+
+    students:[],
+
+    lessons:[]
+
+  };
+
+
+  persist();
+
+
+  renderAll();
+
+
+  showPage(
+    "homePage"
+  );
+
+
+  alert(
+    "All planner data has been cleared."
   );
 
 }
