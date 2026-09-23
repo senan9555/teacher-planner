@@ -10,7 +10,7 @@
 
 <link rel="manifest" href="manifest.json">
 
-<meta name="theme-color" content="#f5f5f7">
+<meta name="theme-color" content="#FAFBFD">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="apple-mobile-web-app-title" content="Teacher Planner">
@@ -22,16 +22,23 @@
 ========================================================= */
 
 :root{
-    --bg:#f5f5f7;
-    --card:#ffffff;
-    --ink:#18191d;
-    --muted:#8d8e96;
-    --soft:#f0f0f3;
-    --line:#e9e9ed;
-    --dark:#1d1e22;
-    --dark-2:#303139;
-    --danger:#c94b4b;
-    --shadow:0 8px 28px rgba(20,20,25,.055);
+    --bg:#FAFBFD;
+    --card:#FFFFFF;
+    --ink:#17181C;
+    --muted:#8B8D96;
+    --soft:#F2F4F7;
+    --line:#E8EAF0;
+
+    --dark:#25272D;
+    --dark-2:#3A3C44;
+
+    --blue:#5D78C8;
+    --blue-soft:#EEF3FF;
+
+    --danger:#C94B4B;
+    --danger-soft:#FFF0F0;
+
+    --shadow:0 8px 28px rgba(35,40,55,.055);
 }
 
 *{
@@ -46,13 +53,15 @@ html{
 
 body{
     margin:0;
+
     background:
         radial-gradient(
             circle at 50% -10%,
-            rgba(255,255,255,.95),
-            transparent 38%
+            rgba(255,255,255,.98),
+            transparent 42%
         ),
         var(--bg);
+
     color:var(--ink);
     min-height:100vh;
 
@@ -68,6 +77,7 @@ body{
         sans-serif;
 
     padding-bottom:env(safe-area-inset-bottom);
+
     -webkit-font-smoothing:antialiased;
     text-rendering:optimizeLegibility;
 }
@@ -100,11 +110,13 @@ textarea{
     max-width:520px;
     min-height:100vh;
     margin:0 auto;
+
     padding:
         calc(16px + env(safe-area-inset-top))
         16px
         calc(28px + env(safe-area-inset-bottom));
 }
+
 
 /* =========================================================
    TOP BAR
@@ -114,6 +126,7 @@ textarea{
     display:flex;
     align-items:center;
     justify-content:space-between;
+
     margin-bottom:30px;
 }
 
@@ -126,6 +139,7 @@ textarea{
 .brand-icon{
     width:42px;
     height:42px;
+
     border-radius:14px;
 
     display:flex;
@@ -133,56 +147,65 @@ textarea{
     justify-content:center;
 
     color:#fff;
+
     font-size:18px;
     font-weight:800;
 
     background:
         linear-gradient(
             145deg,
-            #18191d,
-            #3b3c44
+            #343741,
+            #565963
         );
 
     box-shadow:
-        0 8px 20px rgba(0,0,0,.13),
-        inset 0 1px 0 rgba(255,255,255,.08);
+        0 8px 20px rgba(40,45,60,.13),
+        inset 0 1px 0 rgba(255,255,255,.13);
 }
 
 .brand-text{
     font-size:18px;
     line-height:1.1;
+
     font-weight:760;
+
     letter-spacing:-.45px;
 }
 
 .brand-sub{
     margin-top:4px;
+
     font-size:10px;
-    color:#9899a1;
+
+    color:#999BA4;
+
     letter-spacing:.15px;
 }
 
 .icon-btn{
     width:42px;
     height:42px;
+
     border-radius:14px;
 
     display:flex;
     align-items:center;
     justify-content:center;
 
-    background:rgba(255,255,255,.88);
-    color:#2a2b30;
+    background:#FFFFFF;
+    color:#35373E;
 
     box-shadow:
-        0 5px 18px rgba(0,0,0,.055),
+        0 5px 18px rgba(35,40,55,.055),
         inset 0 0 0 1px rgba(0,0,0,.035);
 
     font-size:18px;
+
     transition:
         transform .16s ease,
         box-shadow .16s ease;
 }
+
 
 /* =========================================================
    PAGE SYSTEM
@@ -198,6 +221,7 @@ textarea{
 }
 
 @keyframes pageIn{
+
     from{
         opacity:0;
         transform:translateY(5px);
@@ -207,7 +231,9 @@ textarea{
         opacity:1;
         transform:translateY(0);
     }
+
 }
+
 
 /* =========================================================
    HOME
@@ -218,22 +244,23 @@ textarea{
 }
 
 .greeting-small{
-    color:#909198;
+    color:#92949D;
+
     font-size:12px;
     font-weight:500;
+
     margin-bottom:7px;
 }
 
 .greeting-title{
     font-size:31px;
     line-height:1.08;
+
     font-weight:820;
+
     letter-spacing:-1.35px;
 }
 
-.greeting-title span{
-    display:inline-block;
-}
 
 /* =========================================================
    WELCOME CARD
@@ -253,34 +280,40 @@ textarea{
     background:
         radial-gradient(
             circle at 92% 8%,
-            rgba(255,255,255,.12),
+            rgba(255,255,255,.16),
             transparent 28%
         ),
         linear-gradient(
             145deg,
-            #202126,
-            #35363e
+            #353842,
+            #555863
         );
 
     box-shadow:
-        0 18px 38px rgba(0,0,0,.12),
-        inset 0 1px 0 rgba(255,255,255,.06);
+        0 18px 38px rgba(45,48,60,.13),
+        inset 0 1px 0 rgba(255,255,255,.08);
 }
 
 .welcome-card:before{
     content:"";
+
     position:absolute;
+
     width:180px;
     height:180px;
+
     right:-85px;
     bottom:-105px;
+
     border-radius:50%;
-    background:rgba(255,255,255,.045);
+
+    background:rgba(255,255,255,.055);
 }
 
 .welcome-icon{
     width:46px;
     height:46px;
+
     border-radius:15px;
 
     display:flex;
@@ -289,29 +322,36 @@ textarea{
 
     margin-bottom:19px;
 
-    background:rgba(255,255,255,.09);
-    box-shadow:inset 0 0 0 1px rgba(255,255,255,.05);
+    background:rgba(255,255,255,.10);
+
+    box-shadow:
+        inset 0 0 0 1px rgba(255,255,255,.06);
 
     font-size:21px;
 }
 
 .welcome-title{
     position:relative;
+
     font-size:20px;
     font-weight:760;
+
     letter-spacing:-.35px;
+
     margin-bottom:7px;
 }
 
 .welcome-text{
     position:relative;
+
     max-width:340px;
 
-    color:rgba(255,255,255,.64);
+    color:rgba(255,255,255,.70);
 
     font-size:12px;
     line-height:1.55;
 }
+
 
 /* =========================================================
    NEXT LESSON
@@ -331,59 +371,77 @@ textarea{
     background:
         linear-gradient(
             145deg,
-            #24252a,
-            #393a42
+            #424550,
+            #5A5D68
         );
 
     box-shadow:
-        0 17px 34px rgba(0,0,0,.115),
-        inset 0 1px 0 rgba(255,255,255,.055);
+        0 17px 34px rgba(45,48,60,.12),
+        inset 0 1px 0 rgba(255,255,255,.07);
 }
 
 .next-card:after{
     content:"";
+
     position:absolute;
+
     width:125px;
     height:125px;
+
     border-radius:50%;
+
     right:-60px;
     top:-60px;
-    background:rgba(255,255,255,.035);
+
+    background:rgba(255,255,255,.045);
 }
 
 .next-label{
     position:relative;
+
     font-size:10px;
     font-weight:650;
-    color:rgba(255,255,255,.54);
+
+    color:rgba(255,255,255,.60);
+
     text-transform:uppercase;
     letter-spacing:1.25px;
+
     margin-bottom:9px;
 }
 
 .next-name{
     position:relative;
+
     font-size:22px;
     font-weight:760;
+
     letter-spacing:-.55px;
 }
 
 .next-meta{
     position:relative;
+
     margin-top:5px;
+
     font-size:12px;
-    color:rgba(255,255,255,.64);
+
+    color:rgba(255,255,255,.68);
 }
 
 .next-time{
     position:relative;
+
     margin-top:16px;
 
     font-size:30px;
     line-height:1;
+
     font-weight:820;
+
     letter-spacing:-1.2px;
 }
+
 
 /* =========================================================
    SECTION HEAD
@@ -403,14 +461,18 @@ textarea{
 .section-title{
     font-size:16px;
     font-weight:760;
+
     letter-spacing:-.25px;
 }
 
 .section-action{
     font-size:11px;
-    color:#999aa1;
+
+    color:#999BA3;
+
     font-weight:550;
 }
+
 
 /* =========================================================
    LESSON CARD
@@ -419,9 +481,10 @@ textarea{
 .lesson-card{
     display:flex;
     align-items:center;
+
     gap:13px;
 
-    background:rgba(255,255,255,.92);
+    background:#FFFFFF;
 
     padding:15px;
 
@@ -430,7 +493,7 @@ textarea{
     border-radius:19px;
 
     box-shadow:
-        0 5px 18px rgba(20,20,25,.042),
+        0 5px 18px rgba(35,40,55,.042),
         inset 0 0 0 1px rgba(0,0,0,.018);
 
     transition:
@@ -447,13 +510,15 @@ textarea{
 
     font-size:13px;
     font-weight:760;
+
     letter-spacing:-.15px;
 }
 
 .lesson-line{
     width:1px;
     height:37px;
-    background:#e5e5e9;
+
+    background:#E5E7EC;
 }
 
 .lesson-info{
@@ -464,6 +529,7 @@ textarea{
 .lesson-name{
     font-size:14px;
     font-weight:720;
+
     white-space:nowrap;
     overflow:hidden;
     text-overflow:ellipsis;
@@ -471,8 +537,27 @@ textarea{
 
 .lesson-level{
     margin-top:4px;
+
     font-size:11px;
-    color:#96979f;
+
+    color:#9698A1;
+}
+
+.lesson-type{
+    display:inline-flex;
+    align-items:center;
+
+    margin-top:5px;
+
+    padding:3px 7px;
+
+    border-radius:7px;
+
+    background:#F2F5FB;
+    color:#69718A;
+
+    font-size:9px;
+    font-weight:650;
 }
 
 .lesson-delete{
@@ -487,13 +572,14 @@ textarea{
 
     border-radius:10px;
 
-    background:#f3f3f5;
-    color:#a2a3a9;
+    background:#F3F4F6;
+    color:#A2A4AC;
 
     font-size:15px;
 
     transition:.15s ease;
 }
+
 
 /* =========================================================
    EMPTY STATES
@@ -502,14 +588,14 @@ textarea{
 .empty-card{
     text-align:center;
 
-    background:rgba(255,255,255,.9);
+    background:#FFFFFF;
 
     padding:27px 21px;
 
     border-radius:21px;
 
     box-shadow:
-        0 6px 20px rgba(20,20,25,.04),
+        0 6px 20px rgba(35,40,55,.04),
         inset 0 0 0 1px rgba(0,0,0,.018);
 }
 
@@ -525,7 +611,7 @@ textarea{
 
     border-radius:16px;
 
-    background:#f0f0f3;
+    background:#F1F3F6;
 
     font-size:21px;
 }
@@ -535,17 +621,21 @@ textarea{
 
     font-size:15px;
     font-weight:750;
+
     letter-spacing:-.15px;
 }
 
 .empty-text{
     max-width:310px;
+
     margin:0 auto;
 
     font-size:11.5px;
     line-height:1.55;
-    color:#999aa1;
+
+    color:#999BA3;
 }
+
 
 /* =========================================================
    STATS
@@ -553,7 +643,9 @@ textarea{
 
 .stats{
     display:grid;
-    grid-template-columns:repeat(2,1fr);
+
+    grid-template-columns:repeat(3,1fr);
+
     gap:10px;
 
     margin-top:12px;
@@ -565,27 +657,32 @@ textarea{
 
     padding:17px;
 
-    background:rgba(255,255,255,.9);
+    background:#FFFFFF;
 
     border-radius:19px;
 
     box-shadow:
-        0 6px 20px rgba(20,20,25,.04),
+        0 6px 20px rgba(35,40,55,.04),
         inset 0 0 0 1px rgba(0,0,0,.018);
 }
 
 .stat-number{
     font-size:25px;
     line-height:1;
+
     font-weight:820;
+
     letter-spacing:-.8px;
 }
 
 .stat-label{
     margin-top:6px;
+
     font-size:10.5px;
-    color:#999aa1;
+
+    color:#999BA3;
 }
+
 
 /* =========================================================
    BOTTOM NAV
@@ -593,37 +690,40 @@ textarea{
 
 .bottom-nav{
     position:sticky;
+
     bottom:12px;
+
     z-index:20;
 
     display:grid;
-    grid-template-columns:repeat(3,1fr);
+
+    grid-template-columns:repeat(4,1fr);
 
     padding:5px;
 
     margin-top:30px;
 
-    background:rgba(255,255,255,.88);
+    background:rgba(255,255,255,.91);
 
     border-radius:22px;
 
     border:1px solid rgba(0,0,0,.045);
 
     box-shadow:
-        0 12px 34px rgba(0,0,0,.09);
+        0 12px 34px rgba(35,40,55,.09);
 
     backdrop-filter:blur(22px);
     -webkit-backdrop-filter:blur(22px);
 }
 
 .nav-btn{
-    padding:9px 5px 8px;
+    padding:9px 4px 8px;
 
     border-radius:17px;
 
     background:transparent;
 
-    color:#999aa2;
+    color:#999BA3;
 
     transition:
         background .18s ease,
@@ -632,14 +732,17 @@ textarea{
 }
 
 .nav-btn.active{
-    background:#202126;
+    background:#363841;
+
     color:#fff;
+
     box-shadow:
-        0 5px 12px rgba(0,0,0,.12);
+        0 5px 12px rgba(35,38,50,.12);
 }
 
 .nav-icon{
     display:block;
+
     margin-bottom:4px;
 
     font-size:16px;
@@ -647,9 +750,10 @@ textarea{
 }
 
 .nav-label{
-    font-size:9.5px;
+    font-size:9px;
     font-weight:650;
 }
+
 
 /* =========================================================
    PAGE TITLES
@@ -660,9 +764,12 @@ textarea{
 
     font-size:29px;
     line-height:1;
+
     font-weight:820;
+
     letter-spacing:-1.1px;
 }
+
 
 /* =========================================================
    SCHEDULE
@@ -670,6 +777,7 @@ textarea{
 
 .week{
     display:flex;
+
     gap:7px;
 
     overflow-x:auto;
@@ -693,28 +801,29 @@ textarea{
 
     border-radius:17px;
 
-    background:rgba(255,255,255,.92);
-    color:#777981;
+    background:#FFFFFF;
+    color:#777A84;
 
     box-shadow:
-        0 5px 16px rgba(20,20,25,.04),
+        0 5px 16px rgba(35,40,55,.04),
         inset 0 0 0 1px rgba(0,0,0,.018);
 
-    transition:
-        .16s ease;
+    transition:.16s ease;
 }
 
 .day-btn.active{
-    background:#202126;
+    background:#4A4D57;
+
     color:#fff;
 
     box-shadow:
-        0 7px 16px rgba(0,0,0,.13);
+        0 7px 16px rgba(35,38,50,.13);
 }
 
 .day-name{
     font-size:9px;
     font-weight:650;
+
     text-transform:uppercase;
     letter-spacing:.5px;
 }
@@ -724,6 +833,7 @@ textarea{
 
     font-size:17px;
     line-height:1;
+
     font-weight:780;
 }
 
@@ -733,14 +843,15 @@ textarea{
         2px
         11px;
 
-    color:#898a92;
+    color:#898B94;
 
     font-size:12px;
     font-weight:550;
 }
 
 .add-main,
-.add-student{
+.add-student,
+.add-group{
     width:100%;
     height:51px;
 
@@ -751,8 +862,8 @@ textarea{
     background:
         linear-gradient(
             145deg,
-            #1d1e22,
-            #303138
+            #454852,
+            #5B5E68
         );
 
     color:#fff;
@@ -761,8 +872,8 @@ textarea{
     font-weight:700;
 
     box-shadow:
-        0 9px 21px rgba(0,0,0,.11),
-        inset 0 1px 0 rgba(255,255,255,.06);
+        0 9px 21px rgba(45,48,60,.11),
+        inset 0 1px 0 rgba(255,255,255,.08);
 
     transition:
         transform .15s ease,
@@ -770,18 +881,24 @@ textarea{
 }
 
 .add-main:active,
-.add-student:active{
+.add-student:active,
+.add-group:active{
     transform:scale(.985);
-    box-shadow:0 5px 12px rgba(0,0,0,.1);
+
+    box-shadow:
+        0 5px 12px rgba(45,48,60,.1);
 }
 
+
 /* =========================================================
-   STUDENTS
+   STUDENTS / GROUPS CARDS
 ========================================================= */
 
-.student-card{
+.student-card,
+.group-card{
     display:flex;
     align-items:center;
+
     gap:13px;
 
     padding:15px;
@@ -790,10 +907,10 @@ textarea{
 
     border-radius:20px;
 
-    background:rgba(255,255,255,.92);
+    background:#FFFFFF;
 
     box-shadow:
-        0 6px 20px rgba(20,20,25,.04),
+        0 6px 20px rgba(35,40,55,.04),
         inset 0 0 0 1px rgba(0,0,0,.018);
 
     transition:
@@ -801,11 +918,13 @@ textarea{
         box-shadow .15s ease;
 }
 
-.student-card:active{
+.student-card:active,
+.group-card:active{
     transform:scale(.985);
 }
 
-.avatar{
+.avatar,
+.group-avatar{
     width:45px;
     height:45px;
 
@@ -820,39 +939,65 @@ textarea{
     background:
         linear-gradient(
             145deg,
-            #eeeeF1,
-            #e4e4e8
+            #EEF1F5,
+            #E2E6EC
         );
 
-    color:#47484f;
+    color:#4B4E58;
 
     font-size:13px;
     font-weight:820;
 }
 
-.student-info{
+.group-avatar{
+    background:
+        linear-gradient(
+            145deg,
+            #EEF2FC,
+            #DFE7FA
+        );
+
+    color:#53658F;
+}
+
+.student-info,
+.group-info{
     flex:1;
     min-width:0;
 }
 
-.student-name{
+.student-name,
+.group-name{
     font-size:14px;
     font-weight:750;
+
     letter-spacing:-.15px;
 }
 
-.student-level{
+.student-level,
+.group-level{
     margin-top:4px;
 
     font-size:11px;
-    color:#96979f;
+
+    color:#9698A1;
+}
+
+.group-members{
+    margin-top:5px;
+
+    font-size:10px;
+
+    color:#A0A2AA;
 }
 
 .chevron{
-    color:#b5b6bc;
+    color:#B5B7BE;
+
     font-size:20px;
     font-weight:300;
 }
+
 
 /* =========================================================
    PROFILE
@@ -865,7 +1010,7 @@ textarea{
 
     background:transparent;
 
-    color:#7e7f87;
+    color:#7E8089;
 
     font-size:12px;
     font-weight:600;
@@ -876,16 +1021,17 @@ textarea{
 
     text-align:center;
 
-    background:rgba(255,255,255,.92);
+    background:#FFFFFF;
 
     border-radius:24px;
 
     box-shadow:
-        0 7px 22px rgba(20,20,25,.045),
+        0 7px 22px rgba(35,40,55,.045),
         inset 0 0 0 1px rgba(0,0,0,.018);
 }
 
-.profile-avatar{
+.profile-avatar,
+.group-profile-avatar{
     width:68px;
     height:68px;
 
@@ -900,8 +1046,8 @@ textarea{
     background:
         linear-gradient(
             145deg,
-            #202126,
-            #3a3b43
+            #4A4D57,
+            #686B76
         );
 
     color:#fff;
@@ -910,19 +1056,29 @@ textarea{
     font-weight:820;
 
     box-shadow:
-        0 9px 20px rgba(0,0,0,.12);
+        0 9px 20px rgba(45,48,60,.12);
+}
+
+.group-profile-avatar{
+    background:
+        linear-gradient(
+            145deg,
+            #6279B8,
+            #7D92CA
+        );
 }
 
 .profile-name{
     font-size:21px;
     font-weight:800;
+
     letter-spacing:-.5px;
 }
 
 .profile-level{
     margin-top:5px;
 
-    color:#96979e;
+    color:#9698A1;
 
     font-size:12px;
 }
@@ -934,10 +1090,10 @@ textarea{
 
     border-radius:21px;
 
-    background:rgba(255,255,255,.92);
+    background:#FFFFFF;
 
     box-shadow:
-        0 6px 20px rgba(20,20,25,.04),
+        0 6px 20px rgba(35,40,55,.04),
         inset 0 0 0 1px rgba(0,0,0,.018);
 }
 
@@ -949,10 +1105,81 @@ textarea{
 }
 
 .profile-notes{
-    color:#777981;
+    color:#777A84;
 
     font-size:12px;
     line-height:1.6;
+}
+
+.member-list{
+    display:flex;
+    flex-direction:column;
+
+    gap:8px;
+}
+
+.member-row{
+    display:flex;
+    align-items:center;
+
+    gap:10px;
+
+    padding:10px;
+
+    border-radius:13px;
+
+    background:#F7F8FA;
+}
+
+.member-avatar{
+    width:32px;
+    height:32px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    flex-shrink:0;
+
+    border-radius:10px;
+
+    background:#E9EDF3;
+
+    color:#50535D;
+
+    font-size:10px;
+    font-weight:800;
+}
+
+.member-info{
+    flex:1;
+    min-width:0;
+}
+
+.member-name{
+    font-size:12px;
+    font-weight:700;
+}
+
+.member-level{
+    margin-top:2px;
+
+    font-size:9px;
+
+    color:#989AA3;
+}
+
+.remove-member{
+    width:27px;
+    height:27px;
+
+    border-radius:9px;
+
+    background:#FFFFFF;
+
+    color:#A4A6AE;
+
+    font-size:13px;
 }
 
 .danger-btn{
@@ -963,13 +1190,14 @@ textarea{
 
     border-radius:16px;
 
-    background:#fff0f0;
+    background:var(--danger-soft);
 
-    color:#c94b4b;
+    color:var(--danger);
 
     font-size:12px;
     font-weight:700;
 }
+
 
 /* =========================================================
    SETTINGS
@@ -978,6 +1206,7 @@ textarea{
 .settings-hero{
     display:flex;
     align-items:center;
+
     gap:14px;
 
     padding:20px;
@@ -991,18 +1220,18 @@ textarea{
     background:
         radial-gradient(
             circle at 90% 0%,
-            rgba(255,255,255,.09),
+            rgba(255,255,255,.12),
             transparent 30%
         ),
         linear-gradient(
             145deg,
-            #202126,
-            #36373f
+            #4A4D57,
+            #656873
         );
 
     box-shadow:
-        0 16px 34px rgba(0,0,0,.115),
-        inset 0 1px 0 rgba(255,255,255,.06);
+        0 16px 34px rgba(45,48,60,.115),
+        inset 0 1px 0 rgba(255,255,255,.07);
 }
 
 .settings-hero-icon{
@@ -1017,7 +1246,7 @@ textarea{
 
     border-radius:16px;
 
-    background:rgba(255,255,255,.09);
+    background:rgba(255,255,255,.10);
 
     font-size:21px;
 }
@@ -1025,13 +1254,14 @@ textarea{
 .settings-hero-title{
     font-size:15px;
     font-weight:750;
+
     letter-spacing:-.2px;
 }
 
 .settings-hero-text{
     margin-top:4px;
 
-    color:rgba(255,255,255,.61);
+    color:rgba(255,255,255,.67);
 
     font-size:10.5px;
     line-height:1.45;
@@ -1042,16 +1272,17 @@ textarea{
 
     border-radius:21px;
 
-    background:rgba(255,255,255,.94);
+    background:#FFFFFF;
 
     box-shadow:
-        0 6px 20px rgba(20,20,25,.04),
+        0 6px 20px rgba(35,40,55,.04),
         inset 0 0 0 1px rgba(0,0,0,.018);
 }
 
 .settings-row{
     display:flex;
     align-items:center;
+
     gap:12px;
 
     min-height:72px;
@@ -1060,7 +1291,7 @@ textarea{
 }
 
 .settings-row + .settings-row{
-    border-top:1px solid #eeeeF1;
+    border-top:1px solid #EEF0F3;
 }
 
 .settings-icon{
@@ -1075,7 +1306,7 @@ textarea{
 
     border-radius:13px;
 
-    background:#f0f0f3;
+    background:#F1F3F6;
 
     font-size:17px;
 }
@@ -1093,7 +1324,7 @@ textarea{
 .settings-description{
     margin-top:3px;
 
-    color:#999aa1;
+    color:#999BA3;
 
     font-size:10.5px;
     line-height:1.4;
@@ -1106,7 +1337,7 @@ textarea{
 
     border-radius:11px;
 
-    background:#202126;
+    background:#4A4D57;
     color:#fff;
 
     font-size:10.5px;
@@ -1120,12 +1351,13 @@ textarea{
 }
 
 .settings-danger{
-    color:#c94b4b;
+    color:var(--danger);
 }
 
 .settings-danger .settings-icon{
-    background:#fff0f0;
+    background:var(--danger-soft);
 }
+
 
 /* =========================================================
    MODALS
@@ -1134,13 +1366,15 @@ textarea{
 .modal-backdrop{
     position:fixed;
     inset:0;
+
     z-index:100;
 
     display:none;
+
     align-items:flex-end;
     justify-content:center;
 
-    background:rgba(12,12,15,.36);
+    background:rgba(25,28,35,.28);
 
     backdrop-filter:blur(9px);
     -webkit-backdrop-filter:blur(9px);
@@ -1154,6 +1388,9 @@ textarea{
     width:100%;
     max-width:520px;
 
+    max-height:92vh;
+    overflow-y:auto;
+
     padding:
         11px
         16px
@@ -1164,12 +1401,12 @@ textarea{
     background:
         linear-gradient(
             180deg,
-            #f8f8fa,
-            #f3f3f5
+            #FBFCFD,
+            #F4F6F8
         );
 
     box-shadow:
-        0 -12px 40px rgba(0,0,0,.16);
+        0 -12px 40px rgba(35,40,55,.16);
 
     animation:sheetIn .23s cubic-bezier(.22,.8,.25,1);
 }
@@ -1196,7 +1433,7 @@ textarea{
 
     border-radius:10px;
 
-    background:#d0d0d4;
+    background:#D1D4D9;
 }
 
 .modal-title{
@@ -1204,6 +1441,7 @@ textarea{
 
     font-size:21px;
     font-weight:800;
+
     letter-spacing:-.55px;
 }
 
@@ -1220,7 +1458,7 @@ textarea{
         6px
         3px;
 
-    color:#85868e;
+    color:#858790;
 
     font-size:10.5px;
     font-weight:600;
@@ -1238,15 +1476,15 @@ textarea{
 
     border-radius:15px;
 
-    background:#fff;
+    background:#FFFFFF;
 
-    color:#202126;
+    color:#202228;
 
     font-size:13px;
 
     box-shadow:
         inset 0 0 0 1px rgba(0,0,0,.025),
-        0 3px 11px rgba(0,0,0,.03);
+        0 3px 11px rgba(35,40,55,.03);
 
     transition:
         box-shadow .15s ease,
@@ -1257,8 +1495,8 @@ textarea{
 .field select:focus,
 .field textarea:focus{
     box-shadow:
-        inset 0 0 0 1.5px rgba(35,35,40,.16),
-        0 4px 13px rgba(0,0,0,.04);
+        inset 0 0 0 1.5px rgba(70,80,105,.18),
+        0 4px 13px rgba(35,40,55,.04);
 }
 
 .field textarea{
@@ -1268,7 +1506,9 @@ textarea{
 
 .modal-actions{
     display:grid;
+
     grid-template-columns:1fr 1fr;
+
     gap:9px;
 
     margin-top:18px;
@@ -1286,8 +1526,8 @@ textarea{
 }
 
 .cancel-btn{
-    background:#e7e7eb;
-    color:#55565d;
+    background:#E8EBEF;
+    color:#555861;
 }
 
 .save-btn{
@@ -1296,13 +1536,103 @@ textarea{
     background:
         linear-gradient(
             145deg,
-            #1d1e22,
-            #303138
+            #454852,
+            #5B5E68
         );
 
     box-shadow:
-        0 7px 16px rgba(0,0,0,.10);
+        0 7px 16px rgba(45,48,60,.10);
 }
+
+.checkbox-list{
+    display:flex;
+    flex-direction:column;
+
+    gap:8px;
+
+    max-height:220px;
+    overflow-y:auto;
+
+    padding:2px;
+}
+
+.check-row{
+    display:flex;
+    align-items:center;
+
+    gap:10px;
+
+    padding:10px 11px;
+
+    border-radius:13px;
+
+    background:#FFFFFF;
+
+    box-shadow:
+        inset 0 0 0 1px rgba(0,0,0,.025);
+}
+
+.check-row input{
+    width:18px;
+    height:18px;
+
+    accent-color:#5D78C8;
+
+    flex-shrink:0;
+}
+
+.check-row-label{
+    flex:1;
+
+    font-size:12px;
+    font-weight:650;
+}
+
+.check-row-level{
+    font-size:9px;
+    color:#999BA3;
+}
+
+
+/* =========================================================
+   SMALL INFO BADGE
+========================================================= */
+
+.type-switch{
+    display:grid;
+
+    grid-template-columns:1fr 1fr;
+
+    gap:7px;
+
+    margin-bottom:14px;
+}
+
+.type-btn{
+    height:43px;
+
+    border-radius:13px;
+
+    background:#FFFFFF;
+
+    color:#858790;
+
+    font-size:11px;
+    font-weight:700;
+
+    box-shadow:
+        inset 0 0 0 1px rgba(0,0,0,.035);
+}
+
+.type-btn.active{
+    background:#EEF2FA;
+
+    color:#52658F;
+
+    box-shadow:
+        inset 0 0 0 1px rgba(93,120,200,.12);
+}
+
 
 /* =========================================================
    MOBILE
@@ -1334,6 +1664,14 @@ textarea{
 
     .day-btn{
         min-width:49px;
+    }
+
+    .stats{
+        gap:7px;
+    }
+
+    .stat-card{
+        padding:14px 12px;
     }
 
 }
@@ -1480,7 +1818,34 @@ textarea{
 
 
     <!-- =====================================================
-         PROFILE
+         GROUPS
+    ====================================================== -->
+
+    <section
+        id="groupsPage"
+        class="page"
+    >
+
+        <div class="page-title">
+            Groups
+        </div>
+
+
+        <button
+            class="add-group"
+            onclick="openGroupModal()"
+        >
+            ＋&nbsp; Add group
+        </button>
+
+
+        <div id="groupsList"></div>
+
+    </section>
+
+
+    <!-- =====================================================
+         STUDENT PROFILE
     ====================================================== -->
 
     <section
@@ -1497,6 +1862,28 @@ textarea{
 
 
         <div id="profileContent"></div>
+
+    </section>
+
+
+    <!-- =====================================================
+         GROUP PROFILE
+    ====================================================== -->
+
+    <section
+        id="groupProfilePage"
+        class="page"
+    >
+
+        <button
+            class="back-btn"
+            onclick="showPage('groups')"
+        >
+            ←&nbsp; Back to groups
+        </button>
+
+
+        <div id="groupProfileContent"></div>
 
     </section>
 
@@ -1529,7 +1916,7 @@ textarea{
                 </div>
 
                 <div class="settings-hero-text">
-                    Your students, lessons and notes stay on this device.
+                    Your students, groups, lessons and notes stay on this device.
                 </div>
 
             </div>
@@ -1619,7 +2006,7 @@ textarea{
                     </div>
 
                     <div class="settings-description">
-                        Permanently remove all students and lessons from this device.
+                        Permanently remove all planner data from this device.
                     </div>
 
                 </div>
@@ -1705,6 +2092,23 @@ textarea{
 
         </button>
 
+
+        <button
+            id="navGroups"
+            class="nav-btn"
+            onclick="showPage('groups')"
+        >
+
+            <span class="nav-icon">
+                ♧
+            </span>
+
+            <span class="nav-label">
+                Groups
+            </span>
+
+        </button>
+
     </nav>
 
 </div>
@@ -1733,10 +2137,61 @@ textarea{
         <div class="field">
 
             <label>
+                Lesson type
+            </label>
+
+
+            <div class="type-switch">
+
+                <button
+                    type="button"
+                    id="individualTypeBtn"
+                    class="type-btn active"
+                    onclick="setLessonType('individual')"
+                >
+                    👤 Individual
+                </button>
+
+
+                <button
+                    type="button"
+                    id="groupTypeBtn"
+                    class="type-btn"
+                    onclick="setLessonType('group')"
+                >
+                    👥 Group
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <div
+            class="field"
+            id="lessonStudentField"
+        >
+
+            <label>
                 Student
             </label>
 
             <select id="lessonStudent"></select>
+
+        </div>
+
+
+        <div
+            class="field"
+            id="lessonGroupField"
+            style="display:none"
+        >
+
+            <label>
+                Group
+            </label>
+
+            <select id="lessonGroup"></select>
 
         </div>
 
@@ -1937,6 +2392,181 @@ textarea{
 </div>
 
 
+<!-- =========================================================
+     GROUP MODAL
+========================================================== -->
+
+<div
+    id="groupModal"
+    class="modal-backdrop"
+    onclick="backdropClose(event,'groupModal')"
+>
+
+    <div class="modal">
+
+        <div class="modal-handle"></div>
+
+
+        <div class="modal-title">
+            Add group
+        </div>
+
+
+        <div class="field">
+
+            <label>
+                Group name
+            </label>
+
+            <input
+                id="groupName"
+                type="text"
+                placeholder="e.g. B1 Evening Group"
+                autocomplete="off"
+            >
+
+        </div>
+
+
+        <div class="field">
+
+            <label>
+                Level
+            </label>
+
+            <select id="groupLevel">
+
+                <option value="A1">
+                    A1
+                </option>
+
+                <option value="A2">
+                    A2
+                </option>
+
+                <option value="B1" selected>
+                    B1
+                </option>
+
+                <option value="B2">
+                    B2
+                </option>
+
+                <option value="C1">
+                    C1
+                </option>
+
+                <option value="C2">
+                    C2
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <div class="field">
+
+            <label>
+                Students
+            </label>
+
+            <div
+                id="groupStudentCheckboxes"
+                class="checkbox-list"
+            ></div>
+
+        </div>
+
+
+        <div class="field">
+
+            <label>
+                Notes
+            </label>
+
+            <textarea
+                id="groupNotes"
+                placeholder="Optional group notes..."
+            ></textarea>
+
+        </div>
+
+
+        <div class="modal-actions">
+
+            <button
+                class="modal-btn cancel-btn"
+                onclick="closeModal('groupModal')"
+            >
+                Cancel
+            </button>
+
+
+            <button
+                class="modal-btn save-btn"
+                onclick="saveGroup()"
+            >
+                Add group
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- =========================================================
+     ADD MEMBER MODAL
+========================================================== -->
+
+<div
+    id="memberModal"
+    class="modal-backdrop"
+    onclick="backdropClose(event,'memberModal')"
+>
+
+    <div class="modal">
+
+        <div class="modal-handle"></div>
+
+
+        <div class="modal-title">
+            Add students
+        </div>
+
+
+        <div
+            id="memberCheckboxes"
+            class="checkbox-list"
+        ></div>
+
+
+        <div class="modal-actions">
+
+            <button
+                class="modal-btn cancel-btn"
+                onclick="closeModal('memberModal')"
+            >
+                Cancel
+            </button>
+
+
+            <button
+                class="modal-btn save-btn"
+                onclick="saveMembers()"
+            >
+                Add students
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
 <script>
 
 /* =========================================================
@@ -1951,7 +2581,8 @@ const DEMO_CLEAN_FLAG =
 
 const defaultData = {
     students:[],
-    lessons:[]
+    lessons:[],
+    groups:[]
 };
 
 
@@ -2115,9 +2746,19 @@ if(
             JSON.stringify(defaultData)
         );
 
-    saveData();
-
 }
+
+
+/*
+   Existing users may already have data from the previous
+   version. Add groups without touching students/lessons.
+*/
+
+if(!Array.isArray(data.groups)){
+    data.groups = [];
+}
+
+saveData();
 
 
 /* =========================================================
@@ -2131,6 +2772,12 @@ let selectedDate =
 
 let selectedStudentId =
     null;
+
+let selectedGroupId =
+    null;
+
+let lessonType =
+    "individual";
 
 
 /* =========================================================
@@ -2328,6 +2975,15 @@ function showPage(page){
     }
 
 
+    if(page === "groups"){
+
+        document.getElementById(
+            "navGroups"
+        ).classList.add("active");
+
+    }
+
+
     renderAll();
 
 
@@ -2423,6 +3079,7 @@ function renderHome(){
 
     if(
         data.students.length === 0 &&
+        data.groups.length === 0 &&
         data.lessons.length === 0
     ){
 
@@ -2439,7 +3096,7 @@ function renderHome(){
                 </div>
 
                 <div class="welcome-text">
-                    Add your first student and start
+                    Add your first student or group and start
                     organizing your lessons in one simple place.
                 </div>
 
@@ -2456,22 +3113,18 @@ function renderHome(){
         data.lessons
             .map(l => {
 
-                const student =
-                    data.students.find(
-                        s =>
-                            Number(s.id) ===
-                            Number(l.studentId)
-                    );
+                const target =
+                    getLessonTarget(l);
 
 
                 return {
                     ...l,
-                    student
+                    target
                 };
 
             })
             .filter(
-                l => l.student
+                l => l.target
             );
 
 
@@ -2525,7 +3178,7 @@ function renderHome(){
 
                 <div class="next-name">
                     ${escapeHtml(
-                        nextLesson.student.name
+                        nextLesson.target.name
                     )}
                 </div>
 
@@ -2540,7 +3193,7 @@ function renderHome(){
                     )}
                     ·
                     ${escapeHtml(
-                        nextLesson.student.level
+                        nextLesson.target.level
                     )}
                 </div>
 
@@ -2607,21 +3260,17 @@ function renderHome(){
         todayLessons.forEach(
             lesson => {
 
-                const student =
-                    data.students.find(
-                        s =>
-                            Number(s.id) ===
-                            Number(lesson.studentId)
-                    );
+                const target =
+                    getLessonTarget(lesson);
 
 
-                if(!student) return;
+                if(!target) return;
 
 
                 html +=
                     lessonCardHtml(
                         lesson,
-                        student
+                        target
                     );
 
             }
@@ -2661,11 +3310,24 @@ function renderHome(){
             <div class="stat-card">
 
                 <div class="stat-number">
+                    ${data.groups.length}
+                </div>
+
+                <div class="stat-label">
+                    Groups
+                </div>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <div class="stat-number">
                     ${data.lessons.length}
                 </div>
 
                 <div class="stat-label">
-                    Total lessons
+                    Lessons
                 </div>
 
             </div>
@@ -2682,13 +3344,76 @@ function renderHome(){
 
 
 /* =========================================================
+   LESSON TARGET
+========================================================= */
+
+function getLessonTarget(lesson){
+
+    const type =
+        lesson.type ||
+        "individual";
+
+
+    if(type === "group"){
+
+        const group =
+            data.groups.find(
+                g =>
+                    Number(g.id) ===
+                    Number(lesson.groupId)
+            );
+
+
+        if(!group)
+            return null;
+
+
+        return {
+            type:"group",
+            id:group.id,
+            name:group.name,
+            level:group.level
+        };
+
+    }
+
+
+    const student =
+        data.students.find(
+            s =>
+                Number(s.id) ===
+                Number(lesson.studentId)
+        );
+
+
+    if(!student)
+        return null;
+
+
+    return {
+        type:"individual",
+        id:student.id,
+        name:student.name,
+        level:student.level
+    };
+
+}
+
+
+/* =========================================================
    LESSON CARD
 ========================================================= */
 
 function lessonCardHtml(
     lesson,
-    student
+    target
 ){
+
+    const typeLabel =
+        target.type === "group"
+            ? "👥 Group"
+            : "👤 Individual";
+
 
     return `
 
@@ -2708,17 +3433,21 @@ function lessonCardHtml(
 
                 <div class="lesson-name">
                     ${escapeHtml(
-                        student.name
+                        target.name
                     )}
                 </div>
 
                 <div class="lesson-level">
                     ${escapeHtml(
-                        student.level
+                        target.level
                     )}
                     ·
                     ${lesson.duration || 60}
                     min
+                </div>
+
+                <div class="lesson-type">
+                    ${typeLabel}
                 </div>
 
             </div>
@@ -2815,21 +3544,17 @@ function renderSchedule(){
         lessons.map(
             lesson => {
 
-                const student =
-                    data.students.find(
-                        s =>
-                            Number(s.id) ===
-                            Number(lesson.studentId)
-                    );
+                const target =
+                    getLessonTarget(lesson);
 
 
-                if(!student)
+                if(!target)
                     return "";
 
 
                 return lessonCardHtml(
                     lesson,
-                    student
+                    target
                 );
 
             }
@@ -3119,6 +3844,10 @@ function renderProfile(){
         data.lessons
             .filter(
                 l =>
+                    (
+                        !l.type ||
+                        l.type === "individual"
+                    ) &&
                     Number(l.studentId) ===
                     Number(student.id)
             )
@@ -3436,6 +4165,26 @@ function deleteStudent(id){
         );
 
 
+    /*
+       Also remove this student from all groups.
+    */
+
+    data.groups =
+        data.groups.map(
+            group => ({
+                ...group,
+                studentIds:
+                    Array.isArray(group.studentIds)
+                    ? group.studentIds.filter(
+                        sid =>
+                            Number(sid) !==
+                            Number(id)
+                    )
+                    : []
+            })
+        );
+
+
     saveData();
 
 
@@ -3447,17 +4196,939 @@ function deleteStudent(id){
 
 
 /* =========================================================
-   LESSON MODAL
+   GROUPS
 ========================================================= */
 
-function openLessonModal(){
+function renderGroups(){
+
+    const container =
+        document.getElementById(
+            "groupsList"
+        );
+
+
+    if(
+        data.groups.length === 0
+    ){
+
+        container.innerHTML = `
+
+            <div class="empty-card">
+
+                <div class="empty-icon">
+                    👥
+                </div>
+
+                <div class="empty-title">
+                    No groups yet
+                </div>
+
+                <div class="empty-text">
+                    Create your first group and add
+                    students to it.
+                </div>
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    container.innerHTML =
+        data.groups
+            .map(group => {
+
+                const count =
+                    Array.isArray(group.studentIds)
+                    ? group.studentIds.length
+                    : 0;
+
+
+                const initials =
+                    getInitials(
+                        group.name
+                    );
+
+
+                return `
+
+                    <div
+                        class="group-card"
+                        onclick="openGroup(${Number(group.id)})"
+                    >
+
+                        <div class="group-avatar">
+                            ${escapeHtml(
+                                initials
+                            )}
+                        </div>
+
+
+                        <div class="group-info">
+
+                            <div class="group-name">
+                                ${escapeHtml(
+                                    group.name
+                                )}
+                            </div>
+
+                            <div class="group-level">
+                                ${escapeHtml(
+                                    group.level
+                                )}
+                            </div>
+
+                            <div class="group-members">
+                                ${count}
+                                student${count === 1 ? "" : "s"}
+                            </div>
+
+                        </div>
+
+
+                        <div class="chevron">
+                            ›
+                        </div>
+
+                    </div>
+
+                `;
+
+            })
+            .join("");
+
+}
+
+
+/* =========================================================
+   ADD GROUP
+========================================================= */
+
+function openGroupModal(){
+
+    document.getElementById(
+        "groupName"
+    ).value = "";
+
+
+    document.getElementById(
+        "groupLevel"
+    ).value = "B1";
+
+
+    document.getElementById(
+        "groupNotes"
+    ).value = "";
+
+
+    renderGroupStudentCheckboxes(
+        "groupStudentCheckboxes",
+        []
+    );
+
+
+    document.getElementById(
+        "groupModal"
+    ).classList.add(
+        "show"
+    );
+
+
+    setTimeout(
+        () => {
+
+            document.getElementById(
+                "groupName"
+            ).focus();
+
+        },
+        150
+    );
+
+}
+
+
+function renderGroupStudentCheckboxes(
+    containerId,
+    selectedIds
+){
+
+    const container =
+        document.getElementById(
+            containerId
+        );
+
 
     if(
         data.students.length === 0
     ){
 
+        container.innerHTML = `
+
+            <div class="empty-text">
+                Add students first, then you can
+                add them to this group.
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    const selected =
+        selectedIds.map(
+            id => Number(id)
+        );
+
+
+    container.innerHTML =
+        data.students
+            .map(student => {
+
+                const checked =
+                    selected.includes(
+                        Number(student.id)
+                    );
+
+
+                return `
+
+                    <label class="check-row">
+
+                        <input
+                            type="checkbox"
+                            value="${Number(student.id)}"
+                            ${checked ? "checked" : ""}
+                        >
+
+                        <span class="check-row-label">
+                            ${escapeHtml(
+                                student.name
+                            )}
+                        </span>
+
+                        <span class="check-row-level">
+                            ${escapeHtml(
+                                student.level
+                            )}
+                        </span>
+
+                    </label>
+
+                `;
+
+            })
+            .join("");
+
+}
+
+
+function getCheckedStudentIds(
+    containerId
+){
+
+    const container =
+        document.getElementById(
+            containerId
+        );
+
+
+    return Array.from(
+        container.querySelectorAll(
+            'input[type="checkbox"]:checked'
+        )
+    ).map(
+        input =>
+            Number(input.value)
+    );
+
+}
+
+
+function saveGroup(){
+
+    const name =
+        document.getElementById(
+            "groupName"
+        ).value.trim();
+
+
+    const level =
+        document.getElementById(
+            "groupLevel"
+        ).value;
+
+
+    const notes =
+        document.getElementById(
+            "groupNotes"
+        ).value.trim();
+
+
+    const studentIds =
+        getCheckedStudentIds(
+            "groupStudentCheckboxes"
+        );
+
+
+    if(!name){
+
         alert(
-            "Add a student first."
+            "Please enter the group name."
+        );
+
+        return;
+
+    }
+
+
+    data.groups.push({
+
+        id:Date.now(),
+
+        name:name,
+
+        level:level,
+
+        notes:notes,
+
+        studentIds:studentIds
+
+    });
+
+
+    saveData();
+
+
+    closeModal(
+        "groupModal"
+    );
+
+
+    renderAll();
+
+}
+
+
+/* =========================================================
+   OPEN GROUP
+========================================================= */
+
+function openGroup(id){
+
+    selectedGroupId =
+        Number(id);
+
+
+    document.querySelectorAll(
+        ".page"
+    ).forEach(
+        el =>
+            el.classList.remove(
+                "active"
+            )
+    );
+
+
+    document.getElementById(
+        "groupProfilePage"
+    ).classList.add(
+        "active"
+    );
+
+
+    document.querySelectorAll(
+        ".nav-btn"
+    ).forEach(
+        el =>
+            el.classList.remove(
+                "active"
+            )
+    );
+
+
+    currentPage =
+        "groupProfile";
+
+
+    renderGroupProfile();
+
+
+    window.scrollTo({
+        top:0,
+        behavior:"smooth"
+    });
+
+}
+
+
+/* =========================================================
+   GROUP PROFILE
+========================================================= */
+
+function renderGroupProfile(){
+
+    const group =
+        data.groups.find(
+            g =>
+                Number(g.id) ===
+                Number(selectedGroupId)
+        );
+
+
+    if(!group){
+
+        showPage(
+            "groups"
+        );
+
+        return;
+
+    }
+
+
+    if(!Array.isArray(group.studentIds)){
+        group.studentIds = [];
+    }
+
+
+    const members =
+        group.studentIds
+            .map(
+                id =>
+                    data.students.find(
+                        student =>
+                            Number(student.id) ===
+                            Number(id)
+                    )
+            )
+            .filter(Boolean);
+
+
+    const lessons =
+        data.lessons
+            .filter(
+                l =>
+                    (
+                        l.type === "group" ||
+                        Number(l.groupId) ===
+                        Number(group.id)
+                    ) &&
+                    Number(l.groupId) ===
+                    Number(group.id)
+            )
+            .sort(
+                (a,b) =>
+                    new Date(
+                        a.date+"T"+a.time
+                    ) -
+                    new Date(
+                        b.date+"T"+b.time
+                    )
+            );
+
+
+    const initials =
+        getInitials(
+            group.name
+        );
+
+
+    let memberHtml = "";
+
+
+    if(
+        members.length === 0
+    ){
+
+        memberHtml = `
+
+            <div class="empty-text">
+                No students in this group yet.
+            </div>
+
+        `;
+
+    }else{
+
+        memberHtml = `
+
+            <div class="member-list">
+
+                ${members.map(student => `
+
+                    <div class="member-row">
+
+                        <div class="member-avatar">
+                            ${escapeHtml(
+                                getInitials(
+                                    student.name
+                                )
+                            )}
+                        </div>
+
+
+                        <div class="member-info">
+
+                            <div class="member-name">
+                                ${escapeHtml(
+                                    student.name
+                                )}
+                            </div>
+
+                            <div class="member-level">
+                                ${escapeHtml(
+                                    student.level
+                                )}
+                            </div>
+
+                        </div>
+
+
+                        <button
+                            class="remove-member"
+                            onclick="removeMemberFromGroup(${Number(student.id)})"
+                            aria-label="Remove student"
+                        >
+                            ×
+                        </button>
+
+                    </div>
+
+                `).join("")}
+
+            </div>
+
+        `;
+
+    }
+
+
+    let lessonHtml = "";
+
+
+    if(
+        lessons.length === 0
+    ){
+
+        lessonHtml = `
+
+            <div class="empty-text">
+                No group lessons scheduled.
+            </div>
+
+        `;
+
+    }else{
+
+        lessonHtml =
+            lessons
+                .map(
+                    lesson => {
+
+                        const d =
+                            new Date(
+                                lesson.date +
+                                "T" +
+                                lesson.time
+                            );
+
+
+                        return `
+
+                            <div class="lesson-card">
+
+                                <div class="lesson-time">
+                                    ${formatTime(
+                                        lesson.time
+                                    )}
+                                </div>
+
+                                <div class="lesson-line"></div>
+
+                                <div class="lesson-info">
+
+                                    <div class="lesson-name">
+                                        ${d.toLocaleDateString(
+                                            undefined,
+                                            {
+                                                weekday:"short",
+                                                month:"short",
+                                                day:"numeric"
+                                            }
+                                        )}
+                                    </div>
+
+                                    <div class="lesson-level">
+                                        ${lesson.duration || 60}
+                                        min
+                                    </div>
+
+                                </div>
+
+
+                                <button
+                                    class="lesson-delete"
+                                    onclick="deleteLesson(${Number(lesson.id)}); renderGroupProfile();"
+                                >
+                                    ×
+                                </button>
+
+                            </div>
+
+                        `;
+
+                    }
+                )
+                .join("");
+
+    }
+
+
+    document.getElementById(
+        "groupProfileContent"
+    ).innerHTML = `
+
+        <div class="profile-header">
+
+            <div class="group-profile-avatar">
+                ${escapeHtml(
+                    initials
+                )}
+            </div>
+
+
+            <div class="profile-name">
+                ${escapeHtml(
+                    group.name
+                )}
+            </div>
+
+
+            <div class="profile-level">
+                ${escapeHtml(
+                    group.level
+                )}
+            </div>
+
+        </div>
+
+
+        <div class="profile-section">
+
+            <div class="profile-section-title">
+                Members
+            </div>
+
+
+            ${memberHtml}
+
+
+            <button
+                class="add-student"
+                style="margin-top:12px;margin-bottom:0"
+                onclick="openMemberModal()"
+            >
+                ＋&nbsp; Add students
+            </button>
+
+        </div>
+
+
+        <div class="profile-section">
+
+            <div class="profile-section-title">
+                Notes
+            </div>
+
+
+            <div class="profile-notes">
+                ${
+                    group.notes
+                    ? escapeHtml(
+                        group.notes
+                    )
+                    : "No notes yet."
+                }
+            </div>
+
+        </div>
+
+
+        <div class="profile-section">
+
+            <div class="profile-section-title">
+                Group lessons
+            </div>
+
+
+            ${lessonHtml}
+
+        </div>
+
+
+        <button
+            class="danger-btn"
+            onclick="deleteGroup(${Number(group.id)})"
+        >
+            Delete group
+        </button>
+
+    `;
+
+}
+
+
+/* =========================================================
+   ADD MEMBERS
+========================================================= */
+
+function openMemberModal(){
+
+    const group =
+        data.groups.find(
+            g =>
+                Number(g.id) ===
+                Number(selectedGroupId)
+        );
+
+
+    if(!group)
+        return;
+
+
+    renderGroupStudentCheckboxes(
+        "memberCheckboxes",
+        Array.isArray(group.studentIds)
+            ? group.studentIds
+            : []
+    );
+
+
+    document.getElementById(
+        "memberModal"
+    ).classList.add(
+        "show"
+    );
+
+}
+
+
+function saveMembers(){
+
+    const group =
+        data.groups.find(
+            g =>
+                Number(g.id) ===
+                Number(selectedGroupId)
+        );
+
+
+    if(!group)
+        return;
+
+
+    group.studentIds =
+        getCheckedStudentIds(
+            "memberCheckboxes"
+        );
+
+
+    saveData();
+
+
+    closeModal(
+        "memberModal"
+    );
+
+
+    renderGroupProfile();
+
+}
+
+
+/* =========================================================
+   REMOVE MEMBER
+========================================================= */
+
+function removeMemberFromGroup(
+    studentId
+){
+
+    const group =
+        data.groups.find(
+            g =>
+                Number(g.id) ===
+                Number(selectedGroupId)
+        );
+
+
+    if(!group)
+        return;
+
+
+    group.studentIds =
+        (group.studentIds || [])
+            .filter(
+                id =>
+                    Number(id) !==
+                    Number(studentId)
+            );
+
+
+    saveData();
+
+
+    renderGroupProfile();
+
+}
+
+
+/* =========================================================
+   DELETE GROUP
+========================================================= */
+
+function deleteGroup(id){
+
+    const group =
+        data.groups.find(
+            g =>
+                Number(g.id) ===
+                Number(id)
+        );
+
+
+    if(!group)
+        return;
+
+
+    const confirmed =
+        confirm(
+            `Delete ${group.name}?`
+        );
+
+
+    if(!confirmed)
+        return;
+
+
+    data.groups =
+        data.groups.filter(
+            g =>
+                Number(g.id) !==
+                Number(id)
+        );
+
+
+    data.lessons =
+        data.lessons.filter(
+            l =>
+                !(
+                    (
+                        l.type === "group" ||
+                        l.groupId != null
+                    ) &&
+                    Number(l.groupId) ===
+                    Number(id)
+                )
+        );
+
+
+    saveData();
+
+
+    showPage(
+        "groups"
+    );
+
+}
+
+
+/* =========================================================
+   LESSON MODAL
+========================================================= */
+
+function setLessonType(type){
+
+    lessonType =
+        type;
+
+
+    const individualBtn =
+        document.getElementById(
+            "individualTypeBtn"
+        );
+
+
+    const groupBtn =
+        document.getElementById(
+            "groupTypeBtn"
+        );
+
+
+    const studentField =
+        document.getElementById(
+            "lessonStudentField"
+        );
+
+
+    const groupField =
+        document.getElementById(
+            "lessonGroupField"
+        );
+
+
+    if(type === "group"){
+
+        individualBtn.classList.remove(
+            "active"
+        );
+
+        groupBtn.classList.add(
+            "active"
+        );
+
+        studentField.style.display =
+            "none";
+
+        groupField.style.display =
+            "block";
+
+    }else{
+
+        individualBtn.classList.add(
+            "active"
+        );
+
+        groupBtn.classList.remove(
+            "active"
+        );
+
+        studentField.style.display =
+            "block";
+
+        groupField.style.display =
+            "none";
+
+    }
+
+}
+
+
+function openLessonModal(){
+
+    if(
+        data.students.length === 0 &&
+        data.groups.length === 0
+    ){
+
+        alert(
+            "Add a student or group first."
         );
 
 
@@ -3471,13 +5142,13 @@ function openLessonModal(){
     }
 
 
-    const select =
+    const studentSelect =
         document.getElementById(
             "lessonStudent"
         );
 
 
-    select.innerHTML =
+    studentSelect.innerHTML =
         data.students
             .map(
                 student => `
@@ -3497,6 +5168,51 @@ function openLessonModal(){
                 `
             )
             .join("");
+
+
+    const groupSelect =
+        document.getElementById(
+            "lessonGroup"
+        );
+
+
+    groupSelect.innerHTML =
+        data.groups
+            .map(
+                group => `
+
+                    <option
+                        value="${Number(group.id)}"
+                    >
+                        ${escapeHtml(
+                            group.name
+                        )}
+                        ·
+                        ${escapeHtml(
+                            group.level
+                        )}
+                    </option>
+
+                `
+            )
+            .join("");
+
+
+    /*
+       Default to individual if students exist.
+       If there are no students but there are groups,
+       automatically use group mode.
+    */
+
+    if(data.students.length > 0){
+
+        setLessonType("individual");
+
+    }else{
+
+        setLessonType("group");
+
+    }
 
 
     document.getElementById(
@@ -3530,14 +5246,6 @@ function openLessonModal(){
 
 function saveLesson(){
 
-    const studentId =
-        Number(
-            document.getElementById(
-                "lessonStudent"
-            ).value
-        );
-
-
     const date =
         document.getElementById(
             "lessonDate"
@@ -3559,7 +5267,6 @@ function saveLesson(){
 
 
     if(
-        !studentId ||
         !date ||
         !time
     ){
@@ -3573,19 +5280,83 @@ function saveLesson(){
     }
 
 
-    data.lessons.push({
+    if(
+        lessonType === "group"
+    ){
 
-        id:Date.now(),
+        const groupId =
+            Number(
+                document.getElementById(
+                    "lessonGroup"
+                ).value
+            );
 
-        studentId:studentId,
 
-        date:date,
+        if(!groupId){
 
-        time:time,
+            alert(
+                "Please select a group."
+            );
 
-        duration:duration
+            return;
 
-    });
+        }
+
+
+        data.lessons.push({
+
+            id:Date.now(),
+
+            type:"group",
+
+            groupId:groupId,
+
+            date:date,
+
+            time:time,
+
+            duration:duration
+
+        });
+
+    }else{
+
+        const studentId =
+            Number(
+                document.getElementById(
+                    "lessonStudent"
+                ).value
+            );
+
+
+        if(!studentId){
+
+            alert(
+                "Please select a student."
+            );
+
+            return;
+
+        }
+
+
+        data.lessons.push({
+
+            id:Date.now(),
+
+            type:"individual",
+
+            studentId:studentId,
+
+            date:date,
+
+            time:time,
+
+            duration:duration
+
+        });
+
+    }
 
 
     saveData();
@@ -3649,7 +5420,7 @@ function backupData(){
 
         app:"Teacher Planner",
 
-        version:4,
+        version:5,
 
         createdAt:
             new Date().toISOString(),
@@ -3658,6 +5429,9 @@ function backupData(){
 
             students:
                 data.students,
+
+            groups:
+                data.groups,
 
             lessons:
                 data.lessons
@@ -3796,6 +5570,13 @@ function restoreData(event){
                     students:
                         backup.data.students,
 
+                    groups:
+                        Array.isArray(
+                            backup.data.groups
+                        )
+                        ? backup.data.groups
+                        : [],
+
                     lessons:
                         backup.data.lessons
 
@@ -3842,7 +5623,7 @@ function clearAllData(){
 
     const first =
         confirm(
-            "Delete all students and lessons from this device?"
+            "Delete all students, groups and lessons from this device?"
         );
 
 
@@ -3863,6 +5644,8 @@ function clearAllData(){
     data = {
 
         students:[],
+
+        groups:[],
 
         lessons:[]
 
@@ -3931,12 +5714,23 @@ function renderAll(){
 
     renderStudents();
 
+    renderGroups();
+
 
     if(
         currentPage === "profile"
     ){
 
         renderProfile();
+
+    }
+
+
+    if(
+        currentPage === "groupProfile"
+    ){
+
+        renderGroupProfile();
 
     }
 
@@ -3949,7 +5743,7 @@ function renderAll(){
 
 function getInitials(name){
 
-    return name
+    return String(name || "")
         .split(" ")
         .filter(Boolean)
         .slice(0,2)
@@ -4033,4 +5827,4 @@ renderAll();
 </script>
 
 </body>
-                  </html> 
+      </html> 
